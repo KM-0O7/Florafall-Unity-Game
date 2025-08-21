@@ -23,6 +23,7 @@ public class DruidFrameWork : MonoBehaviour
     public int maxSpirits;
     private bool recentlygrew = false;
     public int spirits;
+    private bool gravityjump = false;
 
     //jump parameters
     [SerializeField] private Transform groundCheck;
@@ -78,9 +79,27 @@ public class DruidFrameWork : MonoBehaviour
                 if (druidrb.linearVelocityY > -0.1f)
                 {
                     canjump = false;
-                    druidrb.linearVelocityY += 5;
+                    druidrb.linearVelocityY += 7;
                     animator.SetTrigger("Jump");
                 }
+            }
+        }
+
+        //fasterjumpfall
+        if (canjump == false)
+        {
+            if (gravityjump)
+            {
+                druidrb.gravityScale += 0.5f;
+                gravityjump = false;
+            }
+        }
+        else
+        {
+            if (!gravityjump)
+            {
+                gravityjump = true;
+                druidrb.gravityScale = 1f;
             }
         }
 
