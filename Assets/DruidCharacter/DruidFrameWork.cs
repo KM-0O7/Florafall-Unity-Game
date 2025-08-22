@@ -55,20 +55,16 @@ public class DruidFrameWork : MonoBehaviour
         //Movement
         speedx = Input.GetAxisRaw("Horizontal");
         druidrb.linearVelocityX = speedx * druidspeed;
+        animator.SetFloat("XVelo", speedx);
 
         if (speedx > 0f)
         {
-            animator.SetFloat("XVelo", 1f);
             druidspriterender.flipX = false;
         }
         else if (speedx < 0f)
         {
-            animator.SetFloat("XVelo", 1f);
+            Debug.Log(animator.GetFloat("XVelo"));
             druidspriterender.flipX = true;
-        }
-        else if (speedx == 0f)
-        {
-            animator.SetFloat("XVelo", 0f);
         }
 
         //Jump
@@ -125,15 +121,11 @@ public class DruidFrameWork : MonoBehaviour
             }
         }
 
-        if (druidrb.linearVelocityY < 0f)
-        {
-            animator.SetFloat("XVelo", 0f);
-        }
-
         //ResetJump
 
         bool isGrounded = Physics2D.OverlapCircle(groundCheck.position, checkRadius, groundLayer);
         animator.SetBool("IsGrounded", isGrounded);
+
         if (isGrounded && druidrb.linearVelocityY <= 0)
         {
             canjump = true;
