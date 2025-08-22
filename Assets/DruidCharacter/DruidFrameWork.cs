@@ -133,7 +133,7 @@ public class DruidFrameWork : MonoBehaviour
         //ResetJump
 
         bool isGrounded = Physics2D.OverlapCircle(groundCheck.position, checkRadius, groundLayer);
-
+        animator.SetBool("IsGrounded", isGrounded);
         if (isGrounded && druidrb.linearVelocityY <= 0)
         {
             canjump = true;
