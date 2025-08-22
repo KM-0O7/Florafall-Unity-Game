@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -55,7 +56,16 @@ public class DruidFrameWork : MonoBehaviour
         //Movement
         speedx = Input.GetAxisRaw("Horizontal");
         druidrb.linearVelocityX = speedx * druidspeed;
-        animator.SetFloat("XVelo", speedx);
+
+        if (canjump == true)
+        {
+            animator.SetFloat("XVelo", speedx);
+        }
+        else if (!canjump)
+
+        {
+            animator.SetFloat("XVelo", 0f);
+        }
 
         if (speedx > 0f)
         {
@@ -63,7 +73,6 @@ public class DruidFrameWork : MonoBehaviour
         }
         else if (speedx < 0f)
         {
-            Debug.Log(animator.GetFloat("XVelo"));
             druidspriterender.flipX = true;
         }
 
