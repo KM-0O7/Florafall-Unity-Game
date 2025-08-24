@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -25,6 +26,13 @@ public class DruidFrameWork : MonoBehaviour
     private bool recentlygrew = false;
     public int spirits;
     private bool gravityjump = false;
+
+    //tether
+    public LineRenderer tether;
+
+    public Transform druidtransform;
+    private List<LineRenderer> activeTethers = new List<LineRenderer>();
+    private List<Transform> tetherTargets = new List<Transform>();
 
     //jump parameters
     [SerializeField] private Transform groundCheck;
@@ -140,6 +148,16 @@ public class DruidFrameWork : MonoBehaviour
             canjump = true;
         }
 
+        //updatetethers via list
+        for (int i = 0; i < activeTethers.Count; i++)
+        {
+            if (activeTethers[i] != null && tetherTargets[i] != null)
+            {
+                activeTethers[i].SetPosition(0, druidtransform.position);
+                activeTethers[i].SetPosition(1, tetherTargets[i].position);
+            }
+        }
+
         //plantframework
 
         if (Input.GetMouseButtonDown(0))
@@ -147,10 +165,13 @@ public class DruidFrameWork : MonoBehaviour
             if (spirits > 0)
             {
                 Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero);
+                LayerMask plantLayer = LayerMask.GetMask("GrowPlants");
+                RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero, Mathf.Infinity, plantLayer);
 
                 if (hit.collider != null)
                 {
+                    Transform plantTransform = hit.collider.transform;
+
                     //Mushroom
                     if (hit.collider.CompareTag("Mushroom"))
                     {
@@ -159,7 +180,7 @@ public class DruidFrameWork : MonoBehaviour
 
                         if (mush.mushdb == false)
                         {
-                            StartCoroutine(growplant());
+                            StartCoroutine(growplant(plantTransform));
                             mush.GrowMush();
                         }
                     }
@@ -171,7 +192,7 @@ public class DruidFrameWork : MonoBehaviour
 
                         if (root.glowdb == false)
                         {
-                            StartCoroutine(growplant());
+                            StartCoroutine(growplant(plantTransform));
                             root.GrowGlowRoot();
                         }
                     }
@@ -183,7 +204,7 @@ public class DruidFrameWork : MonoBehaviour
 
                         if (cannon.cannondb == false)
                         {
-                            StartCoroutine(growplant());
+                            StartCoroutine(growplant(plantTransform));
                             cannon.GrowGlowRoot();
                         }
                     }
@@ -192,9 +213,17 @@ public class DruidFrameWork : MonoBehaviour
         }
     }
 
-    //removes a spirit and makes the druid do her grow animation
-    private IEnumerator growplant()
+    //removes a spirit and makes the druid do her grow animation and attaches a tether
+    private IEnumerator growplant(Transform plantTransform)
     {
+        LineRenderer tetherclone = Instantiate(tether);
+        tetherclone.positionCount = 2;
+        tetherclone.SetPosition(0, druidtransform.position);
+        tetherclone.SetPosition(1, plantTransform.position);
+        tetherclone.useWorldSpace = true;
+        activeTethers.Add(tetherclone);
+        tetherTargets.Add(plantTransform);
+
         recentlygrew = true;
         spirits -= 1;
         animator.SetTrigger("Grow");
