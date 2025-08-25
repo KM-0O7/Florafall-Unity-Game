@@ -116,12 +116,12 @@ TextureImporter:
       name: SeedShooter3_0
       rect:
         serializedVersion: 2
-        x: 6
+        x: 7
         y: 0
-        width: 23
-        height: 20
+        width: 21
+        height: 19
       alignment: 9
-      pivot: {x: 0.46020475, y: 0.8837185}
+      pivot: {x: 0.44635653, y: 0.2628397}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
