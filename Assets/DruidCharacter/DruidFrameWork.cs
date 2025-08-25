@@ -1,6 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -23,7 +21,6 @@ public class DruidFrameWork : MonoBehaviour
     public Sprite fullSpirit;
     public Sprite emptySpirit;
     public int maxSpirits;
-    private bool recentlygrew = false;
     public int spirits;
     private bool gravityjump = false;
 
@@ -43,9 +40,6 @@ public class DruidFrameWork : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Start()
     {
-        //starts the regen loop
-        StartCoroutine(SpiritLoop());
-
         //components
         druidrb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
@@ -180,8 +174,15 @@ public class DruidFrameWork : MonoBehaviour
 
                         if (mush.mushdb == false)
                         {
-                            StartCoroutine(growplant(plantTransform));
+                            growplant(plantTransform);
                             mush.GrowMush();
+                        }
+                        else if (mush.candie == true)
+                        {
+                            animator.SetTrigger("Grow");
+                            Debug.Log("Dying");
+                            mush.die();
+                            spirits++;
                         }
                     }
                     //GlowRoot
@@ -192,8 +193,15 @@ public class DruidFrameWork : MonoBehaviour
 
                         if (root.glowdb == false)
                         {
-                            StartCoroutine(growplant(plantTransform));
+                            growplant(plantTransform);
                             root.GrowGlowRoot();
+                        }
+                        else if (root.candie == true)
+                        {
+                            animator.SetTrigger("Grow");
+                            Debug.Log("Dying");
+                            root.die();
+                            spirits++;
                         }
                     }
                     //SeedCannon
@@ -204,8 +212,15 @@ public class DruidFrameWork : MonoBehaviour
 
                         if (cannon.cannondb == false)
                         {
-                            StartCoroutine(growplant(plantTransform));
+                            growplant(plantTransform);
                             cannon.GrowGlowRoot();
+                        }
+                        else if (cannon.candie == true)
+                        {
+                            animator.SetTrigger("Grow");
+                            Debug.Log("Dying");
+                            cannon.die();
+                            spirits++;
                         }
                     }
                 }
@@ -214,7 +229,7 @@ public class DruidFrameWork : MonoBehaviour
     }
 
     //removes a spirit and makes the druid do her grow animation and attaches a tether
-    private IEnumerator growplant(Transform plantTransform)
+    private void growplant(Transform plantTransform)
     {
         LineRenderer tetherclone = Instantiate(tether);
         tetherclone.positionCount = 2;
@@ -224,30 +239,7 @@ public class DruidFrameWork : MonoBehaviour
         activeTethers.Add(tetherclone);
         tetherTargets.Add(plantTransform);
 
-        recentlygrew = true;
         spirits -= 1;
         animator.SetTrigger("Grow");
-        yield return new WaitForSeconds(1f);
-        recentlygrew = false;
-    }
-
-    //spiritloop
-    private IEnumerator SpiritLoop()
-    {
-        while (true) // runs forever
-        {
-            if (spirits < maxSpirits)
-            {
-                yield return new WaitForSeconds(spiritregendelay);
-                if (!recentlygrew)
-                {
-                    spirits += 1;
-                }
-            }
-            else
-            {
-                yield return null; // wait one frame, check again
-            }
-        }
     }
 }

@@ -6,6 +6,8 @@ public class MushroomPlant : MonoBehaviour
     private Animator animator;
     public bool mushdb = false;
     public GameObject Collide;
+    public bool candie = false;
+    private BoxCollider2D platform;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Start()
@@ -13,30 +15,43 @@ public class MushroomPlant : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
-    // Update is called once per frame
-    private void Update()
-    {
-    }
-
     public void GrowMush()
     {
         if (mushdb == false)
         {
-            StartCoroutine(GrowCycle());
+            if (candie == false)
+            {
+                StartCoroutine(Grow());
+            }
         }
     }
 
-    private IEnumerator GrowCycle()
+    public void die()
+    {
+        if (mushdb == true)
+        {
+            if (candie == true)
+            {
+                StartCoroutine(diecycle());
+            }
+        }
+    }
+
+    private IEnumerator Grow()
     {
         animator.SetTrigger("Grow");
         mushdb = true;
         yield return new WaitForSeconds(0.75f);
+        candie = true;
         Collide.AddComponent<BoxCollider2D>();
-        BoxCollider2D platform = Collide.GetComponent<BoxCollider2D>();
+        platform = Collide.GetComponent<BoxCollider2D>();
         platform.enabled = true;
         platform.usedByEffector = true;
+    }
 
-        yield return new WaitForSeconds(10f);
+    private IEnumerator diecycle()
+    {
+        candie = false;
         animator.SetTrigger("Die");
         Destroy(platform);
 

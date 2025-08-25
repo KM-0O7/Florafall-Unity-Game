@@ -11,6 +11,7 @@ public class SeedCannon : MonoBehaviour
     [SerializeField] private GameObject Bullet;
     private SpriteRenderer cannon;
     public float bulletspeed;
+    public bool candie = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Start()
@@ -27,14 +28,32 @@ public class SeedCannon : MonoBehaviour
         }
     }
 
+    public void die()
+    {
+        if (cannondb == true)
+        {
+            if (candie == true)
+            {
+                StartCoroutine(diecycle());
+            }
+        }
+    }
+
     private IEnumerator GrowCycle()
     {
         animator.SetTrigger("Grow");
         cannondb = true;
         grew = true;
-        yield return new WaitForSeconds(12f);
+        yield return new WaitForSeconds(0.75f);
+        candie = true;
+    }
+
+    private IEnumerator diecycle()
+    {
+        candie = false;
         animator.SetTrigger("Die");
         grew = false;
+
         yield return new WaitForSeconds(3f);
         cannondb = false;
     }

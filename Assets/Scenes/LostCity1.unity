@@ -346,6 +346,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   glowdb: 0
+  candie: 0
 --- !u!95 &71715839
 Animator:
   serializedVersion: 7
@@ -551,6 +552,7 @@ MonoBehaviour:
   bulletspawn: {fileID: 1280811605}
   Bullet: {fileID: 300321888}
   bulletspeed: 4
+  candie: 0
 --- !u!61 &228286694
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -585,7 +587,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.026402652, y: -0.4136414}
+  m_Offset: {x: 0.026402652, y: -0.2}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.4503009, y: 1.9707249}
@@ -595,7 +597,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.53125, y: 0.28125}
+  m_Size: {x: 0.53125, y: 1}
   m_EdgeRadius: 0
 --- !u!95 &228286695
 Animator:
@@ -1065,6 +1067,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   glowdb: 0
+  candie: 0
 --- !u!95 &432401835
 Animator:
   serializedVersion: 7
@@ -1619,6 +1622,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mushdb: 0
   Collide: {fileID: 29035434}
+  candie: 0
 --- !u!61 &910787287
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2024,6 +2028,7 @@ MonoBehaviour:
   bulletspawn: {fileID: 231074802}
   Bullet: {fileID: 2007268163}
   bulletspeed: 4
+  candie: 0
 --- !u!61 &1151614441
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2058,7 +2063,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.026402652, y: -0.4136414}
+  m_Offset: {x: 0.026402652, y: -0.2}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.4503009, y: 1.9707249}
@@ -2068,7 +2073,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.53125, y: 0.28125}
+  m_Size: {x: 0.53125, y: 1}
   m_EdgeRadius: 0
 --- !u!95 &1151614442
 Animator:
@@ -2323,8 +2328,8 @@ LineRenderer:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0
-        value: 0.32999992
+        time: 0.017158508
+        value: 0.12000847
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -3618,6 +3623,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mushdb: 0
   Collide: {fileID: 1722280216}
+  candie: 0
 --- !u!61 &2031170364
 BoxCollider2D:
   m_ObjectHideFlags: 0
