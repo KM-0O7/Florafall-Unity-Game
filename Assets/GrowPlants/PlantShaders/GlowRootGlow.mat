@@ -41,7 +41,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Emission: 2.5
+    - _Emission: 4
     m_Colors: []
   m_BuildTextureStacks: []
   m_AllowLocking: 1
