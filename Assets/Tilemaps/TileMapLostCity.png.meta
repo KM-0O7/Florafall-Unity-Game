@@ -5,9 +5,6 @@ TextureImporter:
   - first:
       213: -3152213175637208827
     second: TileMapLostCity_0
-  - first:
-      213: 6342080771745639907
-    second: TileMapLostCity_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -75,7 +72,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 1024
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -124,15 +121,19 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
-      physicsShape: []
+      physicsShape:
+      - - {x: -15, y: -16}
+        - {x: 16, y: -16}
+        - {x: 16, y: 13}
+        - {x: -15, y: 13}
       tessellationDetail: 0
       bones: []
-      spriteID: cdc283d1259f3db4cbc2af934bb75a7b
-      internalID: -82659674
+      spriteID: 50196d161d61144d0800000000000000
+      internalID: -3152213175637208827
       vertices: []
       indices: 
       edges: []
@@ -146,15 +147,19 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
-      physicsShape: []
+      physicsShape:
+      - - {x: -16, y: -16}
+        - {x: 16, y: -16}
+        - {x: 16, y: 13}
+        - {x: -16, y: 13}
       tessellationDetail: 0
       bones: []
-      spriteID: 5d822ef37cbe75d4d8cd59aa8156b6f6
-      internalID: 1934696303
+      spriteID: 766dc3a06c3c9f04d80137e063586a52
+      internalID: 571639922
       vertices: []
       indices: 
       edges: []
@@ -168,15 +173,19 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
-      physicsShape: []
+      physicsShape:
+      - - {x: -16, y: -16}
+        - {x: 15, y: -16}
+        - {x: 15, y: 13}
+        - {x: -16, y: 13}
       tessellationDetail: 0
       bones: []
-      spriteID: 38d3ffe71beda164889c0602107707ba
-      internalID: 1359572511
+      spriteID: 0ab5c4ba59bae0c47a469234c3961b23
+      internalID: 389516066
       vertices: []
       indices: 
       edges: []
@@ -190,15 +199,15 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ed4301223f8cb0842a919bf98befe84b
-      internalID: 1506738383
+      spriteID: f0fc33ae97c8cf240bf81ce4e1b65f4b
+      internalID: -1025108668
       vertices: []
       indices: 
       edges: []
@@ -212,15 +221,15 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7b002000ec0c5af4080685401d79931e
-      internalID: 886695196
+      spriteID: 6feadb491958bd94b94c44e72f83f257
+      internalID: 2112545322
       vertices: []
       indices: 
       edges: []
@@ -234,15 +243,19 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
-      physicsShape: []
+      physicsShape:
+      - - {x: -15, y: -16}
+        - {x: 16, y: -16}
+        - {x: 16, y: 13}
+        - {x: -15, y: 13}
       tessellationDetail: 0
       bones: []
-      spriteID: 8da933de720f13a489a599376d8383a2
-      internalID: -1242156135
+      spriteID: 93bdf106743502b498c42479687f8947
+      internalID: -62999407
       vertices: []
       indices: 
       edges: []
@@ -251,20 +264,24 @@ TextureImporter:
       name: TileMapLostCity_6
       rect:
         serializedVersion: 2
-        x: 0
-        y: 192
+        x: 192
+        y: 224
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
-      physicsShape: []
+      physicsShape:
+      - - {x: -16, y: -16}
+        - {x: 16, y: -16}
+        - {x: 16, y: 13}
+        - {x: -16, y: 13}
       tessellationDetail: 0
       bones: []
-      spriteID: 261e5fde97eb95442b9d536e38cc8870
-      internalID: 75708306
+      spriteID: 994825209df92b647b0129649d2d5b9b
+      internalID: 898546374
       vertices: []
       indices: 
       edges: []
@@ -273,20 +290,24 @@ TextureImporter:
       name: TileMapLostCity_7
       rect:
         serializedVersion: 2
-        x: 32
-        y: 192
+        x: 224
+        y: 224
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
-      physicsShape: []
+      physicsShape:
+      - - {x: -16, y: -16}
+        - {x: 15, y: -16}
+        - {x: 15, y: 13}
+        - {x: -16, y: 13}
       tessellationDetail: 0
       bones: []
-      spriteID: ca52671f31288a74cb6484cc51910bb0
-      internalID: -47183162
+      spriteID: 927a49f50476c2f4b965b5afe651c2e3
+      internalID: 1954979628
       vertices: []
       indices: 
       edges: []
@@ -295,20 +316,24 @@ TextureImporter:
       name: TileMapLostCity_8
       rect:
         serializedVersion: 2
-        x: 64
+        x: 0
         y: 192
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
-      physicsShape: []
+      physicsShape:
+      - - {x: -15, y: -16}
+        - {x: 16, y: -16}
+        - {x: 16, y: 16}
+        - {x: -15, y: 16}
       tessellationDetail: 0
       bones: []
-      spriteID: 9cbee4db6d5ac0949a943d6ebe7b107c
-      internalID: 978095037
+      spriteID: 2e17d9d748e69ae4ba77834e2e70c7a2
+      internalID: -1712740469
       vertices: []
       indices: 
       edges: []
@@ -317,20 +342,24 @@ TextureImporter:
       name: TileMapLostCity_9
       rect:
         serializedVersion: 2
-        x: 96
+        x: 32
         y: 192
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
-      physicsShape: []
+      physicsShape:
+      - - {x: -16, y: -16}
+        - {x: 16, y: -16}
+        - {x: 16, y: 16}
+        - {x: -16, y: 16}
       tessellationDetail: 0
       bones: []
-      spriteID: 840f5811af3980846b2026639e8f0d64
-      internalID: -87208443
+      spriteID: 03892983de95e4b4ca454036909818c1
+      internalID: -137997992
       vertices: []
       indices: 
       edges: []
@@ -339,20 +368,24 @@ TextureImporter:
       name: TileMapLostCity_10
       rect:
         serializedVersion: 2
-        x: 128
+        x: 64
         y: 192
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
-      physicsShape: []
+      physicsShape:
+      - - {x: -16, y: -16}
+        - {x: 14, y: -16}
+        - {x: 15, y: 16}
+        - {x: -16, y: 16}
       tessellationDetail: 0
       bones: []
-      spriteID: 13cefd7958a8c30428328970b2ebf2ae
-      internalID: 1453707513
+      spriteID: 4e5f627bfd9752747b0c4f86ba503992
+      internalID: 1977188915
       vertices: []
       indices: 
       edges: []
@@ -361,20 +394,20 @@ TextureImporter:
       name: TileMapLostCity_11
       rect:
         serializedVersion: 2
-        x: 0
-        y: 160
+        x: 96
+        y: 192
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4c362c6aed5785b498a0240d47cbfc2b
-      internalID: -1295253669
+      spriteID: 5d1de0b91401d19449e2332d13be1065
+      internalID: 497940805
       vertices: []
       indices: 
       edges: []
@@ -383,20 +416,20 @@ TextureImporter:
       name: TileMapLostCity_12
       rect:
         serializedVersion: 2
-        x: 32
-        y: 160
+        x: 128
+        y: 192
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 49e60dde643dd4645bc4b058f7c7bcd8
-      internalID: 1294088284
+      spriteID: 96598b13ebde5104fb59c84f12dc0766
+      internalID: -1173180623
       vertices: []
       indices: 
       edges: []
@@ -405,20 +438,24 @@ TextureImporter:
       name: TileMapLostCity_13
       rect:
         serializedVersion: 2
-        x: 64
-        y: 160
+        x: 160
+        y: 192
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
-      physicsShape: []
+      physicsShape:
+      - - {x: -15, y: -16}
+        - {x: 16, y: -16}
+        - {x: 16, y: 16}
+        - {x: -15, y: 16}
       tessellationDetail: 0
       bones: []
-      spriteID: 5b77c055b0db40c40bb9e157fb20de6e
-      internalID: 283428709
+      spriteID: 49e1ecda62665ed439ef7ab19e33976b
+      internalID: 1575234556
       vertices: []
       indices: 
       edges: []
@@ -427,20 +464,24 @@ TextureImporter:
       name: TileMapLostCity_14
       rect:
         serializedVersion: 2
-        x: 96
-        y: 160
+        x: 192
+        y: 192
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
-      physicsShape: []
+      physicsShape:
+      - - {x: -16, y: -16}
+        - {x: 16, y: -16}
+        - {x: 16, y: 16}
+        - {x: -16, y: 16}
       tessellationDetail: 0
       bones: []
-      spriteID: d7245e8cc0b6364428774a6eb9fe441b
-      internalID: 209985452
+      spriteID: 60859986b4bde634ba882cca22a24797
+      internalID: -1289802944
       vertices: []
       indices: 
       edges: []
@@ -449,20 +490,24 @@ TextureImporter:
       name: TileMapLostCity_15
       rect:
         serializedVersion: 2
-        x: 128
-        y: 160
+        x: 224
+        y: 192
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
-      physicsShape: []
+      physicsShape:
+      - - {x: -16, y: -16}
+        - {x: 14, y: -16}
+        - {x: 15, y: 16}
+        - {x: -16, y: 16}
       tessellationDetail: 0
       bones: []
-      spriteID: 845a29f39b0ff0b429e66226cba3f9dd
-      internalID: 287948735
+      spriteID: a1701ce2e1070ec4d826c5f27b5e4a68
+      internalID: 147371562
       vertices: []
       indices: 
       edges: []
@@ -472,19 +517,19 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 32
+        y: 160
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 49fe5073def554045b072ead44d606bf
-      internalID: -1023999836
+      spriteID: 046fcf5d21b016147ae9c698893a2e7f
+      internalID: 1618865713
       vertices: []
       indices: 
       edges: []
@@ -494,19 +539,19 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 32
-        y: 32
+        y: 160
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 55cc03c9652a3c6479138082677ab19f
-      internalID: 1147223082
+      spriteID: 3f8fcc9619badda4bb353413abe6fdf9
+      internalID: 763774091
       vertices: []
       indices: 
       edges: []
@@ -516,19 +561,19 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 64
-        y: 32
+        y: 160
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5ffe808416279514ea9f416a2862ffdb
-      internalID: -1330977436
+      spriteID: b5c75c6ef82587743b57b8afd5284402
+      internalID: -802308774
       vertices: []
       indices: 
       edges: []
@@ -537,20 +582,24 @@ TextureImporter:
       name: TileMapLostCity_19
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
+        x: 96
+        y: 160
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
-      physicsShape: []
+      physicsShape:
+      - - {x: -15, y: -16}
+        - {x: 16, y: -16}
+        - {x: 16, y: 16}
+        - {x: -15, y: 16}
       tessellationDetail: 0
       bones: []
-      spriteID: d847116590617174f80e6f64a1acfa20
-      internalID: -52877959
+      spriteID: 8dbcb083ff235d649ac2d95cc90030fe
+      internalID: -1016988330
       vertices: []
       indices: 
       edges: []
@@ -559,20 +608,24 @@ TextureImporter:
       name: TileMapLostCity_20
       rect:
         serializedVersion: 2
-        x: 32
-        y: 0
+        x: 128
+        y: 160
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
-      physicsShape: []
+      physicsShape:
+      - - {x: -16, y: -16}
+        - {x: 14, y: -16}
+        - {x: 15, y: 16}
+        - {x: -16, y: 16}
       tessellationDetail: 0
       bones: []
-      spriteID: f35eb5d764666794784b58d2d62a7d27
-      internalID: 1101731731
+      spriteID: 9283fda80bf4ef240b5d19dff0c06f99
+      internalID: 2023969810
       vertices: []
       indices: 
       edges: []
@@ -581,20 +634,404 @@ TextureImporter:
       name: TileMapLostCity_21
       rect:
         serializedVersion: 2
-        x: 64
-        y: 0
+        x: 160
+        y: 160
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 07a10a01e363a3f448faa78ddcbad74d
-      internalID: -553348665
+      spriteID: 3b2a2e29c226dbd449aaa878fda8adb0
+      internalID: 892104496
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMapLostCity_22
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 160
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 942fdb8418d32f24a960f4d3c5a060c8
+      internalID: -928765958
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMapLostCity_23
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 160
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6d9ec499fd9b88c4fa693c71ee877904
+      internalID: -346538924
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMapLostCity_24
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 128
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a7f2bdcc5aafc3440be7a5da50c27344
+      internalID: -458152358
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMapLostCity_25
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 128
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0fce7bd375a910d4784a4912fb192997
+      internalID: 1275932595
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMapLostCity_26
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 128
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 20ae5e73cdae43843a3901441815e305
+      internalID: 1505590472
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMapLostCity_27
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 128
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -15, y: -16}
+        - {x: 16, y: -16}
+        - {x: 16, y: 16}
+        - {x: -15, y: 16}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1262f8531f7f2f041a81a3f9c6f33f1d
+      internalID: 881440453
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMapLostCity_28
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 128
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -16, y: -16}
+        - {x: 14, y: -16}
+        - {x: 15, y: 16}
+        - {x: -16, y: 16}
+      tessellationDetail: 0
+      bones: []
+      spriteID: c372faf58d8da844ebb311f87ba1fa58
+      internalID: 1567952517
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMapLostCity_29
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 128
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a32b4f548c2c72c4d8f3975cd2505646
+      internalID: -107467554
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMapLostCity_30
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 96
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -16, y: -16}
+        - {x: 16, y: -16}
+        - {x: 16, y: 13}
+        - {x: -16, y: 13}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 97745166b6bb7a24e83c6187ab1515ec
+      internalID: 1143758370
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMapLostCity_31
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 96
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -16, y: -16}
+        - {x: 16, y: -16}
+        - {x: 16, y: 13}
+        - {x: -16, y: 13}
+      tessellationDetail: 0
+      bones: []
+      spriteID: bd0aaf71505757e4a8c34538cc77b95f
+      internalID: 1638924212
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMapLostCity_32
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 96
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -16, y: -16}
+        - {x: 16, y: -16}
+        - {x: 16, y: 13}
+        - {x: -16, y: 13}
+      tessellationDetail: 0
+      bones: []
+      spriteID: b1f4b857acc42514f99a26fd5ee0c05e
+      internalID: 1601938515
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMapLostCity_33
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 96
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 63a304ede66631644b0ba1f706153dea
+      internalID: 742772148
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMapLostCity_34
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 96
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 11d62052005025c4eb5f9fca944fa5d5
+      internalID: 60789778
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMapLostCity_35
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 96
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -16, y: -16}
+        - {x: 16, y: -16}
+        - {x: 16, y: 13}
+        - {x: -16, y: 13}
+      tessellationDetail: 0
+      bones: []
+      spriteID: d01f6801c0268104a823747bf6a053e8
+      internalID: -2122060800
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMapLostCity_36
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 96
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -16, y: -16}
+        - {x: 16, y: -16}
+        - {x: 16, y: 13}
+        - {x: -16, y: 13}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 01d3a8afb9739cb478fd366b34bfcb34
+      internalID: 746476651
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMapLostCity_37
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 96
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -16, y: -16}
+        - {x: 16, y: -16}
+        - {x: 16, y: 13}
+        - {x: -16, y: 13}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6b563c31c629d5242838d55f9e2a0fcb
+      internalID: 701730145
       vertices: []
       indices: 
       edges: []
@@ -603,7 +1040,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 533b63bbd5a8dc14e92bd0ae70469863
+    spriteID: 02c16c54056f2e64d9f076a79816bb6a
     internalID: 0
     vertices: []
     indices: 
@@ -613,28 +1050,44 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      TileMapLostCity_0: -82659674
-      TileMapLostCity_1: 1934696303
-      TileMapLostCity_10: 1453707513
-      TileMapLostCity_11: -1295253669
-      TileMapLostCity_12: 1294088284
-      TileMapLostCity_13: 283428709
-      TileMapLostCity_14: 209985452
-      TileMapLostCity_15: 287948735
-      TileMapLostCity_16: -1023999836
-      TileMapLostCity_17: 1147223082
-      TileMapLostCity_18: -1330977436
-      TileMapLostCity_19: -52877959
-      TileMapLostCity_2: 1359572511
-      TileMapLostCity_20: 1101731731
-      TileMapLostCity_21: -553348665
-      TileMapLostCity_3: 1506738383
-      TileMapLostCity_4: 886695196
-      TileMapLostCity_5: -1242156135
-      TileMapLostCity_6: 75708306
-      TileMapLostCity_7: -47183162
-      TileMapLostCity_8: 978095037
-      TileMapLostCity_9: -87208443
+      TileMapLostCity_0: -3152213175637208827
+      TileMapLostCity_1: 571639922
+      TileMapLostCity_10: 1977188915
+      TileMapLostCity_11: 497940805
+      TileMapLostCity_12: -1173180623
+      TileMapLostCity_13: 1575234556
+      TileMapLostCity_14: -1289802944
+      TileMapLostCity_15: 147371562
+      TileMapLostCity_16: 1618865713
+      TileMapLostCity_17: 763774091
+      TileMapLostCity_18: -802308774
+      TileMapLostCity_19: -1016988330
+      TileMapLostCity_2: 389516066
+      TileMapLostCity_20: 2023969810
+      TileMapLostCity_21: 892104496
+      TileMapLostCity_22: -928765958
+      TileMapLostCity_23: -346538924
+      TileMapLostCity_24: -458152358
+      TileMapLostCity_25: 1275932595
+      TileMapLostCity_26: 1505590472
+      TileMapLostCity_27: 881440453
+      TileMapLostCity_28: 1567952517
+      TileMapLostCity_29: -107467554
+      TileMapLostCity_3: -1025108668
+      TileMapLostCity_30: 1143758370
+      TileMapLostCity_31: 1638924212
+      TileMapLostCity_32: 1601938515
+      TileMapLostCity_33: 742772148
+      TileMapLostCity_34: 60789778
+      TileMapLostCity_35: -2122060800
+      TileMapLostCity_36: 746476651
+      TileMapLostCity_37: 701730145
+      TileMapLostCity_4: 2112545322
+      TileMapLostCity_5: -62999407
+      TileMapLostCity_6: 898546374
+      TileMapLostCity_7: 1954979628
+      TileMapLostCity_8: -1712740469
+      TileMapLostCity_9: -137997992
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
