@@ -55,6 +55,7 @@ public class SeedCannon : MonoBehaviour
         grew = false;
 
         yield return new WaitForSeconds(3f);
+        animator.SetTrigger("dbdone");
         cannondb = false;
     }
 

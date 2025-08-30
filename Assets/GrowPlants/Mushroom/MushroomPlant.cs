@@ -56,6 +56,7 @@ public class MushroomPlant : MonoBehaviour
         Destroy(platform);
 
         yield return new WaitForSeconds(3f);
+        animator.SetTrigger("dbdone");
         mushdb = false;
     }
 }

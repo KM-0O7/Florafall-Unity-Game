@@ -46,6 +46,7 @@ public class GlowRootPlant : MonoBehaviour
         animator.SetTrigger("Die");
 
         yield return new WaitForSeconds(3f);
+        animator.SetTrigger("dbdone");
         glowdb = false;
     }
 }
