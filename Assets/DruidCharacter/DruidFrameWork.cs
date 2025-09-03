@@ -246,10 +246,10 @@ public class DruidFrameWork : MonoBehaviour
 
         if (index != -1) // if found
         {
-            // Destroy the line renderer GameObject (so the line vanishes)
+            
             Destroy(activeTethers[index].gameObject);
 
-            // Remove both entries from the lists so they're cleaned up
+            
             activeTethers.RemoveAt(index);
             tetherTargets.RemoveAt(index);
         }
