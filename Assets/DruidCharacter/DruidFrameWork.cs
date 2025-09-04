@@ -10,6 +10,8 @@ public class DruidFrameWork : MonoBehaviour
     private float speedx;
     private SpriteRenderer druidspriterender;
     public static bool canjump = true;
+    bool plantgrown = false;
+    
 
     public Texture2D cursorTexture;
     private Vector2 cursorHotspot;
@@ -89,6 +91,10 @@ public class DruidFrameWork : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+
+        //too far away from plant tether destroys REMINDER ADD THIS IN THE FUTURE 
+
+       
 
         //Jump
         if (Input.GetKeyDown(KeyCode.Space))
@@ -268,6 +274,7 @@ public class DruidFrameWork : MonoBehaviour
     //removes a spirit and makes the druid do her grow animation and attaches a tether
     private void growplant(Transform plantTransform)
     {
+        plantgrown = true;
         LineRenderer tetherclone = Instantiate(tether);
         tetherclone.positionCount = 2;
         tetherclone.SetPosition(0, druidtransform.position);
