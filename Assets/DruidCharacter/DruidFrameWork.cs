@@ -83,6 +83,13 @@ public class DruidFrameWork : MonoBehaviour
             druidspriterender.flipX = true;
         }
 
+       
+    }
+
+    // Update is called once per frame
+    private void Update()
+    {
+
         //Jump
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -114,11 +121,16 @@ public class DruidFrameWork : MonoBehaviour
                 druidrb.gravityScale = 1f;
             }
         }
-    }
 
-    // Update is called once per frame
-    private void Update()
-    {
+        //ResetJump
+
+        bool isGrounded = Physics2D.OverlapCircle(groundCheck.position, checkRadius, groundLayer);
+        animator.SetBool("IsGrounded", isGrounded);
+
+        if (isGrounded && druidrb.linearVelocityY <= 0)
+        {
+            canjump = true;
+        }
         //spiritUI
         for (int i = 0; i < spiritimages.Length; i++)
         {
@@ -140,15 +152,7 @@ public class DruidFrameWork : MonoBehaviour
                 spiritimages[i].enabled = false;
             }
         }
-        //ResetJump
-
-        bool isGrounded = Physics2D.OverlapCircle(groundCheck.position, checkRadius, groundLayer);
-        animator.SetBool("IsGrounded", isGrounded);
-
-        if (isGrounded && druidrb.linearVelocityY <= 0)
-        {
-            canjump = true;
-        }
+       
 
         //updatetethers via list
         for (int i = 0; i < activeTethers.Count; i++)
