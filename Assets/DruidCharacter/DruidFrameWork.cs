@@ -37,6 +37,11 @@ public class DruidFrameWork : MonoBehaviour
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private float checkRadius = 0.2f;
 
+    private void Awake()
+    {
+        
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Start()
     {
@@ -50,8 +55,8 @@ public class DruidFrameWork : MonoBehaviour
         Cursor.SetCursor(cursorTexture, cursorHotspot, CursorMode.Auto);
     }
 
-    // Update is called once per frame
-    private void Update()
+    //movement
+    private void FixedUpdate()
     {
         animator.SetFloat("YVelo", druidrb.linearVelocityY);
 
@@ -109,7 +114,11 @@ public class DruidFrameWork : MonoBehaviour
                 druidrb.gravityScale = 1f;
             }
         }
+    }
 
+    // Update is called once per frame
+    private void Update()
+    {
         //spiritUI
         for (int i = 0; i < spiritimages.Length; i++)
         {
@@ -131,7 +140,6 @@ public class DruidFrameWork : MonoBehaviour
                 spiritimages[i].enabled = false;
             }
         }
-
         //ResetJump
 
         bool isGrounded = Physics2D.OverlapCircle(groundCheck.position, checkRadius, groundLayer);
@@ -246,10 +254,8 @@ public class DruidFrameWork : MonoBehaviour
 
         if (index != -1) // if found
         {
-            
             Destroy(activeTethers[index].gameObject);
 
-            
             activeTethers.RemoveAt(index);
             tetherTargets.RemoveAt(index);
         }
