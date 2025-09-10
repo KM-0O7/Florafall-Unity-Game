@@ -10,8 +10,7 @@ public class DruidFrameWork : MonoBehaviour
     private float speedx;
     private SpriteRenderer druidspriterender;
     public static bool canjump = true;
-    bool plantgrown = false;
-    
+    public float maxTetherDistance;
 
     public Texture2D cursorTexture;
     private Vector2 cursorHotspot;
@@ -41,7 +40,6 @@ public class DruidFrameWork : MonoBehaviour
 
     private void Awake()
     {
-        
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -84,18 +82,11 @@ public class DruidFrameWork : MonoBehaviour
         {
             druidspriterender.flipX = true;
         }
-
-       
     }
 
     // Update is called once per frame
     private void Update()
     {
-
-        //too far away from plant tether destroys REMINDER ADD THIS IN THE FUTURE 
-
-       
-
         //Jump
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -158,7 +149,6 @@ public class DruidFrameWork : MonoBehaviour
                 spiritimages[i].enabled = false;
             }
         }
-       
 
         //updatetethers via list
         for (int i = 0; i < activeTethers.Count; i++)
@@ -167,21 +157,32 @@ public class DruidFrameWork : MonoBehaviour
             {
                 activeTethers[i].SetPosition(0, druidtransform.position);
                 activeTethers[i].SetPosition(1, tetherTargets[i].position);
+
+                float distance = Vector2.Distance(druidtransform.position, tetherTargets[i].position);
+                if (distance > maxTetherDistance)
+                {
+                    Debug.Log("Tether too far, breaking...");
+
+                    // Degrow plant
+                    DeGrowPlant(tetherTargets[i]); 
+                    
+                }
             }
         }
 
         //plantframework
 
         if (Input.GetMouseButtonDown(0))
-        {
+        { 
+            
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             LayerMask plantLayer = LayerMask.GetMask("GrowPlants");
             RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero, Mathf.Infinity, plantLayer);
-
+            
             if (hit.collider != null)
             {
                 Transform plantTransform = hit.collider.transform;
-
+                
                 //Mushroom
                 if (hit.collider.CompareTag("Mushroom"))
                 {
@@ -199,10 +200,7 @@ public class DruidFrameWork : MonoBehaviour
                     else if (mush.candie == true)
                     {
                         animator.SetTrigger("Grow");
-                        Debug.Log("Dying");
-                        RemoveTether(plantTransform);
-                        mush.die();
-                        spirits++;
+                        DeGrowPlant(plantTransform);
                     }
                 }
 
@@ -223,10 +221,7 @@ public class DruidFrameWork : MonoBehaviour
                     else if (root.candie == true)
                     {
                         animator.SetTrigger("Grow");
-                        Debug.Log("Dying");
-                        RemoveTether(plantTransform);
-                        root.die();
-                        spirits++;
+                        DeGrowPlant(plantTransform);
                     }
                 }
                 //SeedCannon
@@ -246,10 +241,7 @@ public class DruidFrameWork : MonoBehaviour
                     else if (cannon.candie == true)
                     {
                         animator.SetTrigger("Grow");
-                        Debug.Log("Dying");
-                        RemoveTether(plantTransform);
-                        cannon.die();
-                        spirits++;
+                        DeGrowPlant(plantTransform);
                     }
                 }
             }
@@ -271,10 +263,47 @@ public class DruidFrameWork : MonoBehaviour
         }
     }
 
+    //call function to kill plant
+    private void DeGrowPlant(Transform planttransform)
+    {
+        if (planttransform.CompareTag("Mushroom"))
+        {
+            MushroomPlant mush = planttransform.GetComponent<MushroomPlant>();
+            if (mush)
+            {
+                RemoveTether(planttransform);
+                mush.die();
+                spirits++;
+            }
+        }
+
+        else if (planttransform.CompareTag("GlowRoot"))
+        {
+            GlowRootPlant root = planttransform.GetComponent<GlowRootPlant>();
+            if (root)
+            {
+                RemoveTether(planttransform);
+                root.die();
+                spirits++;
+            }
+        }
+
+        else if (planttransform.CompareTag("SeedCannon"))
+        {
+            SeedCannon cannon = planttransform.GetComponent<SeedCannon>();
+            if (cannon)
+            {
+                RemoveTether(planttransform);
+                cannon.die();
+                spirits++;
+            }
+        }
+    }
+
     //removes a spirit and makes the druid do her grow animation and attaches a tether
     private void growplant(Transform plantTransform)
     {
-        plantgrown = true;
+        
         LineRenderer tetherclone = Instantiate(tether);
         tetherclone.positionCount = 2;
         tetherclone.SetPosition(0, druidtransform.position);
