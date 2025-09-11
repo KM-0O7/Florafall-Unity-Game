@@ -60,10 +60,11 @@ public class DruidFrameWork : MonoBehaviour
     {
         animator.SetFloat("YVelo", druidrb.linearVelocityY);
 
-        //Movement
+        //Walking
         speedx = Input.GetAxisRaw("Horizontal");
         druidrb.linearVelocityX = speedx * druidspeed;
 
+        //anims
         if (canjump == true)
         {
             animator.SetFloat("XVelo", speedx);
