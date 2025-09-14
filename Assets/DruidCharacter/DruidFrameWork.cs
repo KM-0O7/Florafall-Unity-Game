@@ -38,10 +38,6 @@ public class DruidFrameWork : MonoBehaviour
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private float checkRadius = 0.2f;
 
-    private void Awake()
-    {
-    }
-
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Start()
     {
@@ -165,8 +161,7 @@ public class DruidFrameWork : MonoBehaviour
                     Debug.Log("Tether too far, breaking...");
 
                     // Degrow plant
-                    DeGrowPlant(tetherTargets[i]); 
-                    
+                    DeGrowPlant(tetherTargets[i]);
                 }
             }
         }
@@ -174,16 +169,15 @@ public class DruidFrameWork : MonoBehaviour
         //plantframework
 
         if (Input.GetMouseButtonDown(0))
-        { 
-            
+        {
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             LayerMask plantLayer = LayerMask.GetMask("GrowPlants");
             RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero, Mathf.Infinity, plantLayer);
-            
+
             if (hit.collider != null)
             {
                 Transform plantTransform = hit.collider.transform;
-                
+
                 //Mushroom
                 if (hit.collider.CompareTag("Mushroom"))
                 {
@@ -277,7 +271,6 @@ public class DruidFrameWork : MonoBehaviour
                 spirits++;
             }
         }
-
         else if (planttransform.CompareTag("GlowRoot"))
         {
             GlowRootPlant root = planttransform.GetComponent<GlowRootPlant>();
@@ -288,7 +281,6 @@ public class DruidFrameWork : MonoBehaviour
                 spirits++;
             }
         }
-
         else if (planttransform.CompareTag("SeedCannon"))
         {
             SeedCannon cannon = planttransform.GetComponent<SeedCannon>();
@@ -304,7 +296,6 @@ public class DruidFrameWork : MonoBehaviour
     //removes a spirit and makes the druid do her grow animation and attaches a tether
     private void growplant(Transform plantTransform)
     {
-        
         LineRenderer tetherclone = Instantiate(tether);
         tetherclone.positionCount = 2;
         tetherclone.SetPosition(0, druidtransform.position);
