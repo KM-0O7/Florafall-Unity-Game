@@ -7,8 +7,16 @@ public class DoorScript : MonoBehaviour
     [Header("Target Chunk")]
     public SceneField targetChunk;       // Drag your scene here
 
-    public Animator transitions;
+    private Animator fade;
     public string targetSpawnID;       // Name of spawn point in target scene
+
+    private void Start()
+    {
+        if (TransitionManager.Instance != null)
+        {
+            fade = TransitionManager.Instance.transitions;
+        }
+    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -19,7 +27,7 @@ public class DoorScript : MonoBehaviour
 
     private IEnumerator TeleportPlayer(Collider2D player)
     {
-        transitions.SetTrigger("Start");
+        fade.SetTrigger("Start");
         yield return new WaitForSeconds(1f);
         DruidFrameWork druid = player.GetComponent<DruidFrameWork>();
         if (druid != null)
@@ -31,7 +39,7 @@ public class DoorScript : MonoBehaviour
             Debug.LogWarning("no framework lol");
         }
         yield return new WaitForSeconds(0.3f);
-        transitions.SetTrigger("End");
+        fade.SetTrigger("End");
 
         //set spirits to max when changing scene
 
