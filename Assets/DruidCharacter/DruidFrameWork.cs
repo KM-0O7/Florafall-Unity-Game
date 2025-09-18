@@ -4,15 +4,19 @@ using UnityEngine.UI;
 
 public class DruidFrameWork : MonoBehaviour
 {
+    //movement
     private Rigidbody2D druidrb;
+
     private Animator animator;
     public float druidspeed;
     private float speedx;
     private SpriteRenderer druidspriterender;
     public static bool canjump = true;
-    public float maxTetherDistance;
+    public static bool canmove = true;
 
+    //cursor
     public Texture2D cursorTexture;
+
     private Vector2 cursorHotspot;
 
     //UI/spirits
@@ -28,6 +32,7 @@ public class DruidFrameWork : MonoBehaviour
     //tether
     public LineRenderer tether;
 
+    public float maxTetherDistance;
     public Transform druidtransform;
     private List<LineRenderer> activeTethers = new List<LineRenderer>();
     private List<Transform> tetherTargets = new List<Transform>();
@@ -58,7 +63,15 @@ public class DruidFrameWork : MonoBehaviour
 
         //Walking
         speedx = Input.GetAxisRaw("Horizontal");
-        druidrb.linearVelocityX = speedx * druidspeed;
+
+        if (canmove) //checks if you just entered a scene
+        {
+            druidrb.linearVelocityX = speedx * druidspeed;
+
+        } else //sets velo to 0 after u enter a scene
+        {
+            druidrb.linearVelocityX = 0;
+        }
 
         //anims
         if (canjump == true)

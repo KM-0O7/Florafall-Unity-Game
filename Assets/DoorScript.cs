@@ -28,6 +28,7 @@ public class DoorScript : MonoBehaviour
     private IEnumerator TeleportPlayer(Collider2D player)
     {
         fade.SetTrigger("Start");
+        DruidFrameWork.canmove = false;
         yield return new WaitForSeconds(1f);
         DruidFrameWork druid = player.GetComponent<DruidFrameWork>();
         if (druid != null)
@@ -40,7 +41,7 @@ public class DoorScript : MonoBehaviour
         }
         yield return new WaitForSeconds(0.3f);
         fade.SetTrigger("End");
-
+        DruidFrameWork.canmove = true;
         //set spirits to max when changing scene
 
         // Load the target chunk
@@ -67,6 +68,9 @@ public class DoorScript : MonoBehaviour
         {
             Debug.LogWarning($"SpawnPoint '{targetSpawnID}' not found in scene '{targetChunk.SceneName}'");
         }
+        
+       
+        
     }
 
     private Transform FindSpawnRecursively(Transform parent, string name)

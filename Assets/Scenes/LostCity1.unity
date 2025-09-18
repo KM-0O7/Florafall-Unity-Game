@@ -3343,8 +3343,8 @@ Camera:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 0.99999994
-    height: 0.9996382
+    width: 1
+    height: 1.000269
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 34
@@ -4918,7 +4918,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -10
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FlipX: 0
@@ -5557,7 +5557,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   druidspeed: 3
-  maxTetherDistance: 12
   cursorTexture: {fileID: 2800000, guid: 21f1aeab1c4e1014990a55c89c94d423, type: 3}
   spiritimages:
   - {fileID: 1727424415}
@@ -5575,6 +5574,7 @@ MonoBehaviour:
   maxSpirits: 5
   spirits: 5
   tether: {fileID: 1383202073}
+  maxTetherDistance: 12
   druidtransform: {fileID: 2055951703}
   groundCheck: {fileID: 148264443}
   groundLayer:
