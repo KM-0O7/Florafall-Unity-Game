@@ -11,7 +11,7 @@ public class FollowPlayer : MonoBehaviour
     private float camHalfWidth;
     private float camHalfHeight;
     private Vector3 velocity = Vector3.zero;
-    public float smoothTime = 0.15f;
+    public float smoothTime = 0.25f;
 
     private Camera cam;
 
