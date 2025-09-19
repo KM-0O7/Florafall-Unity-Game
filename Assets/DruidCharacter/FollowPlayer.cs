@@ -4,12 +4,26 @@ public class FollowPlayer : MonoBehaviour
 {
     public static Transform target;
     public GameObject Maincharacter;
-    private float followspeed = 5f;
+
+    private Vector2 minBounds;// bottom-left of room
+    private Vector2 maxBounds; // top-right of room
+
+    private float camHalfWidth;
+    private float camHalfHeight;
+    private Vector3 velocity = Vector3.zero;
+    public float smoothTime = 0.15f;
+
+    private Camera cam;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Start()
     {
         target = Maincharacter.transform;
+
+        cam = GetComponent<Camera>();
+
+        camHalfHeight = cam.orthographicSize;
+        camHalfWidth = camHalfHeight * cam.aspect;
     }
 
     // Update is called once per frame
@@ -17,6 +31,17 @@ public class FollowPlayer : MonoBehaviour
     {
         target = Maincharacter.transform;
         Vector3 newpos = new Vector3(target.position.x, target.position.y, -10);
-        transform.position = Vector3.Slerp(transform.position, newpos, followspeed * Time.deltaTime);
+
+        float clampedX = Mathf.Clamp(newpos.x, minBounds.x + camHalfWidth, maxBounds.x - camHalfWidth);
+        float clampedY = Mathf.Clamp(newpos.y, minBounds.y + camHalfHeight, maxBounds.y - camHalfHeight);
+        Vector3 clampedTarget = new Vector3(clampedX, clampedY, -10);
+
+        transform.position = Vector3.SmoothDamp(transform.position, clampedTarget, ref velocity, smoothTime);
+    }
+
+    public void SetBounds(Vector2 min, Vector2 max)
+    {
+        minBounds = min;
+        maxBounds = max;
     }
 }
