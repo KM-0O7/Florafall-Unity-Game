@@ -195,7 +195,7 @@ public class DruidFrameWork : MonoBehaviour
                 //Mushroom
                 if (hit.collider.CompareTag("Mushroom"))
                 {
-                    if (plantdistance < maxTetherDistance)
+                    if (plantdistance < maxTetherDistance - 2)
                     {
                         Debug.Log("MushroomGrowing");
                         MushroomPlant mush = hit.collider.GetComponent<MushroomPlant>();
@@ -219,7 +219,7 @@ public class DruidFrameWork : MonoBehaviour
                 //GlowRoot
                 else if (hit.collider.CompareTag("GlowRoot"))
                 {
-                    if (plantdistance < maxTetherDistance)
+                    if (plantdistance < maxTetherDistance - 2)
                     {
                         Debug.Log("GlowRootGrowing");
                         GlowRootPlant root = hit.collider.GetComponent<GlowRootPlant>();
@@ -242,7 +242,7 @@ public class DruidFrameWork : MonoBehaviour
                 //SeedCannon
                 else if (hit.collider.CompareTag("SeedCannon"))
                 {
-                    if (plantdistance < maxTetherDistance)
+                    if (plantdistance < maxTetherDistance - 2)
                     {
                         Debug.Log("SeedCannonGrowing");
                         SeedCannon cannon = hit.collider.GetComponent<SeedCannon>();
