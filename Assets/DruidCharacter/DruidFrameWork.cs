@@ -67,8 +67,8 @@ public class DruidFrameWork : MonoBehaviour
         if (canmove) //checks if you just entered a scene
         {
             druidrb.linearVelocityX = speedx * druidspeed;
-
-        } else //sets velo to 0 after u enter a scene
+        }
+        else //sets velo to 0 after u enter a scene
         {
             druidrb.linearVelocityX = 0;
         }
@@ -186,70 +186,80 @@ public class DruidFrameWork : MonoBehaviour
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             LayerMask plantLayer = LayerMask.GetMask("GrowPlants");
             RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero, Mathf.Infinity, plantLayer);
+            float plantdistance;
 
             if (hit.collider != null)
             {
                 Transform plantTransform = hit.collider.transform;
-
+                plantdistance = Vector2.Distance(druidtransform.position, plantTransform.position);
                 //Mushroom
                 if (hit.collider.CompareTag("Mushroom"))
                 {
-                    Debug.Log("MushroomGrowing");
-                    MushroomPlant mush = hit.collider.GetComponent<MushroomPlant>();
+                    if (plantdistance < maxTetherDistance)
+                    {
+                        Debug.Log("MushroomGrowing");
+                        MushroomPlant mush = hit.collider.GetComponent<MushroomPlant>();
 
-                    if (mush.mushdb == false)
-                    {
-                        if (spirits > 0)
+                        if (mush.mushdb == false)
                         {
-                            growplant(plantTransform);
-                            mush.GrowMush();
+                            if (spirits > 0)
+                            {
+                                growplant(plantTransform);
+                                mush.GrowMush();
+                            }
                         }
-                    }
-                    else if (mush.candie == true)
-                    {
-                        animator.SetTrigger("Grow");
-                        DeGrowPlant(plantTransform);
+                        else if (mush.candie == true)
+                        {
+                            animator.SetTrigger("Grow");
+                            DeGrowPlant(plantTransform);
+                        }
                     }
                 }
 
                 //GlowRoot
                 else if (hit.collider.CompareTag("GlowRoot"))
                 {
-                    Debug.Log("GlowRootGrowing");
-                    GlowRootPlant root = hit.collider.GetComponent<GlowRootPlant>();
+                    if (plantdistance < maxTetherDistance)
+                    {
+                        Debug.Log("GlowRootGrowing");
+                        GlowRootPlant root = hit.collider.GetComponent<GlowRootPlant>();
 
-                    if (root.glowdb == false)
-                    {
-                        if (spirits > 0)
+                        if (root.glowdb == false)
                         {
-                            growplant(plantTransform);
-                            root.GrowGlowRoot();
+                            if (spirits > 0)
+                            {
+                                growplant(plantTransform);
+                                root.GrowGlowRoot();
+                            }
                         }
-                    }
-                    else if (root.candie == true)
-                    {
-                        animator.SetTrigger("Grow");
-                        DeGrowPlant(plantTransform);
+                        else if (root.candie == true)
+                        {
+                            animator.SetTrigger("Grow");
+                            DeGrowPlant(plantTransform);
+                        }
                     }
                 }
                 //SeedCannon
                 else if (hit.collider.CompareTag("SeedCannon"))
                 {
-                    Debug.Log("SeedCannonGrowing");
-                    SeedCannon cannon = hit.collider.GetComponent<SeedCannon>();
+                    if (plantdistance < maxTetherDistance)
+                    {
+                        Debug.Log("SeedCannonGrowing");
+                        SeedCannon cannon = hit.collider.GetComponent<SeedCannon>();
 
-                    if (cannon.cannondb == false)
-                    {
-                        if (spirits > 0)
+                        if (cannon.cannondb == false)
                         {
-                            growplant(plantTransform);
-                            cannon.GrowGlowRoot();
+                            if (spirits > 0)
+                            {
+                                growplant(plantTransform);
+                                cannon.GrowGlowRoot();
+                            }
                         }
-                    }
-                    else if (cannon.candie == true)
-                    {
-                        animator.SetTrigger("Grow");
-                        DeGrowPlant(plantTransform);
+                        else if (cannon.candie == true)
+                        {
+                            animator.SetTrigger("Grow");
+                            DeGrowPlant(plantTransform);
+                        }
                     }
                 }
             }
