@@ -9,6 +9,7 @@ TagManager:
   - Mushroom
   - GlowRoot
   - SeedCannon
+  - ExplosionShroom
   layers:
   - Default
   - TransparentFX

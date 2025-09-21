@@ -130,9 +130,10 @@ GameObject:
   - component: {fileID: 23750240}
   - component: {fileID: 23750239}
   - component: {fileID: 23750238}
+  - component: {fileID: 23750241}
   m_Layer: 0
   m_Name: ExplosionShroom
-  m_TagString: Untagged
+  m_TagString: ExplosionShroom
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -202,7 +203,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -10
+  m_SortingOrder: 10
   m_Sprite: {fileID: 21300000, guid: 033d9803f385e804685cbce3e4ee502e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -229,6 +230,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &23750241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 23750237}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f11b2b9a964abac439fc02f49b66b7c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &29035434
 GameObject:
   m_ObjectHideFlags: 0
@@ -4833,8 +4846,8 @@ Camera:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 0.99999994
-    height: 0.9996382
+    width: 1
+    height: 1
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 34
@@ -7025,7 +7038,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2037967899}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19c2c8ad00bdd274e9990b34df320cbf, type: 3}
+  m_Script: {fileID: 11500000, guid: b392eb9559e20234eae9810c1694f263, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!61 &2037967901
