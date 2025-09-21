@@ -1475,7 +1475,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 2
-      m_TileSpriteIndex: 2
+      m_TileSpriteIndex: 5
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -1700,14 +1700,14 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 1
-    m_Data: {fileID: -3152213175637208827, guid: 57c26f6d921165844abda9ac242a857f, type: 3}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   - m_RefCount: 2
     m_Data: {fileID: 886231761, guid: 4b90e2cd96d238e44a9585fca5ca19dc, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: 811382761, guid: 57c26f6d921165844abda9ac242a857f, type: 3}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
+  - m_RefCount: 1
+    m_Data: {fileID: -3152213175637208827, guid: 57c26f6d921165844abda9ac242a857f, type: 3}
   - m_RefCount: 2
     m_Data: {fileID: -2069144592, guid: 57c26f6d921165844abda9ac242a857f, type: 3}
   - m_RefCount: 3
@@ -1827,7 +1827,7 @@ GameObject:
   - component: {fileID: 717527608}
   - component: {fileID: 717527607}
   m_Layer: 0
-  m_Name: RoomBounds (1)
+  m_Name: RoomBounds
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
