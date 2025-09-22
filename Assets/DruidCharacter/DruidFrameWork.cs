@@ -197,7 +197,7 @@ public class DruidFrameWork : MonoBehaviour
                         {
                             // Grow the plant
                             plant.Grow();
-
+                            Debug.Log("Growing");
                             growplant(hit.collider.transform);
                         }
                         else if (plant.CanDie)
