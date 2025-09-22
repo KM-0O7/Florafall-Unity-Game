@@ -105,7 +105,7 @@ public class DruidFrameWork : MonoBehaviour
                 if (druidrb.linearVelocityY > -0.1f)
                 {
                     canjump = false;
-                    druidrb.linearVelocityY += 7;
+                    druidrb.linearVelocityY += 9;
                     animator.SetTrigger("Jump");
                 }
             }
