@@ -184,81 +184,27 @@ public class DruidFrameWork : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            LayerMask plantLayer = LayerMask.GetMask("GrowPlants");
-            RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero, Mathf.Infinity, plantLayer);
-            float plantdistance;
-
+            RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero, Mathf.Infinity, LayerMask.GetMask("GrowPlants"));
             if (hit.collider != null)
             {
-                Transform plantTransform = hit.collider.transform;
-                plantdistance = Vector2.Distance(druidtransform.position, plantTransform.position);
-                //Mushroom
-                if (hit.collider.CompareTag("Mushroom"))
+                IGrowablePlant plant = hit.collider.GetComponent<IGrowablePlant>();
+                if (plant != null)
                 {
-                    if (plantdistance < maxTetherDistance - 2)
+                    float distance = Vector2.Distance(druidtransform.position, hit.collider.transform.position);
+                    if (distance <= maxTetherDistance - 2)
                     {
-                        Debug.Log("MushroomGrowing");
-                        MushroomPlant mush = hit.collider.GetComponent<MushroomPlant>();
+                        if (!plant.IsGrown && spirits > 0)
+                        {
+                            // Grow the plant
+                            plant.Grow();
 
-                        if (mush.mushdb == false)
-                        {
-                            if (spirits > 0)
-                            {
-                                growplant(plantTransform);
-                                mush.GrowMush();
-                            }
+                            growplant(hit.collider.transform);
                         }
-                        else if (mush.candie == true)
+                        else if (plant.CanDie)
                         {
+                            // Degrow the plant
+                            DeGrowPlant(hit.collider.transform);
                             animator.SetTrigger("Grow");
-                            DeGrowPlant(plantTransform);
-                        }
-                    }
-                }
-
-                //GlowRoot
-                else if (hit.collider.CompareTag("GlowRoot"))
-                {
-                    if (plantdistance < maxTetherDistance - 2)
-                    {
-                        Debug.Log("GlowRootGrowing");
-                        GlowRootPlant root = hit.collider.GetComponent<GlowRootPlant>();
-
-                        if (root.glowdb == false)
-                        {
-                            if (spirits > 0)
-                            {
-                                growplant(plantTransform);
-                                root.GrowGlowRoot();
-                            }
-                        }
-                        else if (root.candie == true)
-                        {
-                            animator.SetTrigger("Grow");
-                            DeGrowPlant(plantTransform);
-                        }
-                    }
-                }
-                //SeedCannon
-                else if (hit.collider.CompareTag("SeedCannon"))
-                {
-                    if (plantdistance < maxTetherDistance - 2)
-                    {
-                        Debug.Log("SeedCannonGrowing");
-                        SeedCannon cannon = hit.collider.GetComponent<SeedCannon>();
-
-                        if (cannon.cannondb == false)
-                        {
-                            if (spirits > 0)
-                            {
-                                growplant(plantTransform);
-                                cannon.GrowGlowRoot();
-                            }
-                        }
-                        else if (cannon.candie == true)
-                        {
-                            animator.SetTrigger("Grow");
-                            DeGrowPlant(plantTransform);
                         }
                     }
                 }
@@ -284,35 +230,12 @@ public class DruidFrameWork : MonoBehaviour
     //call function to kill plant
     private void DeGrowPlant(Transform planttransform)
     {
-        if (planttransform.CompareTag("Mushroom"))
+        IGrowablePlant plant = planttransform.GetComponent<IGrowablePlant>();
+        if (plant != null)
         {
-            MushroomPlant mush = planttransform.GetComponent<MushroomPlant>();
-            if (mush)
-            {
-                RemoveTether(planttransform);
-                mush.die();
-                spirits++;
-            }
-        }
-        else if (planttransform.CompareTag("GlowRoot"))
-        {
-            GlowRootPlant root = planttransform.GetComponent<GlowRootPlant>();
-            if (root)
-            {
-                RemoveTether(planttransform);
-                root.die();
-                spirits++;
-            }
-        }
-        else if (planttransform.CompareTag("SeedCannon"))
-        {
-            SeedCannon cannon = planttransform.GetComponent<SeedCannon>();
-            if (cannon)
-            {
-                RemoveTether(planttransform);
-                cannon.die();
-                spirits++;
-            }
+            spirits++;
+            plant.Die();
+            RemoveTether(planttransform);
         }
     }
 

@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class MushroomPlant : MonoBehaviour
+public class MushroomPlant : MonoBehaviour, IGrowablePlant
 {
     private Animator animator;
     public bool mushdb = false;
@@ -9,24 +9,27 @@ public class MushroomPlant : MonoBehaviour
     public bool candie = false;
     private BoxCollider2D platform;
 
+    public bool IsGrown => mushdb;
+    public bool CanDie => candie;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Start()
     {
         animator = GetComponent<Animator>();
     }
 
-    public void GrowMush()
+    public void Grow()
     {
         if (mushdb == false)
         {
             if (candie == false)
             {
-                StartCoroutine(Grow());
+                StartCoroutine(GrowCycle());
             }
         }
     }
 
-    public void die()
+    public void Die()
     {
         if (mushdb == true)
         {
@@ -37,7 +40,7 @@ public class MushroomPlant : MonoBehaviour
         }
     }
 
-    private IEnumerator Grow()
+    private IEnumerator GrowCycle()
     {
         animator.SetTrigger("Grow");
         mushdb = true;

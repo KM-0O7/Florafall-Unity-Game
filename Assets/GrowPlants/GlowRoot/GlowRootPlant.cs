@@ -1,11 +1,14 @@
 using System.Collections;
 using UnityEngine;
 
-public class GlowRootPlant : MonoBehaviour
+public class GlowRootPlant : MonoBehaviour, IGrowablePlant
 {
     private Animator animator;
     public bool glowdb = false;
     public bool candie = false;
+
+    public bool IsGrown => glowdb;
+    public bool CanDie => candie;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Start()
@@ -13,7 +16,7 @@ public class GlowRootPlant : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
-    public void GrowGlowRoot()
+    public void Grow()
     {
         if (glowdb == false)
         {
@@ -21,7 +24,7 @@ public class GlowRootPlant : MonoBehaviour
         }
     }
 
-    public void die()
+    public void Die()
     {
         if (glowdb == true)
         {

@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class SeedCannon : MonoBehaviour
+public class SeedCannon : MonoBehaviour, IGrowablePlant
 {
     private Animator animator;
     public bool cannondb = false;
@@ -12,6 +12,8 @@ public class SeedCannon : MonoBehaviour
     private SpriteRenderer cannon;
     public float bulletspeed;
     public bool candie = false;
+    public bool IsGrown => cannondb;
+    public bool CanDie => candie;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Start()
@@ -20,7 +22,7 @@ public class SeedCannon : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
-    public void GrowGlowRoot()
+    public void Grow()
     {
         if (cannondb == false)
         {
@@ -28,7 +30,7 @@ public class SeedCannon : MonoBehaviour
         }
     }
 
-    public void die()
+    public void Die()
     {
         if (cannondb == true)
         {
