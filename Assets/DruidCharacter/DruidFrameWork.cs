@@ -213,7 +213,7 @@ public class DruidFrameWork : MonoBehaviour
     }
 
     //call this function to remove active tether
-    private void RemoveTether(Transform plantTransform)
+    public void RemoveTether(Transform plantTransform)
     {
         // Find which index in the list this plant is at
         int index = tetherTargets.IndexOf(plantTransform);

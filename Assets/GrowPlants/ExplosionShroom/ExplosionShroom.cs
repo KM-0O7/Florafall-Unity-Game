@@ -6,9 +6,10 @@ public class ExplosionShroom : MonoBehaviour, IGrowablePlant
     public bool explosiondb = false;
     public bool candie = false;
     Animator animator;
+    [SerializeField] DruidFrameWork druid;
     public bool IsGrown => explosiondb;
     public bool CanDie => candie;
-
+    [SerializeField] GameObject shroom;
 
     public void Start()
     {
@@ -20,19 +21,18 @@ public class ExplosionShroom : MonoBehaviour, IGrowablePlant
         {
             if (candie == false)
             {
-                StartCoroutine(GrowCycle());
+                explosiondb = true;
+                candie = true;
+                animator.SetTrigger("grow");
+
             }
         }
     }
 
-    IEnumerator GrowCycle()
-    {
-        animator.SetTrigger("grow");
-        yield return new WaitForSeconds(1f);
-    }
+   
 
     public void Die()
     {
-
+        Destroy(shroom);
     }
 }
