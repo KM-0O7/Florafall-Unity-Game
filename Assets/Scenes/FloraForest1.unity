@@ -4899,7 +4899,7 @@ Camera:
     x: 0
     y: 0
     width: 1
-    height: 1
+    height: 1.000269
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 34
@@ -6322,9 +6322,9 @@ GameObject:
   - component: {fileID: 1364717081}
   - component: {fileID: 1364717080}
   - component: {fileID: 1364717085}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: RustyGolem
-  m_TagString: Untagged
+  m_TagString: GrowableEnemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7260,7 +7260,7 @@ GameObject:
   - component: {fileID: 1965449176}
   - component: {fileID: 1965449178}
   - component: {fileID: 1965449177}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Square
   m_TagString: Untagged
   m_Icon: {fileID: 0}
