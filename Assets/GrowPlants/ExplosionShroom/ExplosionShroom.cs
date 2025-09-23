@@ -1,20 +1,20 @@
-using System.Collections;
 using UnityEngine;
 
 public class ExplosionShroom : MonoBehaviour, IGrowablePlant
 {
     public bool explosiondb = false;
     public bool candie = false;
-    Animator animator;
-    [SerializeField] DruidFrameWork druid;
+    private Animator animator;
+    [SerializeField] private DruidFrameWork druid;
     public bool IsGrown => explosiondb;
     public bool CanDie => candie;
-    [SerializeField] GameObject shroom;
+    [SerializeField] private GameObject shroom;
 
     public void Start()
     {
         animator = GetComponent<Animator>();
     }
+
     public void Grow()
     {
         if (explosiondb == false)
@@ -24,12 +24,9 @@ public class ExplosionShroom : MonoBehaviour, IGrowablePlant
                 explosiondb = true;
                 candie = true;
                 animator.SetTrigger("grow");
-
             }
         }
     }
-
-   
 
     public void Die()
     {

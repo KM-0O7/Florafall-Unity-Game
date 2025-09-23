@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public interface IGrowablePlant
 {
     bool IsGrown { get; }

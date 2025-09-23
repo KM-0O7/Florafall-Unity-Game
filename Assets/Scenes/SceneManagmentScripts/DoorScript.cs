@@ -68,9 +68,6 @@ public class DoorScript : MonoBehaviour
         {
             Debug.LogWarning($"SpawnPoint '{targetSpawnID}' not found in scene '{targetChunk.SceneName}'");
         }
-        
-       
-        
     }
 
     private Transform FindSpawnRecursively(Transform parent, string name)
