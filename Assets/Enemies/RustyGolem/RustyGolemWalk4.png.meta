@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 8344fb9926cade44c873dcc1ad393ddf
+guid: 801905b6b88d9a2449b79eecfa63d65e
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 8841308753234918341
-    second: RustyGolemGrow1_0
+      213: 1541191202847312281
+    second: RustyGolemWalk4_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,7 +113,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: RustyGolemGrow1_0
+      name: RustyGolemWalk4_0
       rect:
         serializedVersion: 2
         x: 0
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 5cb7e12c773a2ba70800000000000000
-      internalID: 8841308753234918341
+      spriteID: 999cba0cb39636510800000000000000
+      internalID: 1541191202847312281
       vertices: []
       indices: 
       edges: []
@@ -138,7 +138,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: c01779ea2f6d8c74db59bc6df75451c7
+    spriteID: 50a88a431c29609419fb84a6344d51f8
     internalID: 0
     vertices: []
     indices: 
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      RustyGolemGrow1_0: 8841308753234918341
+      RustyGolemWalk4_0: 1541191202847312281
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
