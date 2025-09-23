@@ -179,12 +179,12 @@ public class DruidFrameWork : MonoBehaviour
             }
         }
 
-        //plantframework
+        //plantframework & GrowableEnemies
 
         if (Input.GetMouseButtonDown(0))
         {
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero, Mathf.Infinity, LayerMask.GetMask("GrowPlants"));
+            RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero, Mathf.Infinity, LayerMask.GetMask("GrowPlants", "GrowEnemy"));
             if (hit.collider != null)
             {
                 IGrowablePlant plant = hit.collider.GetComponent<IGrowablePlant>();
@@ -205,6 +205,35 @@ public class DruidFrameWork : MonoBehaviour
                             // Degrow the plant
                             DeGrowPlant(hit.collider.transform);
                             animator.SetTrigger("Grow");
+                        }
+                    }
+                }
+
+                //Enemies
+                else
+                {
+                    IGrowableEnemy enemy = hit.collider.GetComponent<IGrowableEnemy>();
+                    if (enemy != null)
+                    {
+                        float distance = Vector2.Distance(druidtransform.position, hit.collider.transform.position);
+                        if (distance <= maxTetherDistance - 2)
+                        {
+                            if (!enemy.Dead)
+                            {
+                                if (!enemy.IsGrown && spirits > 0)
+                                {
+                                    // Grow the enemy
+                                    enemy.Grow();
+                                    Debug.Log("Growing");
+                                    growplant(hit.collider.transform);
+                                }
+                                else if (enemy.CanDie)
+                                {
+                                    // Degrow the plant
+                                    DeGrowPlant(hit.collider.transform);
+                                    animator.SetTrigger("Grow");
+                                }
+                            }
                         }
                     }
                 }
@@ -237,20 +266,51 @@ public class DruidFrameWork : MonoBehaviour
             plant.Die();
             RemoveTether(planttransform);
         }
+        else
+        {
+            IGrowableEnemy enemy = planttransform.GetComponent<IGrowableEnemy>();
+            if (enemy != null)
+            {
+                spirits += 3;
+                enemy.Die();
+                RemoveTether(planttransform);
+            }
+        }
     }
 
     //removes a spirit and makes the druid do her grow animation and attaches a tether
     private void growplant(Transform plantTransform)
     {
-        LineRenderer tetherclone = Instantiate(tether);
-        tetherclone.positionCount = 2;
-        tetherclone.SetPosition(0, druidtransform.position);
-        tetherclone.SetPosition(1, plantTransform.position);
-        tetherclone.useWorldSpace = true;
-        activeTethers.Add(tetherclone);
-        tetherTargets.Add(plantTransform);
+        IGrowablePlant plant = plantTransform.GetComponent<IGrowablePlant>();
+        if (plant != null)
+        {
+            LineRenderer tetherclone = Instantiate(tether);
+            tetherclone.positionCount = 2;
+            tetherclone.SetPosition(0, druidtransform.position);
+            tetherclone.SetPosition(1, plantTransform.position);
+            tetherclone.useWorldSpace = true;
+            activeTethers.Add(tetherclone);
+            tetherTargets.Add(plantTransform);
 
-        spirits -= 1;
-        animator.SetTrigger("Grow");
+            spirits -= 1;
+            animator.SetTrigger("Grow");
+        }
+        else
+        {
+            IGrowableEnemy enemy = plantTransform.GetComponent<IGrowableEnemy>();
+            if (enemy != null)
+            {
+                LineRenderer tetherclone = Instantiate(tether);
+                tetherclone.positionCount = 2;
+                tetherclone.SetPosition(0, druidtransform.position);
+                tetherclone.SetPosition(1, plantTransform.position);
+                tetherclone.useWorldSpace = true;
+                activeTethers.Add(tetherclone);
+                tetherTargets.Add(plantTransform);
+
+                spirits -= 3;
+                animator.SetTrigger("Grow");
+            }
+        }
     }
 }

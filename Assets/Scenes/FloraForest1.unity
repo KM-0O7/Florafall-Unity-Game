@@ -4899,7 +4899,7 @@ Camera:
     x: 0
     y: 0
     width: 1
-    height: 1.000269
+    height: 1
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 34
@@ -6470,7 +6470,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: -4322399320752789812, guid: 89b8ca2bbe18e364aab7181d7d3fa52d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
+  m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 0.90625, y: 1.34375}
@@ -6507,6 +6507,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ef08ffec21a8b44d9ca8f153cdacb3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  candie: 0
+  isgrown: 0
+  health: 12
+  dead: 0
+  druid: {fileID: 2055951706}
+  movespeed: 0.5
+  pauseTime: 2
+  movedistance: 4
 --- !u!1 &1383202072
 GameObject:
   m_ObjectHideFlags: 0
@@ -7598,7 +7606,7 @@ GameObject:
   - component: {fileID: 2055951704}
   - component: {fileID: 2055951705}
   - component: {fileID: 2055951706}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Druid
   m_TagString: Player
   m_Icon: {fileID: 0}

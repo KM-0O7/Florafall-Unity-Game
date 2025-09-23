@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 89b8ca2bbe18e364aab7181d7d3fa52d
+guid: 8955a831fb52d85479f53f588b8cba47
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4322399320752789812
-    second: RustyGolemWalk2_0
+      213: 5361684125059703358
+    second: RustyGolemDead_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,12 +113,12 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: RustyGolemWalk2_0
+      name: RustyGolemDead_0
       rect:
         serializedVersion: 2
-        x: 1
+        x: 2
         y: 0
-        width: 30
+        width: 29
         height: 52
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: cc6e32508b0c304c0800000000000000
-      internalID: -4322399320752789812
+      spriteID: e32e808ed47886a40800000000000000
+      internalID: 5361684125059703358
       vertices: []
       indices: 
       edges: []
@@ -138,7 +138,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: db1546f6918b3074daad2ec9be10b7cc
+    spriteID: 05fca867f774e7d42b78207ff9770b7c
     internalID: 0
     vertices: []
     indices: 
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      RustyGolemWalk2_0: -4322399320752789812
+      RustyGolemDead_0: 5361684125059703358
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
