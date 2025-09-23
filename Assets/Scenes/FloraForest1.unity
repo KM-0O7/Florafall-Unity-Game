@@ -6321,6 +6321,7 @@ GameObject:
   - component: {fileID: 1364717082}
   - component: {fileID: 1364717081}
   - component: {fileID: 1364717080}
+  - component: {fileID: 1364717085}
   m_Layer: 0
   m_Name: RustyGolem
   m_TagString: Untagged
@@ -6494,6 +6495,18 @@ Transform:
   - {fileID: 1965449176}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1364717085
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1364717079}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ef08ffec21a8b44d9ca8f153cdacb3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1383202072
 GameObject:
   m_ObjectHideFlags: 0
