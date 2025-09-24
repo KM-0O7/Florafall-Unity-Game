@@ -11,6 +11,7 @@ TagManager:
   - SeedCannon
   - ExplosionShroom
   - GrowableEnemy
+  - SeedBullet
   layers:
   - Default
   - TransparentFX

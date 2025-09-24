@@ -151,4 +151,19 @@ public class RustyGolem : MonoBehaviour, IGrowableEnemy
         yield return new WaitForSeconds(1f);
         isgrown = false;
     }
+
+
+    //damage
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision)
+        {
+            if (collision.gameObject.CompareTag("SeedBullet"))
+            {
+                Destroy(collision.gameObject);
+                health -= 2;
+            }
+        }
+    }
 }
