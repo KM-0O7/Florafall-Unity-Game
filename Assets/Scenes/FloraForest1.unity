@@ -4899,7 +4899,7 @@ Camera:
     x: 0
     y: 0
     width: 1
-    height: 1
+    height: 1.000269
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 34
@@ -6511,7 +6511,6 @@ MonoBehaviour:
   isgrown: 0
   health: 12
   dead: 0
-  druid: {fileID: 2055951706}
   movespeed: 0.5
   pauseTime: 2
   movedistance: 4
