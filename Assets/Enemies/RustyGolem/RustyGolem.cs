@@ -11,7 +11,7 @@ public class RustyGolem : MonoBehaviour, IGrowableEnemy
     private Animator animator;
     private Rigidbody2D rb;
     public bool dead = false;
-    public DruidFrameWork druid;
+    DruidFrameWork druid;
     private SpriteRenderer spriterenderer;
 
     //movement
@@ -31,6 +31,13 @@ public class RustyGolem : MonoBehaviour, IGrowableEnemy
         startpos = transform.position;
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+
+        //find druidreference
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player != null)
+        {
+            druid = player.GetComponent<DruidFrameWork>();
+        }
     }
 
     // Update is called once per frame
