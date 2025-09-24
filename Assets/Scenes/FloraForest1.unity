@@ -733,7 +733,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 20
   m_Sprite: {fileID: -1138300071220052354, guid: 31f5321c5402a3c4d98a1f58692c8def, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -6821,7 +6821,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: -876546973899608171, guid: ed051d7c7bfa7154aa66d4ac0d9b5baf, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6862,7 +6862,7 @@ Transform:
   m_GameObject: {fileID: 1364717079}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10.568365, y: -4.204344, z: 0}
+  m_LocalPosition: {x: 9.72, y: -4.23, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6888,6 +6888,8 @@ MonoBehaviour:
   movespeed: 0.5
   pauseTime: 2
   movedistance: 4
+  flashDuration: 0.3
+  flashPeak: 1
 --- !u!1 &1383202072
 GameObject:
   m_ObjectHideFlags: 0

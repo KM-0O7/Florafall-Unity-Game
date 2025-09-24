@@ -172,12 +172,15 @@ public class RustyGolem : MonoBehaviour, IGrowableEnemy
 
     private void OnTriggerEnter2D(Collider2D collision) 
     {
-        if (collision)
+        if (!dead)
         {
-            if (collision.gameObject.CompareTag("SeedBullet")) //checks if touched by bullet
+            if (collision)
             {
-                Destroy(collision.gameObject);
-                TakeDamage(2f);
+                if (collision.gameObject.CompareTag("SeedBullet")) //checks if touched by bullet
+                {
+                    Destroy(collision.gameObject);
+                    TakeDamage(2f);
+                }
             }
         }
     }
@@ -186,8 +189,11 @@ public class RustyGolem : MonoBehaviour, IGrowableEnemy
     
     private void TakeDamage(float damage) //call to take damage put damage in parameters
     {
-        health -= damage;
-        Flash();
+        if (!dead)
+        {
+            health -= damage;
+            Flash();
+        }
     }
     
 
