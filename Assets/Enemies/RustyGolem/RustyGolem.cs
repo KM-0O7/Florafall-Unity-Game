@@ -11,7 +11,7 @@ public class RustyGolem : MonoBehaviour, IGrowableEnemy
     private Animator animator;
     private Rigidbody2D rb;
     public bool dead = false;
-    DruidFrameWork druid;
+    private DruidFrameWork druid;
     private SpriteRenderer spriterenderer;
 
     //movement

@@ -229,7 +229,7 @@ public class DruidFrameWork : MonoBehaviour
                                 }
                                 else if (enemy.CanDie)
                                 {
-                                    // Degrow the plant
+                                    // Degrow the enemy
                                     DeGrowPlant(hit.collider.transform);
                                     animator.SetTrigger("Grow");
                                 }
