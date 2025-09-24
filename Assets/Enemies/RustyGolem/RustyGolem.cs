@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 
 public class RustyGolem : MonoBehaviour, IGrowableEnemy
@@ -16,7 +16,6 @@ public class RustyGolem : MonoBehaviour, IGrowableEnemy
 
     //movement
     public float movespeed = 2f;
-
     public float pauseTime = 3f;
     public float movedistance = 5f;
     private Vector2 startpos;
@@ -24,10 +23,24 @@ public class RustyGolem : MonoBehaviour, IGrowableEnemy
     private bool isPaused = false;
     public bool Dead => dead;
 
+    //DamageFlash
+    public float flashDuration = 0.3f;    
+    public float flashPeak = 1f;          
+    private MaterialPropertyBlock mpb;
+    private Coroutine flashRoutine;
+
+    void Awake()
+    {
+        spriterenderer = GetComponent<SpriteRenderer>();
+        spriterenderer.material = new Material(spriterenderer.material);
+
+        mpb = new MaterialPropertyBlock();
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Start()
     {
-        spriterenderer = GetComponent<SpriteRenderer>();
+        
         startpos = transform.position;
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
@@ -106,6 +119,7 @@ public class RustyGolem : MonoBehaviour, IGrowableEnemy
         isPaused = false;
     }
 
+    //grow the enemy
     public void Grow()
     {
         if (!dead)
@@ -122,6 +136,7 @@ public class RustyGolem : MonoBehaviour, IGrowableEnemy
         }
     }
 
+    //ungrow the enemy
     public void Die()
     {
         if (!dead)
@@ -155,15 +170,63 @@ public class RustyGolem : MonoBehaviour, IGrowableEnemy
 
     //damage
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision) 
     {
         if (collision)
         {
-            if (collision.gameObject.CompareTag("SeedBullet"))
+            if (collision.gameObject.CompareTag("SeedBullet")) //checks if touched by bullet
             {
                 Destroy(collision.gameObject);
-                health -= 2;
+                TakeDamage(2f);
             }
         }
+    }
+
+
+    
+    private void TakeDamage(float damage) //call to take damage put damage in parameters
+    {
+        health -= damage;
+        Flash();
+    }
+    
+
+    //flash call
+    public void Flash()
+    {
+        if (flashRoutine != null)
+        {
+            StopCoroutine(flashRoutine);
+        }
+        flashRoutine = StartCoroutine(FlashCoroutine());
+ 
+    }
+
+    //flash coroutine
+    private IEnumerator FlashCoroutine()
+    {
+        float timer = 0f;
+
+        
+        spriterenderer.GetPropertyBlock(mpb);
+
+        while (timer < flashDuration)
+        {
+            timer += Time.deltaTime;
+            float t = 1f - (timer / flashDuration);  
+            float intensity = t * flashPeak;
+
+           
+            mpb.SetFloat("_FlashIntensity", intensity);
+            spriterenderer.SetPropertyBlock(mpb);
+
+            yield return null;
+        }
+
+       
+        mpb.SetFloat("_FlashIntensity", 0f);
+        spriterenderer.SetPropertyBlock(mpb);
+
+        flashRoutine = null; // Clear reference
     }
 }
