@@ -115,7 +115,7 @@ public class RustyGolem : MonoBehaviour, IGrowableEnemy
         }
     }
 
-    private IEnumerator PauseAtEnd(bool turnRight)
+    private IEnumerator PauseAtEnd(bool turnRight) // pauses at the end of the movement 
     {
         isPaused = true;
         rb.linearVelocityX = 0f;
