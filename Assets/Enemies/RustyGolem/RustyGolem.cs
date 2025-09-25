@@ -16,6 +16,7 @@ public class RustyGolem : MonoBehaviour, IGrowableEnemy
 
     //movement
     public float movespeed = 2f;
+
     public float pauseTime = 3f;
     public float movedistance = 5f;
     private Vector2 startpos;
@@ -24,12 +25,19 @@ public class RustyGolem : MonoBehaviour, IGrowableEnemy
     public bool Dead => dead;
 
     //DamageFlash
-    public float flashDuration = 0.3f;    
-    public float flashPeak = 1f;          
+    public float flashDuration = 0.3f;
+
+    public float flashPeak = 1f;
     private MaterialPropertyBlock mpb;
     private Coroutine flashRoutine;
 
-    void Awake()
+    //BouncePad
+    [SerializeField] private GameObject collide;
+
+    [SerializeField] private float bounceheight;
+    private BoxCollider2D bouncepad;
+
+    private void Awake()
     {
         spriterenderer = GetComponent<SpriteRenderer>();
         spriterenderer.material = new Material(spriterenderer.material);
@@ -40,7 +48,6 @@ public class RustyGolem : MonoBehaviour, IGrowableEnemy
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Start()
     {
-        
         startpos = transform.position;
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
@@ -154,23 +161,26 @@ public class RustyGolem : MonoBehaviour, IGrowableEnemy
     private IEnumerator GrowCycle()
     {
         animator.SetTrigger("grow");
-
-        yield return null;
+        yield return new WaitForSeconds(0.75f);
+        collide.AddComponent<BoxCollider2D>();
+        bouncepad = collide.GetComponent<BoxCollider2D>();
+        bouncepad.enabled = true;
+        bouncepad.usedByEffector = true;
+        bouncepad.isTrigger = true;
     }
 
     private IEnumerator DieCycle()
     {
         candie = false;
-
+        Destroy(bouncepad);
         animator.SetTrigger("die");
         yield return new WaitForSeconds(1f);
         isgrown = false;
     }
 
-
     //damage
 
-    private void OnTriggerEnter2D(Collider2D collision) 
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (!dead)
         {
@@ -181,12 +191,21 @@ public class RustyGolem : MonoBehaviour, IGrowableEnemy
                     Destroy(collision.gameObject);
                     TakeDamage(2f);
                 }
+
+                if (collision.gameObject.CompareTag("Player") && isgrown && bouncepad != null)
+                {
+                    Rigidbody2D playerRb = collision.GetComponent<Rigidbody2D>();
+                    if (playerRb != null)
+                    {
+                        playerRb.linearVelocity = new Vector2(playerRb.linearVelocityX, 0f);
+                        DruidFrameWork.canjump = false;
+                        playerRb.AddForce(Vector2.up * bounceheight, ForceMode2D.Impulse);
+                    }
+                }
             }
         }
     }
 
-
-    
     private void TakeDamage(float damage) //call to take damage put damage in parameters
     {
         if (!dead)
@@ -195,7 +214,6 @@ public class RustyGolem : MonoBehaviour, IGrowableEnemy
             Flash();
         }
     }
-    
 
     //flash call
     public void Flash()
@@ -205,7 +223,6 @@ public class RustyGolem : MonoBehaviour, IGrowableEnemy
             StopCoroutine(flashRoutine);
         }
         flashRoutine = StartCoroutine(FlashCoroutine());
- 
     }
 
     //flash coroutine
@@ -213,23 +230,20 @@ public class RustyGolem : MonoBehaviour, IGrowableEnemy
     {
         float timer = 0f;
 
-        
         spriterenderer.GetPropertyBlock(mpb);
 
         while (timer < flashDuration)
         {
             timer += Time.deltaTime;
-            float t = 1f - (timer / flashDuration);  
+            float t = 1f - (timer / flashDuration);
             float intensity = t * flashPeak;
 
-           
             mpb.SetFloat("_FlashIntensity", intensity);
             spriterenderer.SetPropertyBlock(mpb);
 
             yield return null;
         }
 
-       
         mpb.SetFloat("_FlashIntensity", 0f);
         spriterenderer.SetPropertyBlock(mpb);
 
