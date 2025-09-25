@@ -115,7 +115,7 @@ public class RustyGolem : MonoBehaviour, IGrowableEnemy
         }
     }
 
-    private IEnumerator PauseAtEnd(bool turnRight) // pauses at the end of the movement 
+    private IEnumerator PauseAtEnd(bool turnRight) // pauses at the end of the movement
     {
         isPaused = true;
         rb.linearVelocityX = 0f;
@@ -198,6 +198,7 @@ public class RustyGolem : MonoBehaviour, IGrowableEnemy
                     if (playerRb != null)
                     {
                         playerRb.linearVelocity = new Vector2(playerRb.linearVelocityX, 0f);
+
                         DruidFrameWork.canjump = false;
                         playerRb.AddForce(Vector2.up * bounceheight, ForceMode2D.Impulse);
                     }

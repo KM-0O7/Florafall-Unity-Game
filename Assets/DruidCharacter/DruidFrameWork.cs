@@ -92,6 +92,11 @@ public class DruidFrameWork : MonoBehaviour
         {
             druidspriterender.flipX = true;
         }
+
+        if (druidrb.linearVelocityY > 0.5f)
+        {
+            animator.SetTrigger("Jump");
+        }
     }
 
     // Update is called once per frame
@@ -106,7 +111,6 @@ public class DruidFrameWork : MonoBehaviour
                 {
                     canjump = false;
                     druidrb.linearVelocityY += 7;
-                    animator.SetTrigger("Jump");
                 }
             }
         }
