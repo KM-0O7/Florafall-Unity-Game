@@ -76,7 +76,14 @@ public class DruidFrameWork : MonoBehaviour
         //anims
         if (canjump == true)
         {
-            animator.SetFloat("XVelo", speedx);
+            if (druidrb.linearVelocityY > -0.1f)
+            {
+                animator.SetFloat("XVelo", speedx);
+            }
+            else
+            {
+                animator.SetFloat("XVelo", 0f);
+            }
         }
         else if (!canjump)
 

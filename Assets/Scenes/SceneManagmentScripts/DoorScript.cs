@@ -29,7 +29,8 @@ public class DoorScript : MonoBehaviour
     {
         fade.SetTrigger("Start");
         DruidFrameWork.canmove = false;
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(1.3f);
+
         DruidFrameWork druid = player.GetComponent<DruidFrameWork>();
         if (druid != null)
         {
@@ -39,8 +40,6 @@ public class DoorScript : MonoBehaviour
         {
             Debug.LogWarning("no framework lol");
         }
-        yield return new WaitForSeconds(0.3f);
-        fade.SetTrigger("End");
         DruidFrameWork.canmove = true;
         //set spirits to max when changing scene
 
@@ -63,11 +62,20 @@ public class DoorScript : MonoBehaviour
         if (spawnPoint != null)
         {
             player.transform.position = spawnPoint.position;
+
+            //snap to player
+            FollowPlayer camFollow = Camera.main.GetComponent<FollowPlayer>();
+            if (camFollow != null)
+            {
+                camFollow.SnapToTarget();
+            }
         }
         else
         {
             Debug.LogWarning($"SpawnPoint '{targetSpawnID}' not found in scene '{targetChunk.SceneName}'");
         }
+
+        fade.SetTrigger("End");
     }
 
     private Transform FindSpawnRecursively(Transform parent, string name)
