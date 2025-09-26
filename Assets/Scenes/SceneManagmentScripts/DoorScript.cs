@@ -9,9 +9,11 @@ public class DoorScript : MonoBehaviour
 
     private Animator fade;
     public string targetSpawnID;       // Name of spawn point in target scene
+    private FollowPlayer camFollow;
 
     private void Start()
     {
+        camFollow = Camera.main.GetComponent<FollowPlayer>();
         if (TransitionManager.Instance != null)
         {
             fade = TransitionManager.Instance.transitions;
@@ -45,7 +47,7 @@ public class DoorScript : MonoBehaviour
 
         // Load the target chunk
         ChunkLoader.Instance.EnterChunk(targetChunk.SceneName);
-
+        camFollow.SnapToTarget();
         // Wait until scene is fully loaded
         Scene targetScene = SceneManager.GetSceneByName(targetChunk.SceneName);
         while (!targetScene.isLoaded)
@@ -63,19 +65,15 @@ public class DoorScript : MonoBehaviour
         {
             player.transform.position = spawnPoint.position;
 
-            //snap to player
-            FollowPlayer camFollow = Camera.main.GetComponent<FollowPlayer>();
-            if (camFollow != null)
-            {
-                camFollow.SnapToTarget();
-            }
+            camFollow.SnapToTarget();
         }
         else
         {
             Debug.LogWarning($"SpawnPoint '{targetSpawnID}' not found in scene '{targetChunk.SceneName}'");
         }
-
+        camFollow.SnapToTarget();
         fade.SetTrigger("End");
+        camFollow.SnapToTarget();
     }
 
     private Transform FindSpawnRecursively(Transform parent, string name)

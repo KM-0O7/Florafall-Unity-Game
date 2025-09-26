@@ -100,7 +100,17 @@ public class SeedCannon : MonoBehaviour, IGrowablePlant
 
             float direction = cannon.flipX ? -1f : 1f;
             bulletrig.AddForce(Vector2.right * bulletspeed * direction, ForceMode2D.Impulse);
-            yield return new WaitForSeconds(2f);
+
+            //death
+
+            yield return new WaitForSeconds(1f);
+
+            Animator bulletAnimator = BulletClone.GetComponent<Animator>();
+            if (bulletAnimator != null)
+            {
+                bulletAnimator.SetTrigger("Death");
+            }
+            yield return new WaitForSeconds(0.3f);
             Destroy(BulletClone);
         }
 

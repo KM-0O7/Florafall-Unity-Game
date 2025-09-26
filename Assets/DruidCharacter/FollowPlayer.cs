@@ -40,7 +40,7 @@ public class FollowPlayer : MonoBehaviour
         {
             transform.position = clampedTarget;
 
-            if (Vector3.Distance(transform.position, clampedTarget) < 0.01f)
+            if (Vector3.Distance(transform.position, clampedTarget) < 0.001f)
             {
                 snapThisFrame = false;
             }
