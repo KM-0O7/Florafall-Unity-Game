@@ -104,14 +104,16 @@ public class SeedCannon : MonoBehaviour, IGrowablePlant
             //death
 
             yield return new WaitForSeconds(1f);
-
-            Animator bulletAnimator = BulletClone.GetComponent<Animator>();
-            if (bulletAnimator != null)
+            if (BulletClone)
             {
-                bulletAnimator.SetTrigger("Death");
+                Animator bulletAnimator = BulletClone.GetComponent<Animator>();
+                if (bulletAnimator != null)
+                {
+                    bulletAnimator.SetTrigger("Death");
+                }
+                yield return new WaitForSeconds(0.3f);
+                Destroy(BulletClone);
             }
-            yield return new WaitForSeconds(0.3f);
-            Destroy(BulletClone);
         }
 
         shotdb = false;
