@@ -47,7 +47,7 @@ public class DoorScript : MonoBehaviour
 
         // Load the target chunk
         ChunkLoader.Instance.EnterChunk(targetChunk.SceneName);
-        camFollow.SnapToTarget();
+
         // Wait until scene is fully loaded
         Scene targetScene = SceneManager.GetSceneByName(targetChunk.SceneName);
         while (!targetScene.isLoaded)
@@ -64,8 +64,6 @@ public class DoorScript : MonoBehaviour
         if (spawnPoint != null)
         {
             player.transform.position = spawnPoint.position;
-
-            camFollow.SnapToTarget();
         }
         else
         {
@@ -73,7 +71,6 @@ public class DoorScript : MonoBehaviour
         }
         camFollow.SnapToTarget();
         fade.SetTrigger("End");
-        camFollow.SnapToTarget();
     }
 
     private Transform FindSpawnRecursively(Transform parent, string name)
