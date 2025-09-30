@@ -43,10 +43,14 @@ public class DruidFrameWork : MonoBehaviour
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private float checkRadius = 0.2f;
 
+    //transformations
+    private BoxCollider2D boxcollider;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Start()
     {
         //components
+        boxcollider = GetComponent<BoxCollider2D>();
         druidrb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         druidspriterender = GetComponent<SpriteRenderer>();
@@ -323,5 +327,16 @@ public class DruidFrameWork : MonoBehaviour
                 animator.SetTrigger("Grow");
             }
         }
+    }
+
+    //transformations
+
+    private void ChangeColliderSize(Vector2 newsize, Vector2 newoffset)
+    {
+        boxcollider.offset = newoffset;
+        boxcollider.size = newsize;
+
+        // Bear sizes for later Size X = 1.2, Y = 0.5, Offset X -0.05, Y = -0.42
+        // Druid Sizes for later Size X = 0.7,  Y = 0.6, Offset X = 0, Y -0.2
     }
 }
