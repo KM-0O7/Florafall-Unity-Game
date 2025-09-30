@@ -5865,7 +5865,7 @@ Camera:
     x: 0
     y: 0
     width: 1
-    height: 1
+    height: 1.000269
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 34
@@ -5969,7 +5969,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: f1ed6dbeaeedb9b4d9e8a6df269e3399, type: 3}
   m_Resource: {fileID: 8300000, guid: f1ed6dbeaeedb9b4d9e8a6df269e3399, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.646
+  m_Volume: 1
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -8417,9 +8417,9 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
+      key0: {r: 0, g: 1, b: 0.06257534, a: 1}
       key1: {r: 1, g: 0.75, b: 0, a: 1}
-      key2: {r: 1, g: 0.7045614, b: 0, a: 0}
+      key2: {r: 0.31332004, g: 1, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
       key5: {r: 0, g: 0, b: 0, a: 0}
@@ -8441,7 +8441,7 @@ LineRenderer:
       atime5: 0
       atime6: 0
       atime7: 0
-      m_Mode: 0
+      m_Mode: 1
       m_ColorSpace: 0
       m_NumColorKeys: 3
       m_NumAlphaKeys: 2

@@ -184,6 +184,8 @@ public class DruidFrameWork : MonoBehaviour
                 activeTethers[i].SetPosition(1, tetherTargets[i].position);
 
                 float distance = Vector2.Distance(druidtransform.position, tetherTargets[i].position);
+
+
                 if (distance > maxTetherDistance)
                 {
                     Debug.Log("Tether too far, breaking...");
