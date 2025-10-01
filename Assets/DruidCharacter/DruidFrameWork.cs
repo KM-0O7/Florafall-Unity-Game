@@ -46,6 +46,8 @@ public class DruidFrameWork : MonoBehaviour
     //transformations
     private BoxCollider2D boxcollider;
 
+    private bool isTransformed = false;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Start()
     {
@@ -175,6 +177,32 @@ public class DruidFrameWork : MonoBehaviour
             }
         }
 
+        //transformations
+
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            if (!isTransformed)
+            {
+                groundCheck.localPosition -= new Vector3(0, 0.17f, 0);
+
+                animator.SetBool("Bear", true);
+                animator.SetTrigger("TransformBear");
+
+                ChangeColliderSize(new Vector2(1.2f, 0.43f), new Vector2(-0.05f, -0.42f));
+                isTransformed = true;
+                animator.SetFloat("XVelo", speedx);
+            }
+            else
+            {
+                groundCheck.localPosition += new Vector3(0, 0.17f, 0);
+
+                animator.SetBool("Bear", false);
+                ChangeColliderSize(new Vector2(0.7f, 0.6f), new Vector2(0f, -0.2f));
+                isTransformed = false;
+                animator.SetFloat("XVelo", speedx);
+            }
+        }
+
         //updatetethers via list
         for (int i = 0; i < activeTethers.Count; i++)
         {
@@ -184,7 +212,6 @@ public class DruidFrameWork : MonoBehaviour
                 activeTethers[i].SetPosition(1, tetherTargets[i].position);
 
                 float distance = Vector2.Distance(druidtransform.position, tetherTargets[i].position);
-
 
                 if (distance > maxTetherDistance)
                 {
@@ -200,55 +227,58 @@ public class DruidFrameWork : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero, Mathf.Infinity, LayerMask.GetMask("GrowPlants", "GrowEnemy"));
-            if (hit.collider != null)
+            if (isTransformed == false)
             {
-                IGrowablePlant plant = hit.collider.GetComponent<IGrowablePlant>();
-                if (plant != null)
+                Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero, Mathf.Infinity, LayerMask.GetMask("GrowPlants", "GrowEnemy"));
+                if (hit.collider != null)
                 {
-                    float distance = Vector2.Distance(druidtransform.position, hit.collider.transform.position);
-                    if (distance <= maxTetherDistance - 2)
-                    {
-                        if (!plant.IsGrown && spirits > 0)
-                        {
-                            // Grow the plant
-                            plant.Grow();
-                            Debug.Log("Growing");
-                            growplant(hit.collider.transform);
-                        }
-                        else if (plant.CanDie)
-                        {
-                            // Degrow the plant
-                            DeGrowPlant(hit.collider.transform);
-                            animator.SetTrigger("Grow");
-                        }
-                    }
-                }
-
-                //Enemies
-                else
-                {
-                    IGrowableEnemy enemy = hit.collider.GetComponent<IGrowableEnemy>();
-                    if (enemy != null)
+                    IGrowablePlant plant = hit.collider.GetComponent<IGrowablePlant>();
+                    if (plant != null)
                     {
                         float distance = Vector2.Distance(druidtransform.position, hit.collider.transform.position);
                         if (distance <= maxTetherDistance - 2)
                         {
-                            if (!enemy.Dead)
+                            if (!plant.IsGrown && spirits > 0)
                             {
-                                if (!enemy.IsGrown && spirits > 0)
+                                // Grow the plant
+                                plant.Grow();
+                                Debug.Log("Growing");
+                                growplant(hit.collider.transform);
+                            }
+                            else if (plant.CanDie)
+                            {
+                                // Degrow the plant
+                                DeGrowPlant(hit.collider.transform);
+                                animator.SetTrigger("Grow");
+                            }
+                        }
+                    }
+
+                    //Enemies
+                    else
+                    {
+                        IGrowableEnemy enemy = hit.collider.GetComponent<IGrowableEnemy>();
+                        if (enemy != null)
+                        {
+                            float distance = Vector2.Distance(druidtransform.position, hit.collider.transform.position);
+                            if (distance <= maxTetherDistance - 2)
+                            {
+                                if (!enemy.Dead)
                                 {
-                                    // Grow the enemy
-                                    enemy.Grow();
-                                    Debug.Log("Growing");
-                                    growplant(hit.collider.transform);
-                                }
-                                else if (enemy.CanDie)
-                                {
-                                    // Degrow the enemy
-                                    DeGrowPlant(hit.collider.transform);
-                                    animator.SetTrigger("Grow");
+                                    if (!enemy.IsGrown && spirits > 0)
+                                    {
+                                        // Grow the enemy
+                                        enemy.Grow();
+                                        Debug.Log("Growing");
+                                        growplant(hit.collider.transform);
+                                    }
+                                    else if (enemy.CanDie)
+                                    {
+                                        // Degrow the enemy
+                                        DeGrowPlant(hit.collider.transform);
+                                        animator.SetTrigger("Grow");
+                                    }
                                 }
                             }
                         }
@@ -337,8 +367,5 @@ public class DruidFrameWork : MonoBehaviour
     {
         boxcollider.offset = newoffset;
         boxcollider.size = newsize;
-
-        // Bear sizes for later Size X = 1.2, Y = 0.5, Offset X -0.05, Y = -0.42
-        // Druid Sizes for later Size X = 0.7,  Y = 0.6, Offset X = 0, Y -0.2
     }
 }
