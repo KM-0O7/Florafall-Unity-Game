@@ -382,7 +382,7 @@ public class DruidFrameWork : MonoBehaviour
 
 
        private IEnumerator attack()
-    { 
+       { 
 
         bearattackcd = true;
         isAttacking = true;
@@ -392,10 +392,6 @@ public class DruidFrameWork : MonoBehaviour
         druidrb.linearVelocityX = 0f;
 
         yield return new WaitForSeconds(0.7f);
-        
-       
-    
-       
 
         float burstSpeed = 10f; // Apply burst of speed in facing direction
         float direction = druidspriterender.flipX ? -1f : 1f;
@@ -415,7 +411,7 @@ public class DruidFrameWork : MonoBehaviour
                         Debug.Log("Hit");
                         damagecd = true;
                         enemy.TakeDamage(3f);
-                       
+                        yield return StartCoroutine(FreezeFrame(0.1f));
                     }
                 }
             }
@@ -429,5 +425,13 @@ public class DruidFrameWork : MonoBehaviour
         yield return new WaitForSeconds(3f); // Cooldown
         bearattackcd = false;
 
+    }
+
+    private IEnumerator FreezeFrame(float duration) //freezeframe
+    {
+        float originalTimeScale = Time.timeScale;
+        Time.timeScale = 0f;
+        yield return new WaitForSecondsRealtime(duration); // unaffected by timeScale
+        Time.timeScale = originalTimeScale;
     }
 }
