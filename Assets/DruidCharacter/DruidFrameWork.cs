@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -45,9 +46,9 @@ public class DruidFrameWork : MonoBehaviour
 
     //transformations
     private BoxCollider2D boxcollider;
-
+    private bool bearattackcd = false;
     private bool isTransformed = false;
-
+    private bool isAttacking = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Start()
     {
@@ -68,16 +69,13 @@ public class DruidFrameWork : MonoBehaviour
         animator.SetFloat("YVelo", druidrb.linearVelocityY);
 
         //Walking
-        speedx = Input.GetAxisRaw("Horizontal");
-
-        if (canmove) //checks if you just entered a scene
+        if (!isAttacking)
         {
+            speedx = Input.GetAxisRaw("Horizontal");
             druidrb.linearVelocityX = speedx * druidspeed;
         }
-        else //sets velo to 0 after u enter a scene
-        {
-            druidrb.linearVelocityX = 0;
-        }
+
+        
 
         //anims
         if (canjump == true)
@@ -223,7 +221,7 @@ public class DruidFrameWork : MonoBehaviour
             }
         }
 
-        //plantframework & GrowableEnemies
+        //plantframework & GrowableEnemies &  transformation attacks/moves
 
         if (Input.GetMouseButtonDown(0))
         {
@@ -283,6 +281,17 @@ public class DruidFrameWork : MonoBehaviour
                             }
                         }
                     }
+                }
+            }
+            else if (isTransformed) //transformations
+            {
+                if (!bearattackcd) //bear attack
+                {
+                    if (canjump)
+                    {
+                        StartCoroutine("attack");
+                    }
+                   
                 }
             }
         }
@@ -362,10 +371,37 @@ public class DruidFrameWork : MonoBehaviour
     }
 
     //transformations
-
     private void ChangeColliderSize(Vector2 newsize, Vector2 newoffset)
     {
         boxcollider.offset = newoffset;
         boxcollider.size = newsize;
+    }
+
+
+       private IEnumerator attack()
+    { 
+
+        bearattackcd = true;
+        isAttacking = true;
+        canjump = false;
+
+        animator.SetTrigger("BearBite");
+
+        yield return new WaitForSeconds(0.2f); 
+
+        // Apply burst of speed in facing direction
+        float burstSpeed = 2f;
+        float direction = druidspriterender.flipX ? -1f : 1f;
+
+        druidrb.AddForce(new Vector2(burstSpeed * direction, 0f), ForceMode2D.Impulse);
+
+        yield return new WaitForSeconds(0.5f); // Attack duration
+
+        isAttacking = false;
+        canjump = true;
+
+        yield return new WaitForSeconds(3f); // Cooldown
+        bearattackcd = false;
+
     }
 }
