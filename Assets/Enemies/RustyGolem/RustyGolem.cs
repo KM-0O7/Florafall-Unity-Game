@@ -191,6 +191,8 @@ public class RustyGolem : MonoBehaviour, IGrowableEnemy
                     Destroy(collision.gameObject);
                     TakeDamage(2f);
                 }
+              
+                
 
                 if (collision.gameObject.CompareTag("Player") && isgrown && bouncepad != null)
                 {
@@ -207,7 +209,7 @@ public class RustyGolem : MonoBehaviour, IGrowableEnemy
         }
     }
 
-    private void TakeDamage(float damage) //call to take damage put damage in parameters
+    public void TakeDamage(float damage) //call to take damage put damage in parameters
     {
         if (!dead)
         {

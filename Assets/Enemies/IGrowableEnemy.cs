@@ -8,4 +8,6 @@ public interface IGrowableEnemy
     void Grow();
 
     void Die();
+
+    void TakeDamage(float damage);
 }

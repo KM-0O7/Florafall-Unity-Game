@@ -12,6 +12,7 @@ TagManager:
   - ExplosionShroom
   - GrowableEnemy
   - SeedBullet
+  - BearAttackHitbox
   layers:
   - Default
   - TransparentFX

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using Unity.VisualScripting;
 
 public class DruidFrameWork : MonoBehaviour
 {
@@ -49,7 +50,9 @@ public class DruidFrameWork : MonoBehaviour
     private bool bearattackcd = false;
     private bool isTransformed = false;
     private bool isAttacking = false;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    private bool damagecd = false;
+    [SerializeField] private GameObject bearattackhitbox;
+
     private void Start()
     {
         //components
@@ -386,20 +389,43 @@ public class DruidFrameWork : MonoBehaviour
         canjump = false;
 
         animator.SetTrigger("BearBite");
+        druidrb.linearVelocityX = 0f;
 
-        yield return new WaitForSeconds(0.2f); 
+        yield return new WaitForSeconds(0.7f);
+        
+       
+    
+       
 
-        // Apply burst of speed in facing direction
-        float burstSpeed = 2f;
+        float burstSpeed = 10f; // Apply burst of speed in facing direction
         float direction = druidspriterender.flipX ? -1f : 1f;
 
+        RaycastHit2D hit = Physics2D.Raycast(druidtransform.position, new Vector2(direction, 0f), 3.5f, LayerMask.GetMask("GrowEnemy"));
+        if (hit)
+        {
+            Debug.Log("RaycastConnected");
+            if (!damagecd)
+            {
+                
+                if (hit.collider != null)
+                {
+                    IGrowableEnemy enemy = hit.collider.GetComponent<IGrowableEnemy>();
+                    if (enemy != null)
+                    {
+                        Debug.Log("Hit");
+                        damagecd = true;
+                        enemy.TakeDamage(3f);
+                       
+                    }
+                }
+            }
+        }
         druidrb.AddForce(new Vector2(burstSpeed * direction, 0f), ForceMode2D.Impulse);
-
-        yield return new WaitForSeconds(0.5f); // Attack duration
-
+        
+        yield return new WaitForSeconds(0.1f);
+        damagecd = false;
         isAttacking = false;
         canjump = true;
-
         yield return new WaitForSeconds(3f); // Cooldown
         bearattackcd = false;
 
