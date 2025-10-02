@@ -47,6 +47,8 @@ public class DruidFrameWork : MonoBehaviour
 
     //transformations
     private BoxCollider2D boxcollider;
+
+    private float jumpheight = 7;
     private bool bearattackcd = false;
     private bool isTransformed = false;
     private bool isAttacking = false;
@@ -77,8 +79,6 @@ public class DruidFrameWork : MonoBehaviour
             speedx = Input.GetAxisRaw("Horizontal");
             druidrb.linearVelocityX = speedx * druidspeed;
         }
-
-        
 
         //anims
         if (canjump == true)
@@ -124,7 +124,7 @@ public class DruidFrameWork : MonoBehaviour
                 if (druidrb.linearVelocityY > -0.1f)
                 {
                     canjump = false;
-                    druidrb.linearVelocityY += 7;
+                    druidrb.linearVelocityY += jumpheight;
                 }
             }
         }
@@ -188,15 +188,15 @@ public class DruidFrameWork : MonoBehaviour
 
                 animator.SetBool("Bear", true);
                 animator.SetTrigger("TransformBear");
-
-                ChangeColliderSize(new Vector2(1.2f, 0.43f), new Vector2(-0.05f, -0.42f));
+                jumpheight = 6;
+                ChangeColliderSize(new Vector2(0.9f, 0.43f), new Vector2(-0.05f, -0.42f));
                 isTransformed = true;
                 animator.SetFloat("XVelo", speedx);
             }
             else
             {
                 groundCheck.localPosition += new Vector3(0, 0.17f, 0);
-
+                jumpheight = 7;
                 animator.SetBool("Bear", false);
                 ChangeColliderSize(new Vector2(0.7f, 0.6f), new Vector2(0f, -0.2f));
                 isTransformed = false;
@@ -294,7 +294,6 @@ public class DruidFrameWork : MonoBehaviour
                     {
                         StartCoroutine("attack");
                     }
-                   
                 }
             }
         }
@@ -380,10 +379,8 @@ public class DruidFrameWork : MonoBehaviour
         boxcollider.size = newsize;
     }
 
-
-       private IEnumerator attack()
-       { 
-
+    private IEnumerator attack()
+    {
         bearattackcd = true;
         isAttacking = true;
         canjump = false;
@@ -396,35 +393,36 @@ public class DruidFrameWork : MonoBehaviour
         float burstSpeed = 10f; // Apply burst of speed in facing direction
         float direction = druidspriterender.flipX ? -1f : 1f;
 
-        RaycastHit2D hit = Physics2D.Raycast(druidtransform.position, new Vector2(direction, 0f), 3.5f, LayerMask.GetMask("GrowEnemy"));
+        RaycastHit2D hit = Physics2D.Raycast(druidtransform.position, new Vector2(direction, 0f), 2.5f, LayerMask.GetMask("GrowEnemy"));
         if (hit)
         {
             Debug.Log("RaycastConnected");
             if (!damagecd)
             {
-                
                 if (hit.collider != null)
                 {
                     IGrowableEnemy enemy = hit.collider.GetComponent<IGrowableEnemy>();
                     if (enemy != null)
                     {
-                        Debug.Log("Hit");
-                        damagecd = true;
-                        enemy.TakeDamage(3f);
-                        yield return StartCoroutine(FreezeFrame(0.1f));
+                        if (!enemy.Dead)
+                        {
+                            Debug.Log("Hit");
+                            damagecd = true;
+                            enemy.TakeDamage(3f);
+                            yield return StartCoroutine(FreezeFrame(0.25f));
+                        }
                     }
                 }
             }
         }
         druidrb.AddForce(new Vector2(burstSpeed * direction, 0f), ForceMode2D.Impulse);
-        
+
         yield return new WaitForSeconds(0.1f);
         damagecd = false;
         isAttacking = false;
         canjump = true;
         yield return new WaitForSeconds(3f); // Cooldown
         bearattackcd = false;
-
     }
 
     private IEnumerator FreezeFrame(float duration) //freezeframe
