@@ -53,6 +53,9 @@ public class DruidFrameWork : MonoBehaviour
     private bool isAttacking = false;
     private bool damagecd = false;
     [SerializeField] private GameObject bearattackhitbox;
+    private bool istransforming = false;
+    [SerializeField] private Animator UIwalker;
+    public static bool Transitioning = false;
 
     private void Start()
     {
@@ -129,22 +132,26 @@ public class DruidFrameWork : MonoBehaviour
         }
 
         //fasterjumpfall
-        if (canjump == false)
+        if (!istransforming)
         {
-            if (gravityjump)
+            if (canjump == false)
             {
-                druidrb.gravityScale += 0.5f;
-                gravityjump = false;
+                if (gravityjump)
+                {
+                    druidrb.gravityScale += 0.5f;
+                    gravityjump = false;
+                }
+            }
+            else
+            {
+                if (!gravityjump)
+                {
+                    gravityjump = true;
+                    druidrb.gravityScale = 1f;
+                }
             }
         }
-        else
-        {
-            if (!gravityjump)
-            {
-                gravityjump = true;
-                druidrb.gravityScale = 1f;
-            }
-        }
+       
 
         //ResetJump
 
@@ -185,27 +192,24 @@ public class DruidFrameWork : MonoBehaviour
             {
                 if (spirits == 5)
                 {
-                    spirits = 0;
-                    groundCheck.localPosition -= new Vector3(0, 0.17f, 0);
-
-                    animator.SetBool("Bear", true);
-                    animator.SetTrigger("TransformBear");
-                    jumpheight = 6;
-                    ChangeColliderSize(new Vector2(0.9f, 0.43f), new Vector2(-0.05f, -0.42f));
-                    isTransformed = true;
-                    animator.SetFloat("XVelo", speedx);
+                    if (!istransforming)
+                    {
+                        if (!Transitioning)
+                        {
+                            StartCoroutine(TransformIntoAnimal("Bear"));
+                        }  
+                    }
                 }
-
             }
             else
             {
-                spirits = 5;
-                groundCheck.localPosition += new Vector3(0, 0.17f, 0);
-                jumpheight = 7;
-                animator.SetBool("Bear", false);
-                ChangeColliderSize(new Vector2(0.7f, 0.6f), new Vector2(0f, -0.2f));
-                isTransformed = false;
-                animator.SetFloat("XVelo", speedx);
+               if (!istransforming)
+                {
+                    if (!Transitioning)
+                    {
+                        StartCoroutine(TransformIntoDruid());
+                    }
+                }
             }
         }
 
@@ -437,5 +441,58 @@ public class DruidFrameWork : MonoBehaviour
         Time.timeScale = 0f;
         yield return new WaitForSecondsRealtime(duration); // unaffected by timeScale
         Time.timeScale = originalTimeScale;
+    }
+
+    private IEnumerator TransformIntoAnimal(string animal)
+    {
+        if (animal  == "Bear")
+        {
+            UIwalker.SetBool("Bear", true);
+            animator.SetBool("Bear", true);
+            spirits = 0;
+            druidrb.linearVelocityX = 0f;
+            druidrb.linearVelocityY = 0f;
+            druidrb.gravityScale = 0f;
+            canjump = false;
+            isAttacking = true;
+            animator.SetTrigger("TransformBear");
+            istransforming = true;
+            yield return new WaitForSeconds(0.4f);
+            istransforming = false;
+            isAttacking = false;
+            druidrb.gravityScale = 1f;
+            canjump = true;
+            groundCheck.localPosition -= new Vector3(0, 0.17f, 0);
+            jumpheight = 6;
+            ChangeColliderSize(new Vector2(0.9f, 0.43f), new Vector2(-0.05f, -0.42f));
+            isTransformed = true;
+            animator.SetFloat("XVelo", speedx);
+        }
+       
+    }
+
+    private IEnumerator TransformIntoDruid()
+    {
+        UIwalker.SetBool("Bear", false);
+        spirits = 5;
+        druidrb.linearVelocityX = 0f;
+        druidrb.linearVelocityY = 0f;
+        druidrb.gravityScale = 0f;
+        canjump = false;
+        istransforming = true;
+        animator.SetBool("IsTransforming", true);
+        isAttacking = true;
+        jumpheight = 7;
+        animator.SetBool("Bear", false);
+        yield return new WaitForSeconds(0.3f);
+        animator.SetBool("IsTransforming", false);
+        istransforming = false;
+        isAttacking = false;
+        druidrb.gravityScale = 1f;
+        canjump = true;
+        groundCheck.localPosition += new Vector3(0, 0.17f, 0);
+        ChangeColliderSize(new Vector2(0.7f, 0.6f), new Vector2(0f, -0.2f));
+        isTransformed = false;
+        animator.SetFloat("XVelo", speedx);
     }
 }

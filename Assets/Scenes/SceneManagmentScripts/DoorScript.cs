@@ -29,6 +29,7 @@ public class DoorScript : MonoBehaviour
 
     private IEnumerator TeleportPlayer(Collider2D player)
     {
+        DruidFrameWork.Transitioning = true;
         fade.SetTrigger("Start");
         DruidFrameWork.canmove = false;
         yield return new WaitForSeconds(1.3f);
@@ -70,6 +71,7 @@ public class DoorScript : MonoBehaviour
             Debug.LogWarning($"SpawnPoint '{targetSpawnID}' not found in scene '{targetChunk.SceneName}'");
         }
         camFollow.SnapToTarget();
+        DruidFrameWork.Transitioning = false;
         fade.SetTrigger("End");
     }
 
