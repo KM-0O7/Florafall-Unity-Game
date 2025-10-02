@@ -390,9 +390,8 @@ public class DruidFrameWork : MonoBehaviour
 
         yield return new WaitForSeconds(0.7f);
 
-        float burstSpeed = 10f; // Apply burst of speed in facing direction
-        float direction = druidspriterender.flipX ? -1f : 1f;
 
+        float direction = druidspriterender.flipX ? -1f : 1f;
         RaycastHit2D hit = Physics2D.Raycast(druidtransform.position, new Vector2(direction, 0f), 2.5f, LayerMask.GetMask("GrowEnemy"));
         if (hit)
         {
@@ -410,12 +409,15 @@ public class DruidFrameWork : MonoBehaviour
                             damagecd = true;
                             enemy.TakeDamage(3f);
                             yield return StartCoroutine(FreezeFrame(0.25f));
+                            float burstSpeed = 4f; // Apply burst of speed in facing direction
+                            
+                            druidrb.AddForce(new Vector2(burstSpeed * -direction, 0f), ForceMode2D.Impulse);
                         }
                     }
                 }
             }
         }
-        druidrb.AddForce(new Vector2(burstSpeed * direction, 0f), ForceMode2D.Impulse);
+        
 
         yield return new WaitForSeconds(0.1f);
         damagecd = false;
