@@ -191,8 +191,6 @@ public class RustyGolem : MonoBehaviour, IGrowableEnemy
                     Destroy(collision.gameObject);
                     TakeDamage(2f);
                 }
-              
-                
 
                 if (collision.gameObject.CompareTag("Player") && isgrown && bouncepad != null)
                 {
