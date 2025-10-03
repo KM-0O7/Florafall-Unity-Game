@@ -13,7 +13,8 @@ public class RustyGolem : MonoBehaviour, IGrowableEnemy
     public bool dead = false;
     private DruidFrameWork druid;
     private SpriteRenderer spriterenderer;
-
+    private DruidUI UI;
+    private DruidGrowFramework growframework;
     //movement
     public float movespeed = 2f;
 
@@ -56,6 +57,8 @@ public class RustyGolem : MonoBehaviour, IGrowableEnemy
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (player != null)
         {
+            growframework = player.GetComponent<DruidGrowFramework>();
+            UI = player.GetComponent<DruidUI>();
             druid = player.GetComponent<DruidFrameWork>();
         }
     }
@@ -75,10 +78,10 @@ public class RustyGolem : MonoBehaviour, IGrowableEnemy
             {
                 if (!DruidFrameWork.isTransformed)
                 {
-                    druid.spirits += 3;
+                    UI.spirits += 3;
                 }
                 dead = true;
-                druid.RemoveTether(transform);
+                growframework.RemoveTether(transform);
             }
         }
     }

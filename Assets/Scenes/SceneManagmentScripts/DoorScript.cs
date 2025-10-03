@@ -35,11 +35,12 @@ public class DoorScript : MonoBehaviour
         yield return new WaitForSeconds(1.3f);
 
         DruidFrameWork druid = player.GetComponent<DruidFrameWork>();
+        DruidUI UI = player.GetComponent<DruidUI>();
         if (druid != null)
         {
             if (!DruidFrameWork.isTransformed)
             {
-                druid.spirits = druid.maxSpirits;
+                UI.spirits = UI.maxSpirits;
             }
         }
         else

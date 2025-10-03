@@ -5971,8 +5971,8 @@ Camera:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 0.9996357
-    height: 1
+    width: 1
+    height: 1.000269
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 34
@@ -9905,6 +9905,8 @@ GameObject:
   - component: {fileID: 2055951704}
   - component: {fileID: 2055951705}
   - component: {fileID: 2055951706}
+  - component: {fileID: 2055951707}
+  - component: {fileID: 2055951708}
   m_Layer: 3
   m_Name: Druid
   m_TagString: Player
@@ -10094,6 +10096,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   druidspeed: 3
   cursorTexture: {fileID: 2800000, guid: 21f1aeab1c4e1014990a55c89c94d423, type: 3}
+  druidtransform: {fileID: 2055951703}
+  groundCheck: {fileID: 148264443}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  checkRadius: 0.2
+  biteLength: 2.5
+  UIwalker: {fileID: 1145120313}
+--- !u!114 &2055951707
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2055951700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fec25821f77179c43afebe5b91562093, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   spiritimages:
   - {fileID: 1727424415}
   - {fileID: 2096918170}
@@ -10104,21 +10126,25 @@ MonoBehaviour:
   - {fileID: 1733302696}
   - {fileID: 1081608036}
   - {fileID: 1713371199}
-  spiritregendelay: 4
   fullSpirit: {fileID: -4463601529666964615, guid: 789ba4bba1e45d04d83a2e619515871a, type: 3}
   emptySpirit: {fileID: -969724790046378131, guid: 789ba4bba1e45d04d83a2e619515871a, type: 3}
   maxSpirits: 5
   spirits: 5
+--- !u!114 &2055951708
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2055951700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f08f5015607e067478a3f1e7e6e401dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   tether: {fileID: 1383202073}
   maxTetherDistance: 12
   druidtransform: {fileID: 2055951703}
-  groundCheck: {fileID: 148264443}
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 64
-  checkRadius: 0.2
-  bearattackhitbox: {fileID: 1948936907}
-  UIwalker: {fileID: 1145120313}
 --- !u!1 &2096918168
 GameObject:
   m_ObjectHideFlags: 0
