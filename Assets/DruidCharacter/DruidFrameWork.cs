@@ -49,7 +49,7 @@ public class DruidFrameWork : MonoBehaviour
 
     private float jumpheight = 7;
     private bool bearattackcd = false;
-    private bool isTransformed = false;
+    public static bool isTransformed = false;
     private bool isAttacking = false;
     private bool damagecd = false;
     [SerializeField] private GameObject bearattackhitbox;
@@ -351,6 +351,7 @@ public class DruidFrameWork : MonoBehaviour
             if (enemy != null)
             {
                 spirits += 3;
+
                 enemy.Die();
                 RemoveTether(planttransform);
             }
@@ -509,7 +510,7 @@ public class DruidFrameWork : MonoBehaviour
         druidrb.gravityScale = 1f;
         canjump = true;
         groundCheck.localPosition += new Vector3(0, 0.17f, 0);
-        ChangeColliderSize(new Vector2(0.7f, 0.6f), new Vector2(0f, -0.2f));
+        ChangeColliderSize(new Vector2(0.7f, 0.53f), new Vector2(0f, -0.2f));
         isTransformed = false;
         animator.SetFloat("XVelo", speedx);
 

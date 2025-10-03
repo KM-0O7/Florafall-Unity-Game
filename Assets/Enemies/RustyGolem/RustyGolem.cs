@@ -73,7 +73,10 @@ public class RustyGolem : MonoBehaviour, IGrowableEnemy
             rb.linearVelocityY = 0f;
             if (dead == false)
             {
-                druid.spirits += 3;
+                if (!DruidFrameWork.isTransformed)
+                {
+                    druid.spirits += 3;
+                }
                 dead = true;
                 druid.RemoveTether(transform);
             }

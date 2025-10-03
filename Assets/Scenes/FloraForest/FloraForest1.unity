@@ -6076,7 +6076,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: f1ed6dbeaeedb9b4d9e8a6df269e3399, type: 3}
   m_Resource: {fileID: 8300000, guid: f1ed6dbeaeedb9b4d9e8a6df269e3399, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.312
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -10078,7 +10078,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.7, y: 0.6}
+  m_Size: {x: 0.7, y: 0.54}
   m_EdgeRadius: 0
 --- !u!114 &2055951706
 MonoBehaviour:

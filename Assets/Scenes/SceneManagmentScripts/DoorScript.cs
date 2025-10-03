@@ -37,7 +37,10 @@ public class DoorScript : MonoBehaviour
         DruidFrameWork druid = player.GetComponent<DruidFrameWork>();
         if (druid != null)
         {
-            druid.spirits = druid.maxSpirits;
+            if (!DruidFrameWork.isTransformed)
+            {
+                druid.spirits = druid.maxSpirits;
+            }
         }
         else
         {
