@@ -7,8 +7,8 @@ public class DruidUI : MonoBehaviour
     
     public Sprite fullSpirit;
     public Sprite emptySpirit;
-    public int maxSpirits;
-    public int spirits;
+    public int maxSpirits; //change to set max spirits max is 8
+    public int spirits; //current spirits
     void Start()
     {
         
@@ -16,7 +16,7 @@ public class DruidUI : MonoBehaviour
 
     void Update()
     {
-        for (int i = 0; i < spiritimages.Length; i++)
+        for (int i = 0; i < spiritimages.Length; i++) //set spirit UI can change in Inspector
         {
             if (i < spirits)
             {

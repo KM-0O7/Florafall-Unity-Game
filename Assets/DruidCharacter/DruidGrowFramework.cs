@@ -3,18 +3,20 @@ using UnityEngine;
 
 public class DruidGrowFramework : MonoBehaviour
 {
+    //tethers
     public LineRenderer tether;
-
     public float maxTetherDistance;
     public Transform druidtransform;
     private List<LineRenderer> activeTethers = new List<LineRenderer>();
     private List<Transform> tetherTargets = new List<Transform>();
+
+    //UI and Scripts
     DruidUI UI;
     Animator animator;
     DruidFrameWork druid;
     void Start()
     {
-        
+        //components
         druid = GetComponent<DruidFrameWork>();
         animator = GetComponent<Animator>();
         UI = GetComponent<DruidUI>();
@@ -45,11 +47,12 @@ public class DruidGrowFramework : MonoBehaviour
         }
 
  
-
+        //If Clicked
         if (Input.GetMouseButtonDown(0))
         {
             if (DruidFrameWork.isTransformed == false)
             {
+                //find mouse pos
                 Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero, Mathf.Infinity, LayerMask.GetMask("GrowPlants", "GrowEnemy"));
                 if (hit.collider != null)
@@ -146,6 +149,7 @@ public class DruidGrowFramework : MonoBehaviour
         }
         else
         {
+            //enemy ungrow
             IGrowableEnemy enemy = planttransform.GetComponent<IGrowableEnemy>();
             if (enemy != null)
             {
@@ -157,7 +161,7 @@ public class DruidGrowFramework : MonoBehaviour
         }
     }
 
-    private void growplant(Transform plantTransform)
+    private void growplant(Transform plantTransform) //call this function add tether to growed plant
     {
         IGrowablePlant plant = plantTransform.GetComponent<IGrowablePlant>();
         if (plant != null)
@@ -173,7 +177,7 @@ public class DruidGrowFramework : MonoBehaviour
             UI.spirits -= 1;
             animator.SetTrigger("Grow");
         }
-        else
+        else //enemies
         {
             IGrowableEnemy enemy = plantTransform.GetComponent<IGrowableEnemy>();
             if (enemy != null)

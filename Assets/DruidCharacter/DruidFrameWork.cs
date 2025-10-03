@@ -21,10 +21,8 @@ public class DruidFrameWork : MonoBehaviour
     private Vector2 cursorHotspot;
 
     DruidUI UI;
-   
     private bool gravityjump = false;
 
-    //tether
    
     public Transform druidtransform;
  
