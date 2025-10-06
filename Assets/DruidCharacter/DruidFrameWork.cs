@@ -141,7 +141,7 @@ public class DruidFrameWork : MonoBehaviour
             {
                 if (gravityjump)
                 {
-                    druidrb.gravityScale += 1f;
+                    druidrb.gravityScale += 0.5f;
                     gravityjump = false;
                 }
             }
@@ -269,9 +269,8 @@ public class DruidFrameWork : MonoBehaviour
         {
             if (transformcd == false)
             {
-                canjump = false;
-                UIwalker.SetBool("Bear", true);
-                animator.SetBool("Bear", true);
+                
+                
                 UI.spirits = 0;
                 druidrb.linearVelocityX = 0f;
                 druidrb.linearVelocityY = 0f;
@@ -280,8 +279,11 @@ public class DruidFrameWork : MonoBehaviour
                 isAttacking = true;
                 animator.SetTrigger("TransformBear");
                 istransforming = true;
+                canjump = false;
 
                 yield return new WaitForSeconds(0.4f);//after anim plays
+                UIwalker.SetBool("Bear", true);
+                animator.SetBool("Bear", true);
                 istransforming = false;
                 isAttacking = false;
                 druidrb.gravityScale = 1f;
