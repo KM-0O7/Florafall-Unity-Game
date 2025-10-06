@@ -35,12 +35,13 @@ public class DruidFrameWork : MonoBehaviour
     //transformations
     private BoxCollider2D boxcollider;
     [SerializeField] private float biteLength = 2.5f;
-    private float jumpheight = 7;
+    private float jumpheight = 7.5f;
     public static bool bearattackcd = false;
     public static bool isTransformed = false;
     private bool isAttacking = false;
     private bool damagecd = false;
-
+    [SerializeField] private float druidJumpHeight;
+    [SerializeField] private float bearJumpHeight;
     private bool istransforming = false;
     [SerializeField] private Animator UIwalker;
     public static bool Transitioning = false;
@@ -127,7 +128,7 @@ public class DruidFrameWork : MonoBehaviour
                     if (druidrb.linearVelocityY > -0.1f)
                     {
                         canjump = false;
-                        druidrb.linearVelocityY += jumpheight; //jump height = 7 if druid and 6 if bear
+                        druidrb.linearVelocityY += jumpheight; 
                     }
                 }
             }
@@ -140,7 +141,7 @@ public class DruidFrameWork : MonoBehaviour
             {
                 if (gravityjump)
                 {
-                    druidrb.gravityScale += 0.5f;
+                    druidrb.gravityScale += 1f;
                     gravityjump = false;
                 }
             }
@@ -195,13 +196,10 @@ public class DruidFrameWork : MonoBehaviour
         }
     }
 
-    public void BearAttack()
+    public void BearAttack() //call this to attack while bear
     {
         StartCoroutine(attack());
     }
-
-     
-
    
    
     //transformations
@@ -289,7 +287,7 @@ public class DruidFrameWork : MonoBehaviour
                 druidrb.gravityScale = 1f;
                 canjump = true;
                 groundCheck.localPosition -= new Vector3(0, 0.17f, 0);
-                jumpheight = 6;
+                jumpheight = bearJumpHeight;
                 ChangeColliderSize(new Vector2(0.9f, 0.43f), new Vector2(-0.05f, -0.42f));
                 isTransformed = true;
                 animator.SetFloat("XVelo", speedx);
@@ -310,7 +308,7 @@ public class DruidFrameWork : MonoBehaviour
         istransforming = true;
         animator.SetBool("IsTransforming", true);
         isAttacking = true;
-        jumpheight = 7;
+        jumpheight = druidJumpHeight;
         animator.SetBool("Bear", false);
 
         yield return new WaitForSeconds(0.3f);//after anim plays

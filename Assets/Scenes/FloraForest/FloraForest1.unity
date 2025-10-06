@@ -5965,8 +5965,8 @@ Camera:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 0.9996357
-    height: 1
+    width: 1
+    height: 1.000269
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 34
@@ -10097,6 +10097,8 @@ MonoBehaviour:
     m_Bits: 64
   checkRadius: 0.2
   biteLength: 2.5
+  druidJumpHeight: 8.5
+  bearJumpHeight: 7
   UIwalker: {fileID: 1145120313}
 --- !u!114 &2055951707
 MonoBehaviour:
