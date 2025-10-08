@@ -14,6 +14,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/FloraForest/FloraForest3.unity
     guid: 5e1ef5e3fa407b946a2b082f1e5c86c9
+  - enabled: 1
+    path: Assets/Scenes/Mountain/Mountain1(Spawn).unity
+    guid: c0b8090824bf4c244be60e1ffee649b2
+  - enabled: 1
+    path: Assets/Scenes/Mountain/Mountain2.unity
+    guid: ff9b4a83ba40538449decb79d955efa6
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0
