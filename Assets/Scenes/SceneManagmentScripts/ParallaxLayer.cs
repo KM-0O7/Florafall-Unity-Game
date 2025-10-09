@@ -3,7 +3,7 @@ using UnityEngine;
 public class ParallaxLayer : MonoBehaviour
 {
     [Range(0f, 2f)]
-    public float parallaxFactor = 0.5f;
+    public float parallaxFactorX = 0.5f;  // Horizontal parallax
 
     private Transform cam;
     private Vector3 startPos;
@@ -11,17 +11,19 @@ public class ParallaxLayer : MonoBehaviour
     private void Start()
     {
         cam = Camera.main.transform;
-        startPos = transform.position; // remember original tilemap position
+        startPos = transform.position; // Remember original tilemap position
     }
 
     private void LateUpdate()
     {
         if (cam == null) return;
 
-        // Calculate X offset based on camera movement
-        float offsetX = (cam.position.x * parallaxFactor);
+        // Calculate offsets based on camera movement
+        float offsetX = cam.position.x * parallaxFactorX;
+      
 
-        // Apply offset relative to original starting position
-        transform.position = new Vector3(startPos.x + offsetX, startPos.y, startPos.z);
+        // Apply offsets relative to the original position
+        transform.position = new Vector3(startPos.x + offsetX, cam.position.y, startPos.z);
+       
     }
 }
