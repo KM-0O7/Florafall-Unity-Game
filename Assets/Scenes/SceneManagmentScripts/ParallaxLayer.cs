@@ -23,7 +23,7 @@ public class ParallaxLayer : MonoBehaviour
       
 
         // Apply offsets relative to the original position
-        transform.position = new Vector3(startPos.x + offsetX, cam.position.y, startPos.z);
+        transform.position = new Vector3(startPos.x + offsetX, startPos.y, startPos.z);
        
     }
 }
