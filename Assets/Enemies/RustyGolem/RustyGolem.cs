@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class RustyGolem : MonoBehaviour, IGrowableEnemy
 {
@@ -15,6 +16,7 @@ public class RustyGolem : MonoBehaviour, IGrowableEnemy
     private SpriteRenderer spriterenderer;
     private DruidUI UI;
     private DruidGrowFramework growframework;
+
     //movement
     public float movespeed = 2f;
 
@@ -209,6 +211,7 @@ public class RustyGolem : MonoBehaviour, IGrowableEnemy
                         playerRb.AddForce(Vector2.up * bounceheight, ForceMode2D.Impulse);
                     }
                 }
+
             }
         }
     }
@@ -222,6 +225,7 @@ public class RustyGolem : MonoBehaviour, IGrowableEnemy
         }
     }
 
+   
     //flash call
     public void Flash()
     {
