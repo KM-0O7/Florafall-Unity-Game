@@ -69,11 +69,14 @@ public class DoorScript : MonoBehaviour
         if (spawnPoint != null)
         {
             player.transform.position = spawnPoint.position;
+            Rigidbody2D playerRig = player.GetComponent<Rigidbody2D>();
+            playerRig.linearVelocity = new Vector2(0, 0);
         }
         else
         {
             Debug.LogWarning($"SpawnPoint '{targetSpawnID}' not found in scene '{targetChunk.SceneName}'");
         }
+
         camFollow.SnapToTarget();
         DruidFrameWork.Transitioning = false;
         fade.SetTrigger("End");
