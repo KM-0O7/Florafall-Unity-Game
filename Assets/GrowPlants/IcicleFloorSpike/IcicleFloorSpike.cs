@@ -76,6 +76,7 @@ public class IcicleFloorSpike : MonoBehaviour, IGrowablePlant
                         damagecd = true;
                         enemy.TakeDamage(2f);
                         StartCoroutine(DamageCooldown());
+                        Debug.Log(collision.gameObject.name + "walked on" + gameObject.name);
                     }
                 }
             }
