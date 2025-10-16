@@ -24527,7 +24527,7 @@ Transform:
   m_GameObject: {fileID: 1374191286}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.022909164, y: -0.42301345, z: 0}
+  m_LocalPosition: {x: -0.023, y: -0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -30523,17 +30523,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   druidspeed: 3
-  cursorTexture: {fileID: 2800000, guid: 21f1aeab1c4e1014990a55c89c94d423, type: 3}
   druidtransform: {fileID: 1815524642}
   groundCheck: {fileID: 1374191287}
+  variableJumpMultiplier: 0.5
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
   checkRadius: 0.2
-  biteLength: 2.5
+  jumpBufferTime: 0.1
+  coyoteTime: 0.2
   druidJumpHeight: 7.5
   bearJumpHeight: 6
+  cursorTexture: {fileID: 2800000, guid: 21f1aeab1c4e1014990a55c89c94d423, type: 3}
   UIwalker: {fileID: 1351026799}
+  biteLength: 2.5
 --- !u!61 &1815524646
 BoxCollider2D:
   m_ObjectHideFlags: 0

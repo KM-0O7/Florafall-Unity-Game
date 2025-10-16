@@ -5,93 +5,126 @@ using UnityEngine;
 
 public class DruidFrameWork : MonoBehaviour
 {
-    //movement
-    private Rigidbody2D druidrb;
 
-    private Animator animator;
-    public float druidspeed;
-    private float speedx;
+    /* DRUIDFRAMEWORK
+     * This script handles movement, transformations, and jumping for the main character
+     * Includes functions for attack
+     * Includes coroutines for freezeframes and transformations
+     * Connects to other druid scripts
+     */
+
+    /* VARIABLES
+     * Handles all changing parts in druidframework
+     * Handles UI
+     * Handles Components
+     * Handles Jump
+     * etc
+     */
+
+    //MOVEMENT
+    private Rigidbody2D druidrb;
+    private Animator animator; 
     private SpriteRenderer druidspriterender;
+    private BoxCollider2D boxcollider;
+    private float speedx;
+
+    public float druidspeed;
     public static bool canjump = true;
     public static bool canmove = true;
-
-    //cursor
-    public Texture2D cursorTexture;
-
-    private Vector2 cursorHotspot;
-
-    DruidUI UI;
-    private bool gravityjump = false;
-
-   
     public Transform druidtransform;
- 
-    //jump parameters
-    [SerializeField] private Transform groundCheck;
 
+    //CUSTOM JUMP PHYSICS
+    private float coyoteTimeCounter;
+    private float jumpBufferCounter;
+   
+    private bool isJumping;
+    private bool isGrounded;
+    private bool gravityjump = false;
+    private float jumpheight = 7.5f;
+
+    [SerializeField] private Transform groundCheck;
+    [SerializeField] private float variableJumpMultiplier = 0.5f;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private float checkRadius = 0.2f;
-
-    //transformations
-    private BoxCollider2D boxcollider;
-    [SerializeField] private float biteLength = 2.5f;
-    private float jumpheight = 7.5f;
-    public static bool bearattackcd = false;
-    public static bool isTransformed = false;
-    private bool isAttacking = false;
-    private bool damagecd = false;
+    [SerializeField] private float jumpBufferTime = 0.1f;
+    [SerializeField] private float coyoteTime = 0.1f;
     [SerializeField] private float druidJumpHeight;
     [SerializeField] private float bearJumpHeight;
-    private bool istransforming = false;
+
+    //CUSTOM CURSOR
+    public Texture2D cursorTexture;
+    private Vector2 cursorHotspot;
+
+    //UI
+    DruidUI UI;
     [SerializeField] private Animator UIwalker;
-    public static bool Transitioning = false;
+
+    //TRANSFORMATIONS
+    private bool isAttacking = false;
+    private bool damagecd = false;
+    private bool istransforming = false;
     private bool transformcd = false;
 
+    public static bool Transitioning = false;
+    public static bool bearattackcd = false;
+    public static bool isTransformed = false;
+ 
+    [SerializeField] private float biteLength = 2.5f;
+
+    /* START
+     * Handles all components
+     * Handles custom cursor
+     */
     private void Start()
     {
+        //BASIC COMPONENTS
         UI = GetComponent<DruidUI>();
-        //components
         boxcollider = GetComponent<BoxCollider2D>();
         druidrb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         druidspriterender = GetComponent<SpriteRenderer>();
 
-        //cursor
+        //CURSOR
         cursorHotspot = new Vector2(cursorTexture.width / 2, cursorTexture.height / 2);
         Cursor.SetCursor(cursorTexture, cursorHotspot, CursorMode.Auto);
     }
 
-    //movement
+   /* FIXEDUPDATE
+    * Handles all left to right movement logic
+    * Handles coyote time
+    * Handles UI transitions with the druid and bear in the circle wipe
+    * Handles flip x of druid sprite 
+    * Handles animations for movement such as jump and walking
+    */
+
     private void FixedUpdate()
     {
+        //WALKING
         animator.SetFloat("YVelo", druidrb.linearVelocityY);
 
-        //Walking
-        if (!isAttacking)
+        
+        if (!isAttacking) //checks if not attacking
         {
             speedx = Input.GetAxisRaw("Horizontal");
-            druidrb.linearVelocityX = speedx * druidspeed;
-        }
+            druidrb.linearVelocityX = speedx * druidspeed; //sets velo to your movement direction times speed
 
-        //anims
-        if (canjump == true)
-        {
-            if (druidrb.linearVelocityY > -0.1f)
+            if (isGrounded)
             {
-                animator.SetFloat("XVelo", speedx);
+                animator.SetFloat("XVelo", Mathf.Abs(speedx));
             }
             else
             {
                 animator.SetFloat("XVelo", 0f);
             }
         }
-        else if (!canjump)
-
+        else
         {
             animator.SetFloat("XVelo", 0f);
         }
 
-        if (speedx > 0f)
+
+        //FLIP X LOGIC AND UI LOGIC
+        if (speedx > 0f) //fowards
         {
             druidspriterender.flipX = false;
 
@@ -100,7 +133,9 @@ public class DruidFrameWork : MonoBehaviour
                 UIwalker.SetBool("Backwards", false);
             }
         }
-        else if (speedx < 0f)
+
+
+        else if (speedx < 0f) //backwards
         {
             druidspriterender.flipX = true;
             if (!Transitioning)
@@ -109,39 +144,77 @@ public class DruidFrameWork : MonoBehaviour
             }
         }
 
+        //JUMP ANIMATIONS
         if (druidrb.linearVelocityY > 0.5f)
         {
             animator.SetTrigger("Jump");
         }
+
+        //ResetJump & coyote time
+        isGrounded = Physics2D.OverlapCircle(groundCheck.position, checkRadius, groundLayer);
+        animator.SetBool("IsGrounded", isGrounded);
+
+        if (isGrounded && druidrb.linearVelocityY <= 0.1f)
+        {
+            coyoteTimeCounter = coyoteTime;
+            canjump = true;
+        }
+        else
+        {
+            coyoteTimeCounter -= Time.deltaTime;
+            canjump = false;
+        }
     }
 
-    // Update is called once per frame
+    /* UPDATE
+     * Update handles most jump logic and key inputs
+     * Handles jump buffer
+     * Handles Q to transform
+     * Handles jump input
+     */
+
+
     private void Update()
     {
-        //Jump
+        //JUMP
+
+        //BUFFER
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (!isAttacking) //checks if attacking
-            {
-                if (canjump == true)
-                {
-                    if (druidrb.linearVelocityY > -0.1f)
-                    {
-                        canjump = false;
-                        druidrb.linearVelocityY += jumpheight; 
-                    }
-                }
-            }
+            jumpBufferCounter = jumpBufferTime;
+        }
+        else
+        {
+            jumpBufferCounter -= Time.deltaTime;
         }
 
-        //fasterjumpfall
+        if (jumpBufferCounter > 0f && coyoteTimeCounter > 0f && !isAttacking && !istransforming && canmove)
+        {
+            druidrb.linearVelocityY = jumpheight;
+            isJumping = true;
+            jumpBufferCounter = 0f;
+        }
+
+        //VARIABLE JUMP HEIGHT
+        if (Input.GetKeyUp(KeyCode.Space) && isJumping)
+        {
+            if (druidrb.linearVelocityY > 0f)
+            {
+                druidrb.linearVelocityY *= variableJumpMultiplier;
+            }
+
+            isJumping = false;
+        }
+
+
+        //FASTER JUMP FALL
         if (!istransforming)
         {
             if (canjump == false)
             {
                 if (gravityjump)
                 {
-                    druidrb.gravityScale += 0.5f;
+                    druidrb.gravityScale += 0.5f; //add 0.5 to gravity when falling so it feels less floaty when jumping
                     gravityjump = false;
                 }
             }
@@ -150,24 +223,13 @@ public class DruidFrameWork : MonoBehaviour
                 if (!gravityjump)
                 {
                     gravityjump = true;
-                    druidrb.gravityScale = 1f;
+                    druidrb.gravityScale = 1f; //set back to normal gravity
                 }
             }
         }
 
-        //ResetJump
 
-        bool isGrounded = Physics2D.OverlapCircle(groundCheck.position, checkRadius, groundLayer);
-        animator.SetBool("IsGrounded", isGrounded);
-
-        if (isGrounded && druidrb.linearVelocityY <= 0)
-        {
-            canjump = true;
-        }
-
-
-        //transformations
-
+        //TRANSFORMATIONS INPUT
         if (Input.GetKeyDown(KeyCode.Q))
         {
             if (!isTransformed)
@@ -196,20 +258,33 @@ public class DruidFrameWork : MonoBehaviour
         }
     }
 
+    /* FUNCTIONS
+     * Beartattack will trigger the bear to attack by calling a coroutine
+     * Changecollidersize will change the druids collider to a new size and a new offset useful for transformations
+     */
+
     public void BearAttack() //call this to attack while bear
     {
         StartCoroutine(attack());
     }
    
-   
-    //transformations
+    //COLLIDER SIZE
     private void ChangeColliderSize(Vector2 newsize, Vector2 newoffset)
     {
         boxcollider.offset = newoffset;
         boxcollider.size = newsize;
     }
 
-    private IEnumerator attack()
+
+    /* COROUTINES
+     * Calling attack will trigger the bearattack animation and raycast a hit
+     * calling freezeframe will freeze the game for a set duration as stated in parameters
+     * calling transform into animal will trigger you to transform into an animal as stated in parameters
+     * calling transform into druid will trigger you to transform back into a druid
+     */
+
+
+    private IEnumerator attack() //call to attack as bear
     {
         bearattackcd = true;
         isAttacking = true;
@@ -263,7 +338,7 @@ public class DruidFrameWork : MonoBehaviour
         Time.timeScale = originalTimeScale;
     }
 
-    private IEnumerator TransformIntoAnimal(string animal)
+    private IEnumerator TransformIntoAnimal(string animal) //call to transform into animal as stated in parameters
     {
         if (animal == "Bear")
         {
@@ -297,7 +372,7 @@ public class DruidFrameWork : MonoBehaviour
         }
     }
 
-    private IEnumerator TransformIntoDruid()
+    private IEnumerator TransformIntoDruid() //call to transform back into a druid
     {
         transformcd = true;
         canjump = false;

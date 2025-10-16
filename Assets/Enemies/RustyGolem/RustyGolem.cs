@@ -17,29 +17,34 @@ public class RustyGolem : MonoBehaviour, IGrowableEnemy
     private DruidUI UI;
     private DruidGrowFramework growframework;
 
-    //movement
+    //MOVEMENT
     public float movespeed = 2f;
-
     public float pauseTime = 3f;
     public float movedistance = 5f;
-    private Vector2 startpos;
-    private bool movingright = true;
-    private bool isPaused = false;
     public bool Dead => dead;
 
-    //DamageFlash
-    public float flashDuration = 0.3f;
+    private bool movingright = true;
+    private bool isPaused = false;
+    private Vector2 startpos;
 
+    //DAMAGE FLASH
+    public float flashDuration = 0.3f;
     public float flashPeak = 1f;
+
     private MaterialPropertyBlock mpb;
     private Coroutine flashRoutine;
 
     //BouncePad
     [SerializeField] private GameObject collide;
-
     [SerializeField] private float bounceheight;
+
     private BoxCollider2D bouncepad;
 
+
+    /* AWAKE
+     * Handles extremely necessary components
+     * Handles flash components
+     */
     private void Awake()
     {
         spriterenderer = GetComponent<SpriteRenderer>();
@@ -48,7 +53,12 @@ public class RustyGolem : MonoBehaviour, IGrowableEnemy
         mpb = new MaterialPropertyBlock();
     }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+   
+    /* START
+     * Handles player variable
+     * Handles components
+     */
+
     private void Start()
     {
         startpos = transform.position;
@@ -65,7 +75,10 @@ public class RustyGolem : MonoBehaviour, IGrowableEnemy
         }
     }
 
-    // Update is called once per frame
+    /* UPDATE
+     * Handles Death
+     */
+
     private void Update()
     {
         animator.SetFloat("XVelo", rb.linearVelocityX);
@@ -88,7 +101,11 @@ public class RustyGolem : MonoBehaviour, IGrowableEnemy
         }
     }
 
-    //Movement
+  
+    /* FIXED UPDATE
+     * Handles Movement
+     * Handles Flipping
+     */
     private void FixedUpdate()
     {
         if (!dead && !isPaused)
@@ -123,16 +140,14 @@ public class RustyGolem : MonoBehaviour, IGrowableEnemy
         }
     }
 
-    private IEnumerator PauseAtEnd(bool turnRight) // pauses at the end of the movement
-    {
-        isPaused = true;
-        rb.linearVelocityX = 0f;
+    /* FUNCTIONS
+     * Handles grow
+     * Handles Dying
+     * Handles collision with bouncepad if grown
+     * Handles taking damage
+     * Handles flash
+     */
 
-        yield return new WaitForSeconds(pauseTime);
-
-        movingright = turnRight;
-        isPaused = false;
-    }
 
     //grow the enemy
     public void Grow()
@@ -166,28 +181,8 @@ public class RustyGolem : MonoBehaviour, IGrowableEnemy
         }
     }
 
-    private IEnumerator GrowCycle()
-    {
-        animator.SetTrigger("grow");
-        yield return new WaitForSeconds(0.75f);
-        collide.AddComponent<BoxCollider2D>();
-        bouncepad = collide.GetComponent<BoxCollider2D>();
-        bouncepad.enabled = true;
-        bouncepad.usedByEffector = true;
-        bouncepad.isTrigger = true;
-    }
 
-    private IEnumerator DieCycle()
-    {
-        candie = false;
-        Destroy(bouncepad);
-        animator.SetTrigger("die");
-        yield return new WaitForSeconds(1f);
-        isgrown = false;
-    }
-
-    //damage
-
+    //DAMAGE
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (!dead)
@@ -225,7 +220,6 @@ public class RustyGolem : MonoBehaviour, IGrowableEnemy
         }
     }
 
-   
     //flash call
     public void Flash()
     {
@@ -235,6 +229,14 @@ public class RustyGolem : MonoBehaviour, IGrowableEnemy
         }
         flashRoutine = StartCoroutine(FlashCoroutine());
     }
+
+
+    /* COROUTINES
+     * Handles damage flash
+     * Handles Growing
+     * Handles Dying
+     * Handles Idle at end of walking
+     */
 
     //flash coroutine
     private IEnumerator FlashCoroutine()
@@ -259,5 +261,36 @@ public class RustyGolem : MonoBehaviour, IGrowableEnemy
         spriterenderer.SetPropertyBlock(mpb);
 
         flashRoutine = null; // Clear reference
+    }
+
+    private IEnumerator PauseAtEnd(bool turnRight) // pauses at the end of the movement
+    {
+        isPaused = true;
+        rb.linearVelocityX = 0f;
+
+        yield return new WaitForSeconds(pauseTime);
+
+        movingright = turnRight;
+        isPaused = false;
+    }
+
+    private IEnumerator GrowCycle()
+    {
+        animator.SetTrigger("grow");
+        yield return new WaitForSeconds(0.75f);
+        collide.AddComponent<BoxCollider2D>();
+        bouncepad = collide.GetComponent<BoxCollider2D>();
+        bouncepad.enabled = true;
+        bouncepad.usedByEffector = true;
+        bouncepad.isTrigger = true;
+    }
+
+    private IEnumerator DieCycle()
+    {
+        candie = false;
+        Destroy(bouncepad);
+        animator.SetTrigger("die");
+        yield return new WaitForSeconds(1f);
+        isgrown = false;
     }
 }
