@@ -14,6 +14,7 @@ TagManager:
   - SeedBullet
   - BearAttackHitbox
   - IcicleFloorSpike
+  - IcicleFallingPlatform
   layers:
   - Default
   - TransparentFX
@@ -25,7 +26,7 @@ TagManager:
   - GrowPlants
   - GrowEnemy
   - Background
-  - 
+  - FallingPlatform
   - 
   - 
   - 
