@@ -10,7 +10,8 @@ public class IcicleFallingPlatform : MonoBehaviour
     private Vector2 basespawn;
     BoxCollider2D collider2Dicicle;
     Animator animator;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
+
     void Start()
     {
         basespawn = transform.position;
@@ -19,8 +20,7 @@ public class IcicleFallingPlatform : MonoBehaviour
         collider2Dicicle = GetComponent<BoxCollider2D>();
         animator = GetComponent<Animator>();
     }
-
-    // Update is called once per frame
+    
     void Update()
     {
         if (!isfalling)
