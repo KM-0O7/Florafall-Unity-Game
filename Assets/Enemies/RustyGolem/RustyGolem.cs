@@ -1,33 +1,47 @@
 ﻿using System.Collections;
 using UnityEngine;
-using UnityEngine.Rendering;
+
 
 public class RustyGolem : MonoBehaviour, IGrowableEnemy
 {
+
+    /* RUSTY GOLEM
+     * Handles all of rusty golem's logic
+     * Handles rusty golem's movement
+     * Handles rusty golem's 
+     */
+
+    // ---- INTERFACE ----
+
+    public bool dead = false;
     public bool candie = false;
     public bool isgrown = false;
-    public float health;
+
     public bool CanDie => candie;
     public bool IsGrown => isgrown;
+    public bool Dead => dead;
+
+    // ---- BASE COMPONENTS ----
+    public float health;
+
     private Animator animator;
     private Rigidbody2D rb;
-    public bool dead = false;
     private DruidFrameWork druid;
     private SpriteRenderer spriterenderer;
     private DruidUI UI;
     private DruidGrowFramework growframework;
 
-    //MOVEMENT
+    // ---- MOVEMENT ----
     public float movespeed = 2f;
     public float pauseTime = 3f;
     public float movedistance = 5f;
-    public bool Dead => dead;
+  
 
     private bool movingright = true;
     private bool isPaused = false;
     private Vector2 startpos;
 
-    //DAMAGE FLASH
+    // ---- DAMAGE FLASH ----
     public float flashDuration = 0.3f;
     public float flashPeak = 1f;
 
@@ -182,7 +196,7 @@ public class RustyGolem : MonoBehaviour, IGrowableEnemy
     }
 
 
-    //DAMAGE
+    // ---- DAMAGE ----
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (!dead)
@@ -220,7 +234,7 @@ public class RustyGolem : MonoBehaviour, IGrowableEnemy
         }
     }
 
-    //flash call
+    // ---- FLASH CALL ----
     public void Flash()
     {
         if (flashRoutine != null)

@@ -20,8 +20,8 @@ public class DruidFrameWork : MonoBehaviour
      * Handles Jump
      * etc
      */
-
-    //MOVEMENT
+    
+    // ---- MOVEMENT ----
     private Rigidbody2D druidrb;
     private Animator animator; 
     private SpriteRenderer druidspriterender;
@@ -33,7 +33,7 @@ public class DruidFrameWork : MonoBehaviour
     public static bool canmove = true;
     public Transform druidtransform;
 
-    //CUSTOM JUMP PHYSICS
+    // ---- CUSTOM JUMP PHYSICS ----
     private float coyoteTimeCounter;
     private float jumpBufferCounter;
    
@@ -51,15 +51,15 @@ public class DruidFrameWork : MonoBehaviour
     [SerializeField] private float druidJumpHeight;
     [SerializeField] private float bearJumpHeight;
 
-    //CUSTOM CURSOR
+    // ---- CUSTOM CURSOR ----
     public Texture2D cursorTexture;
     private Vector2 cursorHotspot;
 
-    //UI
+    // ---- UI ----
     DruidUI UI;
     [SerializeField] private Animator UIwalker;
 
-    //TRANSFORMATIONS
+    // ---- TRANSFORMATIONS ----
     private bool isAttacking = false;
     private bool damagecd = false;
     private bool istransforming = false;
@@ -77,14 +77,14 @@ public class DruidFrameWork : MonoBehaviour
      */
     private void Start()
     {
-        //BASIC COMPONENTS
+        // ---- BASIC COMPONENTS ----
         UI = GetComponent<DruidUI>();
         boxcollider = GetComponent<BoxCollider2D>();
         druidrb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         druidspriterender = GetComponent<SpriteRenderer>();
 
-        //CURSOR
+        // ---- CURSOR ----
         cursorHotspot = new Vector2(cursorTexture.width / 2, cursorTexture.height / 2);
         Cursor.SetCursor(cursorTexture, cursorHotspot, CursorMode.Auto);
     }
@@ -99,7 +99,7 @@ public class DruidFrameWork : MonoBehaviour
 
     private void FixedUpdate()
     {
-        //WALKING
+        // ---- WALKING ----
         animator.SetFloat("YVelo", druidrb.linearVelocityY);
 
         
@@ -123,8 +123,8 @@ public class DruidFrameWork : MonoBehaviour
         }
 
 
-        //FLIP X LOGIC AND UI LOGIC
-        if (speedx > 0f) //fowards
+        // ---- FLIP X LOGIC AND UI LOGIC ----
+        if (speedx > 0f) //forwards
         {
             druidspriterender.flipX = false;
 
@@ -144,13 +144,13 @@ public class DruidFrameWork : MonoBehaviour
             }
         }
 
-        //JUMP ANIMATIONS
+        // ---- JUMP ANIMATIONS ----
         if (druidrb.linearVelocityY > 0.5f)
         {
             animator.SetTrigger("Jump");
         }
 
-        //ResetJump & coyote time
+        // ---- COYOTE TIME & RESET JUMP ----
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, checkRadius, groundLayer);
         animator.SetBool("IsGrounded", isGrounded);
 
@@ -176,9 +176,9 @@ public class DruidFrameWork : MonoBehaviour
 
     private void Update()
     {
-        //JUMP
+        // ---- JUMP ----
 
-        //BUFFER
+        // ---- BUFFER ----
         if (Input.GetKeyDown(KeyCode.Space))
         {
             jumpBufferCounter = jumpBufferTime;
@@ -195,7 +195,7 @@ public class DruidFrameWork : MonoBehaviour
             jumpBufferCounter = 0f;
         }
 
-        //VARIABLE JUMP HEIGHT
+        // ---- VARIABLE JUMP HEIGHT ----
         if (Input.GetKeyUp(KeyCode.Space) && isJumping)
         {
             if (druidrb.linearVelocityY > 0f)
@@ -207,7 +207,7 @@ public class DruidFrameWork : MonoBehaviour
         }
 
 
-        //FASTER JUMP FALL
+        // ---- FASTER JUMP FALL ----
         if (!istransforming)
         {
             if (canjump == false)
@@ -229,7 +229,7 @@ public class DruidFrameWork : MonoBehaviour
         }
 
 
-        //TRANSFORMATIONS INPUT
+        // ---- TRANSFORMATIONS INPUT ----
         if (Input.GetKeyDown(KeyCode.Q))
         {
             if (!isTransformed)
@@ -268,7 +268,7 @@ public class DruidFrameWork : MonoBehaviour
         StartCoroutine(attack());
     }
    
-    //COLLIDER SIZE
+    // ---- COLLIDER SIZE ----
     private void ChangeColliderSize(Vector2 newsize, Vector2 newoffset)
     {
         boxcollider.offset = newoffset;
