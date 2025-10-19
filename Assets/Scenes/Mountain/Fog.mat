@@ -55,7 +55,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _InnerRadius: 9.5
+    - _InnerRadius: 6.5
     - _OuterRadius: 0
     - _QueueControl: 0
     - _QueueOffset: 0
