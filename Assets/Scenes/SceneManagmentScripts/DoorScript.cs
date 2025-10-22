@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -10,6 +11,7 @@ public class DoorScript : MonoBehaviour
     private Animator fade;
     public string targetSpawnID;       // Name of spawn point in target scene
     private FollowPlayer camFollow;
+
 
     private void Start()
     {
@@ -31,11 +33,25 @@ public class DoorScript : MonoBehaviour
     {
         DruidFrameWork.Transitioning = true;
         fade.SetTrigger("Start");
+        DruidUI UI = player.GetComponent<DruidUI>();
         DruidFrameWork.canmove = false;
+
+        //colours
+        if (gameObject.tag == "MountainDoor")
+        {
+            UI.circleWipe.color = new Color(78f / 255f, 104f / 255f, 154f / 255f);
+
+        }
+        else if (gameObject.tag == "FloraForestDoor")
+        {
+            UI.circleWipe.color = new Color(29f / 255f, 142f / 255f, 47f / 255f);
+        }
+
         yield return new WaitForSeconds(1.3f);
 
         DruidFrameWork druid = player.GetComponent<DruidFrameWork>();
-        DruidUI UI = player.GetComponent<DruidUI>();
+      
+        
         if (druid != null)
         {
             if (!DruidFrameWork.isTransformed)
@@ -43,10 +59,13 @@ public class DoorScript : MonoBehaviour
                 UI.spirits = UI.maxSpirits;
             }
         }
+        
         else
         {
             Debug.LogWarning("no framework lol");
         }
+       
+        
         DruidFrameWork.canmove = true;
         //set spirits to max when changing scene
 

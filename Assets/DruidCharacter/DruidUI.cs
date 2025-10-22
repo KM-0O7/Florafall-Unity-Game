@@ -9,6 +9,7 @@ public class DruidUI : MonoBehaviour
     public Sprite emptySpirit;
     public int maxSpirits; //change to set max spirits max is 8
     public int spirits; //current spirits
+    public Image circleWipe;
     void Start()
     {
         
