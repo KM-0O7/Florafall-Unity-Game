@@ -20,6 +20,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Mountain/Mountain2(Drop Cave).unity
     guid: 557ceb5677fb20442b866d75b6d301ed
+  - enabled: 1
+    path: Assets/Scenes/Mountain/Mountain3.unity
+    guid: fcad90e8157de1d4d97d25ed94a41cc1
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

@@ -1,41 +1,78 @@
 using UnityEngine;
+using System.Collections;
 
+[ExecuteAlways]
 public class ParallaxLayer : MonoBehaviour
 {
-    [Range(0f, 2f)]
-    public float parallaxFactorX = 0.5f;
+    [Header("Parallax Factors")]
+    [Range(0f, 1f)] public float parallaxFactorX = 0.5f;
+    [Range(0f, 1f)] public float parallaxFactorY = 0.5f;
 
-    [Range(0f, 2f)]
-    public float parallaxFactorY = 0.5f;
-
-    public bool isStatic = false;
+    public float initDelay = 0.1f;
 
     private Transform cam;
-    private Vector3 camStartPos;
-    private Vector3 layerStartPos;
+    private Vector3 editorPos;      
+    private Vector3 initialCamPos;
+    private bool initialized = false;
+    private bool initializing = false;
 
-    private void Start()
+    void Awake()
     {
-        cam = Camera.main.transform;
-        camStartPos = cam.position;
-        layerStartPos = transform.position;
+
+        editorPos = Application.isPlaying ? transform.position : editorPos;
     }
 
-    private void LateUpdate()
+    void OnEnable()
     {
-        if (cam == null) return;
+        cam = Camera.main?.transform;
+        initialized = false;
+        initializing = false;
+    }
 
-        if (isStatic)
+    void LateUpdate()
+    {
+        if (cam == null)
         {
-            transform.position = layerStartPos;
+            cam = Camera.main?.transform;
             return;
         }
 
-        Vector3 camDelta = cam.position - camStartPos;
+        if (!initialized && !initializing && Application.isPlaying)
+        {
+            StartCoroutine(InitializeAfterDelay());
+            return;
+        }
 
-        float offsetX = camDelta.x * parallaxFactorX;
-        float offsetY = camDelta.y * parallaxFactorY;
+        if (!initialized) return;
 
-        transform.position = new Vector3(layerStartPos.x + offsetX, layerStartPos.y + offsetY, layerStartPos.z);
+        Vector3 camDelta = cam.position - initialCamPos;
+
+        transform.position = new Vector3(
+            editorPos.x + camDelta.x * parallaxFactorX,
+            editorPos.y + camDelta.y * parallaxFactorY,
+            editorPos.z
+        );
     }
+
+    private IEnumerator InitializeAfterDelay()
+    {
+        initializing = true;
+        yield return new WaitForSeconds(initDelay);
+
+        if (cam != null)
+        {
+        
+            initialCamPos = cam.position;
+            initialized = true;
+        }
+    }
+
+#if UNITY_EDITOR
+  
+    void OnValidate()
+    {
+        if (!Application.isPlaying)
+            editorPos = transform.position;
+    }
+#endif
 }

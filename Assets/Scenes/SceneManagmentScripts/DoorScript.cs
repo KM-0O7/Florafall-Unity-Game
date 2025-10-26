@@ -97,6 +97,8 @@ public class DoorScript : MonoBehaviour
         }
 
         camFollow.SnapToTarget();
+
+      
         DruidFrameWork.Transitioning = false;
         fade.SetTrigger("End");
     }
