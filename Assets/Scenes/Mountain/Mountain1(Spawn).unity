@@ -21262,7 +21262,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 3
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
@@ -30855,7 +30855,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 5
   m_Sprite: {fileID: 21300000, guid: 58b6c28612a4e9a4296b086ab36edd00, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -30968,10 +30968,10 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: f1ed6dbeaeedb9b4d9e8a6df269e3399, type: 3}
-  m_Resource: {fileID: 8300000, guid: f1ed6dbeaeedb9b4d9e8a6df269e3399, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 820a9317379d16544b2d12a67af468c9, type: 3}
+  m_Resource: {fileID: 8300000, guid: 820a9317379d16544b2d12a67af468c9, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.312
+  m_Volume: 1
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -31191,7 +31191,7 @@ Camera:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 1
+    width: 0.9996357
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
