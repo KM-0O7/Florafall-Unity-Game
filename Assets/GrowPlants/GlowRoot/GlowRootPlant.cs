@@ -6,7 +6,8 @@ public class GlowRootPlant : MonoBehaviour, IGrowablePlant
     private Animator animator;
     public bool glowdb = false;
     public bool candie = false;
-
+    private int spirits = 1;
+    public int spiritCost => spirits;
     public bool IsGrown => glowdb;
     public bool CanDie => candie;
 

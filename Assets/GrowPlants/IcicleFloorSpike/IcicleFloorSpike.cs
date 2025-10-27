@@ -8,6 +8,8 @@ public class IcicleFloorSpike : MonoBehaviour, IGrowablePlant
     public bool candie = false;
     public static bool candamage = false;
     private bool damagecd = false;
+    private int spirits = 1;
+    public int spiritCost => spirits;
     //interface 
     public bool IsGrown => icicledb;
     public bool CanDie => candie;

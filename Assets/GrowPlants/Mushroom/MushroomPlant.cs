@@ -8,6 +8,8 @@ public class MushroomPlant : MonoBehaviour, IGrowablePlant
     public GameObject Collide;
     public bool candie = false;
     private BoxCollider2D platform;
+    private int spirits = 1;
+    public int spiritCost => spirits;
 
     public bool IsGrown => mushdb;
     public bool CanDie => candie;

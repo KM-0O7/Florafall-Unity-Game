@@ -14,6 +14,8 @@ public class SeedCannon : MonoBehaviour, IGrowablePlant
     public bool candie = false;
     public bool IsGrown => cannondb;
     public bool CanDie => candie;
+    private int spirits = 2;
+    public int spiritCost => spirits;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Start()

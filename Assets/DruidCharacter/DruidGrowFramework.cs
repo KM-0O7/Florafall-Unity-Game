@@ -78,7 +78,7 @@ public class DruidGrowFramework : MonoBehaviour
                             float distance = Vector2.Distance(druidtransform.position, hit.collider.transform.position);
                             if (distance <= maxTetherDistance - 2)
                             {
-                                if (!plant.IsGrown && UI.spirits > 0)
+                                if (!plant.IsGrown && UI.spirits > plant.spiritCost)
                                 {
                                     // Grow the plant
                                     plant.Grow();
@@ -160,7 +160,7 @@ public class DruidGrowFramework : MonoBehaviour
         IGrowablePlant plant = planttransform.GetComponent<IGrowablePlant>();
         if (plant != null)
         {
-            UI.spirits++;
+            UI.spirits+= plant.spiritCost;
             plant.Die();
             RemoveTether(planttransform);
         }
@@ -191,7 +191,7 @@ public class DruidGrowFramework : MonoBehaviour
             activeTethers.Add(tetherclone);
             tetherTargets.Add(plantTransform);
 
-            UI.spirits -= 1;
+            UI.spirits -= plant.spiritCost;
             animator.SetTrigger("Grow");
         }
         else //enemies

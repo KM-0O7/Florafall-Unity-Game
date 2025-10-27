@@ -9,7 +9,8 @@ public class ExplosionShroom : MonoBehaviour, IGrowablePlant
     public bool IsGrown => explosiondb;
     public bool CanDie => candie;
     [SerializeField] private GameObject shroom;
-
+    private int spirits = 1;
+    public int spiritCost => spirits;
     public void Start()
     {
         animator = GetComponent<Animator>();
