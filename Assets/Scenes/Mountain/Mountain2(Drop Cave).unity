@@ -11858,7 +11858,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetChunk:
     _sceneAsset: {fileID: 102900000, guid: c0b8090824bf4c244be60e1ffee649b2, type: 3}
-    _sceneName: Mountain1(Spawn)
+    _sceneName: Mountain1
   targetSpawnID: RightSpawn
 --- !u!212 &2105928424
 SpriteRenderer:

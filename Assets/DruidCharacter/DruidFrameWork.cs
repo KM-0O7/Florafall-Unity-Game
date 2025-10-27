@@ -99,71 +99,75 @@ public class DruidFrameWork : MonoBehaviour
 
     private void FixedUpdate()
     {
-        // ---- WALKING ----
-        animator.SetFloat("YVelo", druidrb.linearVelocityY);
-
-        
-        if (!isAttacking) //checks if not attacking
+        if (!UI.dead) //checks if not dead
         {
-            speedx = Input.GetAxisRaw("Horizontal");
-            druidrb.linearVelocityX = speedx * druidspeed; //sets velo to your movement direction times speed
+            // ---- WALKING ----
+            animator.SetFloat("YVelo", druidrb.linearVelocityY);
 
-            if (isGrounded)
+
+            if (!isAttacking) //checks if not attacking
             {
-                animator.SetFloat("XVelo", Mathf.Abs(speedx));
+                speedx = Input.GetAxisRaw("Horizontal");
+                druidrb.linearVelocityX = speedx * druidspeed; //sets velo to your movement direction times speed
+
+                if (isGrounded)
+                {
+                    animator.SetFloat("XVelo", Mathf.Abs(speedx));
+                }
+                else
+                {
+                    animator.SetFloat("XVelo", 0f);
+                }
             }
             else
             {
                 animator.SetFloat("XVelo", 0f);
             }
-        }
-        else
-        {
-            animator.SetFloat("XVelo", 0f);
-        }
 
 
-        // ---- FLIP X LOGIC AND UI LOGIC ----
-        if (speedx > 0f) //forwards
-        {
-            druidspriterender.flipX = false;
-
-            if (!Transitioning)
+            // ---- FLIP X LOGIC AND UI LOGIC ----
+            if (speedx > 0f) //forwards
             {
-                UIwalker.SetBool("Backwards", false);
+                druidspriterender.flipX = false;
+
+                if (!Transitioning)
+                {
+                    UIwalker.SetBool("Backwards", false);
+                }
+            }
+
+
+            else if (speedx < 0f) //backwards
+            {
+                druidspriterender.flipX = true;
+                if (!Transitioning)
+                {
+                    UIwalker.SetBool("Backwards", true);
+                }
+            }
+
+            // ---- JUMP ANIMATIONS ----
+            if (druidrb.linearVelocityY > 0.5f)
+            {
+                animator.SetTrigger("Jump");
+            }
+
+            // ---- COYOTE TIME & RESET JUMP ----
+            isGrounded = Physics2D.OverlapCircle(groundCheck.position, checkRadius, groundLayer);
+            animator.SetBool("IsGrounded", isGrounded);
+
+            if (isGrounded && druidrb.linearVelocityY <= 0.1f)
+            {
+                coyoteTimeCounter = coyoteTime;
+                canjump = true;
+            }
+            else
+            {
+                coyoteTimeCounter -= Time.deltaTime;
+                canjump = false;
             }
         }
-
-
-        else if (speedx < 0f) //backwards
-        {
-            druidspriterender.flipX = true;
-            if (!Transitioning)
-            {
-                UIwalker.SetBool("Backwards", true);
-            }
-        }
-
-        // ---- JUMP ANIMATIONS ----
-        if (druidrb.linearVelocityY > 0.5f)
-        {
-            animator.SetTrigger("Jump");
-        }
-
-        // ---- COYOTE TIME & RESET JUMP ----
-        isGrounded = Physics2D.OverlapCircle(groundCheck.position, checkRadius, groundLayer);
-        animator.SetBool("IsGrounded", isGrounded);
-
-        if (isGrounded && druidrb.linearVelocityY <= 0.1f)
-        {
-            coyoteTimeCounter = coyoteTime;
-            canjump = true;
-        }
-        else
-        {
-            coyoteTimeCounter -= Time.deltaTime;
-            canjump = false;
-        }
+       
     }
 
     /* UPDATE
@@ -176,86 +180,90 @@ public class DruidFrameWork : MonoBehaviour
 
     private void Update()
     {
-        // ---- JUMP ----
+        if (!UI.dead)
+        {
+            // ---- JUMP ----
 
-        // ---- BUFFER ----
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            jumpBufferCounter = jumpBufferTime;
-        }
-        else
-        {
-            jumpBufferCounter -= Time.deltaTime;
-        }
-
-        if (jumpBufferCounter > 0f && coyoteTimeCounter > 0f && !isAttacking && !istransforming && canmove)
-        {
-            druidrb.linearVelocityY = jumpheight;
-            isJumping = true;
-            jumpBufferCounter = 0f;
-        }
-
-        // ---- VARIABLE JUMP HEIGHT ----
-        if (Input.GetKeyUp(KeyCode.Space) && isJumping)
-        {
-            if (druidrb.linearVelocityY > 0f)
+            // ---- BUFFER ----
+            if (Input.GetKeyDown(KeyCode.Space))
             {
-                druidrb.linearVelocityY *= variableJumpMultiplier;
-            }
-
-            isJumping = false;
-        }
-
-
-        // ---- FASTER JUMP FALL ----
-        if (!istransforming)
-        {
-            if (canjump == false)
-            {
-                if (gravityjump)
-                {
-                    druidrb.gravityScale += 0.5f; //add 0.5 to gravity when falling so it feels less floaty when jumping
-                    gravityjump = false;
-                }
+                jumpBufferCounter = jumpBufferTime;
             }
             else
             {
-                if (!gravityjump)
+                jumpBufferCounter -= Time.deltaTime;
+            }
+
+            if (jumpBufferCounter > 0f && coyoteTimeCounter > 0f && !isAttacking && !istransforming && canmove)
+            {
+                druidrb.linearVelocityY = jumpheight;
+                isJumping = true;
+                jumpBufferCounter = 0f;
+            }
+
+            // ---- VARIABLE JUMP HEIGHT ----
+            if (Input.GetKeyUp(KeyCode.Space) && isJumping)
+            {
+                if (druidrb.linearVelocityY > 0f)
                 {
-                    gravityjump = true;
-                    druidrb.gravityScale = 1f; //set back to normal gravity
+                    druidrb.linearVelocityY *= variableJumpMultiplier;
+                }
+
+                isJumping = false;
+            }
+
+
+            // ---- FASTER JUMP FALL ----
+            if (!istransforming)
+            {
+                if (canjump == false)
+                {
+                    if (gravityjump)
+                    {
+                        druidrb.gravityScale += 0.5f; //add 0.5 to gravity when falling so it feels less floaty when jumping
+                        gravityjump = false;
+                    }
+                }
+                else
+                {
+                    if (!gravityjump)
+                    {
+                        gravityjump = true;
+                        druidrb.gravityScale = 1f; //set back to normal gravity
+                    }
                 }
             }
-        }
 
 
-        // ---- TRANSFORMATIONS INPUT ----
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            if (!isTransformed)
+            // ---- TRANSFORMATIONS INPUT ----
+            if (Input.GetKeyDown(KeyCode.Q))
             {
-                if (UI.spirits == 5)
+                if (!isTransformed)
+                {
+                    if (UI.spirits == 5)
+                    {
+                        if (!istransforming)
+                        {
+                            if (!Transitioning)
+                            {
+                                StartCoroutine(TransformIntoAnimal("Bear"));
+                            }
+                        }
+                    }
+                }
+                else
                 {
                     if (!istransforming)
                     {
                         if (!Transitioning)
                         {
-                            StartCoroutine(TransformIntoAnimal("Bear"));
+                            StartCoroutine(TransformIntoDruid());
                         }
                     }
                 }
             }
-            else
-            {
-                if (!istransforming)
-                {
-                    if (!Transitioning)
-                    {
-                        StartCoroutine(TransformIntoDruid());
-                    }
-                }
-            }
         }
+       
     }
 
     /* FUNCTIONS

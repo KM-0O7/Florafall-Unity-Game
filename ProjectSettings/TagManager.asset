@@ -17,6 +17,7 @@ TagManager:
   - IcicleFallingPlatform
   - MountainDoor
   - FloraForestDoor
+  - RespawnPoint
   layers:
   - Default
   - TransparentFX
