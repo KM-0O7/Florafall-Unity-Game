@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -7,7 +6,6 @@ public class ChunkLoader : MonoBehaviour
 {
     public static ChunkLoader Instance { get; private set; }
 
-    private HashSet<string> loadedChunks = new HashSet<string>();
     private string currentChunk;
 
     private void Awake()
@@ -23,31 +21,39 @@ public class ChunkLoader : MonoBehaviour
 
     private void Start()
     {
-        Scene firstScene = SceneManager.GetActiveScene();
-        currentChunk = firstScene.name;
+        currentChunk = SceneManager.GetActiveScene().name;
     }
 
     public void EnterChunk(string sceneName, System.Action onChunkLoaded = null)
     {
-        StartCoroutine(LoadAndUnload(sceneName));
+        StartCoroutine(LoadAndUnload(sceneName, onChunkLoaded));
     }
 
-    private IEnumerator LoadAndUnload(string sceneName)
+    private IEnumerator LoadAndUnload(string sceneName, System.Action onChunkLoaded = null)
     {
-        // Load new chunk
-        if (!SceneManager.GetSceneByName(sceneName).isLoaded)
+        if (currentChunk == sceneName)
         {
-            var loadOp = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
-            while (!loadOp.isDone) yield return null;
+            Debug.Log($"[ChunkLoader] Already in scene '{sceneName}', skipping reload.");
+            onChunkLoaded?.Invoke();
+            yield break;
         }
 
-        // Unload previous chunk
-        if (!string.IsNullOrEmpty(currentChunk) && currentChunk != sceneName)
+        AsyncOperation loadOp = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+        while (!loadOp.isDone)
+            yield return null;
+
+        Scene newScene = SceneManager.GetSceneByName(sceneName);
+        SceneManager.SetActiveScene(newScene);
+        onChunkLoaded?.Invoke();
+
+        if (!string.IsNullOrEmpty(currentChunk))
         {
-            var unloadOp = SceneManager.UnloadSceneAsync(currentChunk);
-            while (!unloadOp.isDone) yield return null;
+            AsyncOperation unloadOp = SceneManager.UnloadSceneAsync(currentChunk);
+            while (!unloadOp.isDone)
+                yield return null;
         }
 
         currentChunk = sceneName;
+        Debug.Log($"[ChunkLoader] Loaded scene '{sceneName}', unloaded '{currentChunk}'.");
     }
 }

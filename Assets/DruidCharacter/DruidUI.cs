@@ -2,11 +2,11 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+
 public class DruidUI : MonoBehaviour
 {
     public Image[] spiritimages;
 
-    
     public Sprite fullSpirit;
     public Sprite emptySpirit;
     public int maxSpirits; //change to set max spirits max is 8
@@ -22,14 +22,13 @@ public class DruidUI : MonoBehaviour
     public string spawnSceneName;
     private Animator druidanims;
 
-
-    void Start()
+    private void Start()
     {
         druidanims = GetComponent<Animator>();
         health = MaxHealth;
     }
 
-    void Update()
+    private void Update()
     {
         for (int i = 0; i < spiritimages.Length; i++) //set spirit UI can change in Inspector
         {
@@ -60,17 +59,15 @@ public class DruidUI : MonoBehaviour
                 {
                     StartCoroutine(DeathScreenCycle());
                 }
-            }  
+            }
         }
 
         if (dead)
         {
             if (waitCycle)
             {
-               
-                    StartCoroutine(RespawnCycle());
-              
-            }  
+                StartCoroutine(RespawnCycle());
+            }
         }
     }
 
@@ -91,23 +88,24 @@ public class DruidUI : MonoBehaviour
         deathScreen.SetTrigger("Respawn");
         yield return new WaitForSeconds(0.1f);
 
+        Scene currentScene = SceneManager.GetActiveScene();
         druidanims.SetTrigger("Respawn");
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(spawnSceneName);
 
-        while (!asyncLoad.isDone)
+        if (SceneManager.GetActiveScene().name != spawnSceneName)
         {
-            yield return null;
+            ChunkLoader.Instance.EnterChunk(spawnSceneName);
         }
 
-
         yield return null;
+        yield return null;
+        yield return null;
+
         spawnPoint = GameObject.FindWithTag("RespawnPoint")?.transform;
 
         health = MaxHealth;
         dead = false;
         spirits = maxSpirits;
 
-    
         if (spawnPoint != null)
         {
             druid.transform.position = spawnPoint.position;
