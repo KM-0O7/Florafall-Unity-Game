@@ -6,10 +6,10 @@ using UnityEngine.SceneManagement;
 public class DoorScript : MonoBehaviour
 {
     [Header("Target Chunk")]
-    public SceneField targetChunk;       // Drag your scene here
+    public SceneField targetChunk;
 
     private Animator fade;
-    public string targetSpawnID;       // Name of spawn point in target scene
+    public string targetSpawnID;
     private FollowPlayer camFollow;
 
     private void Start()
@@ -62,17 +62,13 @@ public class DoorScript : MonoBehaviour
         }
 
         DruidFrameWork.canmove = true;
-        //set spirits to max when changing scene
 
-        // Load the target chunk
         ChunkLoader.Instance.EnterChunk(targetChunk.SceneName);
 
-        // Wait until scene is fully loaded
         Scene targetScene = SceneManager.GetSceneByName(targetChunk.SceneName);
         while (!targetScene.isLoaded)
             yield return null;
 
-        // Find spawn point recursively
         Transform spawnPoint = null;
         foreach (GameObject root in targetScene.GetRootGameObjects())
         {

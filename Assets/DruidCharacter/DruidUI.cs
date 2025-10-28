@@ -75,10 +75,12 @@ public class DruidUI : MonoBehaviour
     {
         health = 0;
         waitCycle = true;
-        deathScreen.SetTrigger("Death");
         druidanims.SetTrigger("Death");
-        yield return new WaitForSeconds(0.1f);
-        yield return new WaitForSeconds(0.9f);
+
+        yield return new WaitForSeconds(0.5f);
+        deathScreen.SetTrigger("Death");
+
+        yield return new WaitForSeconds(0.3f);
         dead = true;
     }
 
