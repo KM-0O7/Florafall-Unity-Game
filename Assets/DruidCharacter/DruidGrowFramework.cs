@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class DruidGrowFramework : MonoBehaviour
 {
@@ -19,6 +20,11 @@ public class DruidGrowFramework : MonoBehaviour
     private List<LineRenderer> activeTethers = new List<LineRenderer>();
     private List<Transform> tetherTargets = new List<Transform>();
 
+    //HIGHLIGHTS
+    private Transform lastHoveredObject;
+    private Material lastHoveredMaterial;
+
+
     //UI and Scripts
     DruidUI UI;
     Animator animator;
@@ -29,6 +35,7 @@ public class DruidGrowFramework : MonoBehaviour
      */
     void Start()
     {
+        
         //components
         druid = GetComponent<DruidFrameWork>();
         animator = GetComponent<Animator>();
@@ -58,9 +65,55 @@ public class DruidGrowFramework : MonoBehaviour
                 }
             }
         }
+        //highlight objects when hovered over
+        if (!UI.dead && !DruidFrameWork.isTransformed)
+        {
+            Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero, Mathf.Infinity, LayerMask.GetMask("GrowPlants", "GrowEnemy"));
 
- 
-        if (!UI.dead)
+            if (lastHoveredObject != null && lastHoveredMaterial != null)
+            {
+                lastHoveredMaterial.SetFloat("_On_Off", 0);
+                lastHoveredObject = null;
+                lastHoveredMaterial = null;
+            }
+
+            if (hit.collider != null)
+            {
+
+                Transform target = hit.collider.transform;
+                float distance = Vector2.Distance(druidtransform.position, target.position);
+
+                if (distance < maxTetherDistance - 2)
+                {
+                    IGrowableEnemy enemy = hit.collider.GetComponent<IGrowableEnemy>();
+                    IGrowablePlant plant = hit.collider.GetComponent<IGrowablePlant>();
+                    
+                    if (plant != null|| enemy != null)
+                    {
+                        SpriteRenderer growableRender = hit.collider.GetComponent<SpriteRenderer>();
+
+                        if (growableRender != null)
+                        {
+
+                            if (!growableRender.material.name.EndsWith("(Instance)"))
+                            {
+                                growableRender.material = new Material(growableRender.material);
+                            }
+
+                            Debug.Log(hit.collider.name + "Highlighted");
+                            growableRender.material.SetFloat("_On_Off", 1);
+
+                            lastHoveredObject = target;
+                            lastHoveredMaterial = growableRender.material;
+                        }
+                    }
+                }
+            }
+
+        }
+
+            if (!UI.dead)
         {
             //If Clicked
             if (Input.GetMouseButtonDown(0))
@@ -78,7 +131,7 @@ public class DruidGrowFramework : MonoBehaviour
                             float distance = Vector2.Distance(druidtransform.position, hit.collider.transform.position);
                             if (distance <= maxTetherDistance - 2)
                             {
-                                if (!plant.IsGrown && UI.spirits > plant.spiritCost)
+                                if (!plant.IsGrown && UI.spirits >= plant.spiritCost)
                                 {
                                     // Grow the plant
                                     plant.Grow();
