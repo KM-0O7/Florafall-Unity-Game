@@ -1,14 +1,12 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-
 public class RustyGolem : MonoBehaviour, IGrowableEnemy
 {
-
     /* RUSTY GOLEM
      * Handles all of rusty golem's logic
      * Handles rusty golem's movement
-     * Handles rusty golem's 
+     * Handles rusty golem's
      */
 
     // ---- INTERFACE ----
@@ -33,9 +31,9 @@ public class RustyGolem : MonoBehaviour, IGrowableEnemy
 
     // ---- MOVEMENT ----
     public float movespeed = 2f;
+
     public float pauseTime = 3f;
     public float movedistance = 5f;
-  
 
     private bool movingright = true;
     private bool isPaused = false;
@@ -43,6 +41,7 @@ public class RustyGolem : MonoBehaviour, IGrowableEnemy
 
     // ---- DAMAGE FLASH ----
     public float flashDuration = 0.3f;
+
     public float flashPeak = 1f;
 
     private MaterialPropertyBlock mpb;
@@ -50,15 +49,16 @@ public class RustyGolem : MonoBehaviour, IGrowableEnemy
 
     //BouncePad
     [SerializeField] private GameObject collide;
+
     [SerializeField] private float bounceheight;
 
     private BoxCollider2D bouncepad;
-
 
     /* AWAKE
      * Handles extremely necessary components
      * Handles flash components
      */
+
     private void Awake()
     {
         spriterenderer = GetComponent<SpriteRenderer>();
@@ -67,7 +67,6 @@ public class RustyGolem : MonoBehaviour, IGrowableEnemy
         mpb = new MaterialPropertyBlock();
     }
 
-   
     /* START
      * Handles player variable
      * Handles components
@@ -115,11 +114,11 @@ public class RustyGolem : MonoBehaviour, IGrowableEnemy
         }
     }
 
-  
     /* FIXED UPDATE
      * Handles Movement
      * Handles Flipping
      */
+
     private void FixedUpdate()
     {
         if (!dead && !isPaused)
@@ -162,7 +161,6 @@ public class RustyGolem : MonoBehaviour, IGrowableEnemy
      * Handles flash
      */
 
-
     //grow the enemy
     public void Grow()
     {
@@ -195,7 +193,6 @@ public class RustyGolem : MonoBehaviour, IGrowableEnemy
         }
     }
 
-
     // ---- DAMAGE ----
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -220,7 +217,6 @@ public class RustyGolem : MonoBehaviour, IGrowableEnemy
                         playerRb.AddForce(Vector2.up * bounceheight, ForceMode2D.Impulse);
                     }
                 }
-
             }
         }
     }
@@ -243,7 +239,6 @@ public class RustyGolem : MonoBehaviour, IGrowableEnemy
         }
         flashRoutine = StartCoroutine(FlashCoroutine());
     }
-
 
     /* COROUTINES
      * Handles damage flash

@@ -10,17 +10,16 @@ public class IcicleFloorSpike : MonoBehaviour, IGrowablePlant
     private bool damagecd = false;
     private int spirits = 1;
     public int spiritCost => spirits;
-    //interface 
+
+    //interface
     public bool IsGrown => icicledb;
+
     public bool CanDie => candie;
 
-
-
-    void Start()
+    private void Start()
     {
         animator = GetComponent<Animator>();
     }
-
 
     public void Grow()
     {
@@ -43,7 +42,7 @@ public class IcicleFloorSpike : MonoBehaviour, IGrowablePlant
             }
         }
     }
-   
+
     private IEnumerator GrowCycle()
     {
         animator.SetTrigger("Grow");
@@ -52,7 +51,6 @@ public class IcicleFloorSpike : MonoBehaviour, IGrowablePlant
         yield return new WaitForSeconds(0.75f);
         candamage = true;
         candie = true;
-
     }
 
     private IEnumerator DieCycle()

@@ -66,7 +66,5 @@ public class FollowPlayer : MonoBehaviour
 
         snapThisFrame = true;
         velocity = Vector3.zero;
-
-      
     }
 }

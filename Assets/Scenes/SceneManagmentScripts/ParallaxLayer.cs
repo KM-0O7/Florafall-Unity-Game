@@ -1,35 +1,35 @@
-using UnityEngine;
 using System.Collections;
+using UnityEngine;
 
 [ExecuteAlways]
 public class ParallaxLayer : MonoBehaviour
 {
     [Header("Parallax Factors")]
     [Range(0f, 1f)] public float parallaxFactorX = 0.5f;
+
     [Range(0f, 1f)] public float parallaxFactorY = 0.5f;
 
     public float initDelay = 0.1f;
 
     private Transform cam;
-    private Vector3 editorPos;      
+    private Vector3 editorPos;
     private Vector3 initialCamPos;
     private bool initialized = false;
     private bool initializing = false;
 
-    void Awake()
+    private void Awake()
     {
-
         editorPos = Application.isPlaying ? transform.position : editorPos;
     }
 
-    void OnEnable()
+    private void OnEnable()
     {
         cam = Camera.main?.transform;
         initialized = false;
         initializing = false;
     }
 
-    void LateUpdate()
+    private void LateUpdate()
     {
         if (cam == null)
         {
@@ -61,18 +61,18 @@ public class ParallaxLayer : MonoBehaviour
 
         if (cam != null)
         {
-        
             initialCamPos = cam.position;
             initialized = true;
         }
     }
 
 #if UNITY_EDITOR
-  
-    void OnValidate()
+
+    private void OnValidate()
     {
         if (!Application.isPlaying)
             editorPos = transform.position;
     }
+
 #endif
 }

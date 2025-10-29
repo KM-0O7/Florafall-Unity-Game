@@ -3,16 +3,15 @@ using UnityEngine;
 
 public class IcicleFallingPlatform : MonoBehaviour
 {
-    Rigidbody2D rig;
+    private Rigidbody2D rig;
     private bool isfalling;
     public float respawntime = 2f;
     public float fallingtime = 1f;
     private Vector2 basespawn;
-    BoxCollider2D collider2Dicicle;
-    Animator animator;
+    private BoxCollider2D collider2Dicicle;
+    private Animator animator;
 
-
-    void Start()
+    private void Start()
     {
         basespawn = transform.position;
         rig = GetComponent<Rigidbody2D>();
@@ -20,8 +19,8 @@ public class IcicleFallingPlatform : MonoBehaviour
         collider2Dicicle = GetComponent<BoxCollider2D>();
         animator = GetComponent<Animator>();
     }
-    
-    void Update()
+
+    private void Update()
     {
         if (!isfalling)
         {
@@ -30,17 +29,14 @@ public class IcicleFallingPlatform : MonoBehaviour
                 playercheck();
                 Debug.Log("falling = false");
             }
-            
         }
     }
 
-    void playercheck()
+    private void playercheck()
     {
-
         Collider2D col = GetComponent<Collider2D>();
 
         Vector2 checkPoint = new Vector2(transform.position.x, transform.position.y + col.bounds.extents.y + 0.1f);
-
 
         Collider2D[] hits = Physics2D.OverlapPointAll(checkPoint);
 

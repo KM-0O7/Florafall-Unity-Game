@@ -1,11 +1,8 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-
 
 public class DruidFrameWork : MonoBehaviour
 {
-
     /* DRUIDFRAMEWORK
      * This script handles movement, transformations, and jumping for the main character
      * Includes functions for attack
@@ -20,10 +17,11 @@ public class DruidFrameWork : MonoBehaviour
      * Handles Jump
      * etc
      */
-    
+
     // ---- MOVEMENT ----
     private Rigidbody2D druidrb;
-    private Animator animator; 
+
+    private Animator animator;
     private SpriteRenderer druidspriterender;
     private BoxCollider2D boxcollider;
     private float speedx;
@@ -35,8 +33,9 @@ public class DruidFrameWork : MonoBehaviour
 
     // ---- CUSTOM JUMP PHYSICS ----
     private float coyoteTimeCounter;
+
     private float jumpBufferCounter;
-   
+
     private bool isJumping;
     private bool isGrounded;
     private bool gravityjump = false;
@@ -53,14 +52,17 @@ public class DruidFrameWork : MonoBehaviour
 
     // ---- CUSTOM CURSOR ----
     public Texture2D cursorTexture;
+
     private Vector2 cursorHotspot;
 
     // ---- UI ----
-    DruidUI UI;
+    private DruidUI UI;
+
     [SerializeField] private Animator UIwalker;
 
     // ---- TRANSFORMATIONS ----
     private bool isAttacking = false;
+
     private bool damagecd = false;
     private bool istransforming = false;
     private bool transformcd = false;
@@ -68,13 +70,14 @@ public class DruidFrameWork : MonoBehaviour
     public static bool Transitioning = false;
     public static bool bearattackcd = false;
     public static bool isTransformed = false;
- 
+
     [SerializeField] private float biteLength = 2.5f;
 
     /* START
      * Handles all components
      * Handles custom cursor
      */
+
     private void Start()
     {
         // ---- BASIC COMPONENTS ----
@@ -89,13 +92,13 @@ public class DruidFrameWork : MonoBehaviour
         Cursor.SetCursor(cursorTexture, cursorHotspot, CursorMode.Auto);
     }
 
-   /* FIXEDUPDATE
-    * Handles all left to right movement logic
-    * Handles coyote time
-    * Handles UI transitions with the druid and bear in the circle wipe
-    * Handles flip x of druid sprite 
-    * Handles animations for movement such as jump and walking
-    */
+    /* FIXEDUPDATE
+     * Handles all left to right movement logic
+     * Handles coyote time
+     * Handles UI transitions with the druid and bear in the circle wipe
+     * Handles flip x of druid sprite
+     * Handles animations for movement such as jump and walking
+     */
 
     private void FixedUpdate()
     {
@@ -103,7 +106,6 @@ public class DruidFrameWork : MonoBehaviour
         {
             // ---- WALKING ----
             animator.SetFloat("YVelo", druidrb.linearVelocityY);
-
 
             if (!isAttacking) //checks if not attacking
             {
@@ -124,7 +126,6 @@ public class DruidFrameWork : MonoBehaviour
                 animator.SetFloat("XVelo", 0f);
             }
 
-
             // ---- FLIP X LOGIC AND UI LOGIC ----
             if (speedx > 0f) //forwards
             {
@@ -135,8 +136,6 @@ public class DruidFrameWork : MonoBehaviour
                     UIwalker.SetBool("Backwards", false);
                 }
             }
-
-
             else if (speedx < 0f) //backwards
             {
                 druidspriterender.flipX = true;
@@ -167,7 +166,6 @@ public class DruidFrameWork : MonoBehaviour
                 canjump = false;
             }
         }
-       
     }
 
     /* UPDATE
@@ -176,7 +174,6 @@ public class DruidFrameWork : MonoBehaviour
      * Handles Q to transform
      * Handles jump input
      */
-
 
     private void Update()
     {
@@ -212,7 +209,6 @@ public class DruidFrameWork : MonoBehaviour
                 isJumping = false;
             }
 
-
             // ---- FASTER JUMP FALL ----
             if (!istransforming)
             {
@@ -233,7 +229,6 @@ public class DruidFrameWork : MonoBehaviour
                     }
                 }
             }
-
 
             // ---- TRANSFORMATIONS INPUT ----
             if (Input.GetKeyDown(KeyCode.Q))
@@ -263,7 +258,6 @@ public class DruidFrameWork : MonoBehaviour
                 }
             }
         }
-       
     }
 
     /* FUNCTIONS
@@ -275,7 +269,7 @@ public class DruidFrameWork : MonoBehaviour
     {
         StartCoroutine(attack());
     }
-   
+
     // ---- COLLIDER SIZE ----
     private void ChangeColliderSize(Vector2 newsize, Vector2 newoffset)
     {
@@ -283,14 +277,12 @@ public class DruidFrameWork : MonoBehaviour
         boxcollider.size = newsize;
     }
 
-
     /* COROUTINES
      * Calling attack will trigger the bearattack animation and raycast a hit
      * calling freezeframe will freeze the game for a set duration as stated in parameters
      * calling transform into animal will trigger you to transform into an animal as stated in parameters
      * calling transform into druid will trigger you to transform back into a druid
      */
-
 
     private IEnumerator attack() //call to attack as bear
     {
@@ -352,8 +344,6 @@ public class DruidFrameWork : MonoBehaviour
         {
             if (transformcd == false)
             {
-                
-                
                 UI.spirits = 0;
                 druidrb.linearVelocityX = 0f;
                 druidrb.linearVelocityY = 0f;

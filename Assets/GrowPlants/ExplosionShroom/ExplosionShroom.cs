@@ -11,6 +11,7 @@ public class ExplosionShroom : MonoBehaviour, IGrowablePlant
     [SerializeField] private GameObject shroom;
     private int spirits = 1;
     public int spiritCost => spirits;
+
     public void Start()
     {
         animator = GetComponent<Animator>();
