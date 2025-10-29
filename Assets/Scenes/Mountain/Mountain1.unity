@@ -10829,8 +10829,8 @@ Transform:
   m_GameObject: {fileID: 902796106}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -12.3481, y: -5.3382263, z: 0.023407128}
-  m_LocalScale: {x: 26.073795, y: 16.69094, z: 1}
+  m_LocalPosition: {x: -12.3481, y: -3.3382263, z: 0.023407128}
+  m_LocalScale: {x: 26.073795, y: 12.690122, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1977546209}
@@ -21312,11 +21312,7 @@ CompositeCollider2D:
         Y: 730312512
       - X: -50312500
         Y: 730312512
-    - - X: -90000000
-        Y: 610312512
-      - X: 59687500
-        Y: 610312512
-      - X: 59687500
+    - - X: 59687500
         Y: 670000000
       - X: 99687504
         Y: 670000000
@@ -21333,9 +21329,9 @@ CompositeCollider2D:
       - X: -99687504
         Y: 688750016
       - X: -99687504
-        Y: 610000000
-      - X: -90000000
-        Y: 610000000
+        Y: 610312512
+      - X: 59687500
+        Y: 610312512
   m_CompositePaths:
     m_Paths:
     - - {x: 12.99997, y: 67}
@@ -21352,9 +21348,7 @@ CompositeCollider2D:
       - {x: -5.031279, y: 80}
       - {x: -12, y: 79.99997}
       - {x: -11.99997, y: 73.03125}
-    - - {x: -9.00003, y: 61}
-      - {x: -8.99997, y: 61.031254}
-      - {x: 5.96875, y: 61.031284}
+    - - {x: 5.968721, y: 61.031254}
       - {x: 5.968779, y: 67}
       - {x: 9.968751, y: 67.00003}
       - {x: 9.968721, y: 69.875}
@@ -21363,7 +21357,7 @@ CompositeCollider2D:
       - {x: 6, y: 68.99997}
       - {x: 5.9999704, y: 68.875}
       - {x: -9.968751, y: 68.87497}
-      - {x: -9.968721, y: 61}
+      - {x: -9.968721, y: 61.031254}
   m_VertexDistance: 0.0005
   m_OffsetDistance: 0.00005
   m_UseDelaunayMesh: 0
@@ -21497,8 +21491,8 @@ Tilemap:
   - first: {x: -10, y: 61, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 5
-      m_TileSpriteIndex: 5
+      m_TileIndex: 17
+      m_TileSpriteIndex: 17
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -24556,7 +24550,7 @@ Tilemap:
     m_Data: {fileID: 11400000, guid: 713a6aa5dd05ed043be72a2f168b7abe, type: 2}
   - m_RefCount: 13
     m_Data: {fileID: 11400000, guid: 5cd598c6f2e5b754683769af3bbfbf1a, type: 2}
-  - m_RefCount: 6
+  - m_RefCount: 5
     m_Data: {fileID: 11400000, guid: 4767cd3ba2aa16e47978956a8564db81, type: 2}
   - m_RefCount: 28
     m_Data: {fileID: 11400000, guid: 3cd3763b83c072842943b99fcc5c4c0e, type: 2}
@@ -24580,7 +24574,7 @@ Tilemap:
     m_Data: {fileID: 11400000, guid: 312e81e12da50c246bc951d18494b69b, type: 2}
   - m_RefCount: 2
     m_Data: {fileID: 11400000, guid: da0a151b90d1a584ca775c2bfdf68aea, type: 2}
-  - m_RefCount: 1
+  - m_RefCount: 2
     m_Data: {fileID: 11400000, guid: 3b865430282b00d4a8b6438041ada0f0, type: 2}
   - m_RefCount: 1
     m_Data: {fileID: 11400000, guid: 010160622c7544b4dba2c3b30d38a543, type: 2}
@@ -24601,7 +24595,7 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 13
     m_Data: {fileID: 2049427222, guid: e47620d613ea6044e84505347594beff, type: 3}
-  - m_RefCount: 6
+  - m_RefCount: 5
     m_Data: {fileID: 194518595, guid: e47620d613ea6044e84505347594beff, type: 3}
   - m_RefCount: 28
     m_Data: {fileID: 637075155, guid: e47620d613ea6044e84505347594beff, type: 3}
@@ -24625,7 +24619,7 @@ Tilemap:
     m_Data: {fileID: 1209065095, guid: e47620d613ea6044e84505347594beff, type: 3}
   - m_RefCount: 2
     m_Data: {fileID: -783131619, guid: e47620d613ea6044e84505347594beff, type: 3}
-  - m_RefCount: 1
+  - m_RefCount: 2
     m_Data: {fileID: 2105928489, guid: e47620d613ea6044e84505347594beff, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: -582113085959572785, guid: a958f8724a5cbe14a96e1fc80bfffc75, type: 3}
@@ -30689,8 +30683,8 @@ Transform:
   m_GameObject: {fileID: 1776752799}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -12.3481, y: -5.3382263, z: 0.023407128}
-  m_LocalScale: {x: 26.073795, y: 16.69094, z: 1}
+  m_LocalPosition: {x: -12.3481, y: -3.3382263, z: 0.023407128}
+  m_LocalScale: {x: 26.073795, y: 12.690122, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1977546209}
@@ -31284,9 +31278,9 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0
+    y: 0.050213676
     width: 1
-    height: 1
+    height: 0.9002404
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 34
