@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class DeadTree : MonoBehaviour, IGrowablePlant
@@ -30,9 +31,39 @@ public class DeadTree : MonoBehaviour, IGrowablePlant
 
     public void Grow()
     {
+        if (!deadtreeDb)
+        {
+            StartCoroutine(GrowCycle());
+        }
     }
 
     public void Die()
     {
+        if (deadtreeDb)
+        {
+            if (candie)
+            {
+                StartCoroutine(DieCycle());
+            }
+        }
+    }
+
+    private IEnumerator GrowCycle()
+    {
+        TreeAnimator.SetTrigger("Grow");
+        druidAnimator.SetTrigger("Resting");
+        deadtreeDb = true;
+        yield return new WaitForSeconds(0.75f);
+        candie = true;
+    }
+
+    private IEnumerator DieCycle()
+    {
+        candie = false;
+        TreeAnimator.SetTrigger("Die");
+        druidAnimator.SetBool("StopRest", true);
+        yield return new WaitForSeconds(0.6f);
+        druidAnimator.SetBool("StopRest", false);
+        deadtreeDb = false;
     }
 }
