@@ -199,6 +199,7 @@ public class DruidGrowFramework : MonoBehaviour
     /* FUNCTIONS
      * RemoveTether - Call to remove tether at specified transform
      * DeGrowPlant - Call to degrow the plant/enemy at specified transform
+     * GrowPlant - Call to grow the plant/enemy at specified transform
      */ 
     public void RemoveTether(Transform plantTransform)
     {
