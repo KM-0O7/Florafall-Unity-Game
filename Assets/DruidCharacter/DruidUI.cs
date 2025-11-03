@@ -21,11 +21,14 @@ public class DruidUI : MonoBehaviour
     private bool waitCycle = false;
     public string spawnSceneName;
     private Animator druidanims;
+    private Rigidbody2D druidRig;
+    private DeadTree treespawn;
 
     private void Start()
     {
         druidanims = GetComponent<Animator>();
         health = MaxHealth;
+        druidRig = GetComponent<Rigidbody2D>();
     }
 
     private void Update()
@@ -103,7 +106,12 @@ public class DruidUI : MonoBehaviour
         yield return null;
 
         spawnPoint = GameObject.FindWithTag("RespawnPoint")?.transform;
+        if (spawnPoint.GetComponent<DeadTree>())
+        {
+            treespawn = spawnPoint.GetComponent<DeadTree>();
 
+        }
+        druidRig.gravityScale = 1f;
         health = MaxHealth;
         dead = false;
         spirits = maxSpirits;

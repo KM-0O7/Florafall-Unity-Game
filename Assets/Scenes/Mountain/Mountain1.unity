@@ -10614,7 +10614,7 @@ GameObject:
   - component: {fileID: 791627162}
   m_Layer: 7
   m_Name: DeadTree
-  m_TagString: Untagged
+  m_TagString: RespawnPoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -30777,7 +30777,7 @@ MonoBehaviour:
   dead: 0
   druid: {fileID: 1815524641}
   deathScreen: {fileID: 1219829554}
-  spawnSceneName: Mountain1
+  spawnSceneName: 
 --- !u!114 &1815524645
 MonoBehaviour:
   m_ObjectHideFlags: 0

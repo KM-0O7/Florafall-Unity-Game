@@ -72,6 +72,8 @@ public class DruidGrowFramework : MonoBehaviour
         }
 
         //---- HIGHLIGHTS ----
+
+        /*
         if (!UI.dead && !DruidFrameWork.isTransformed)
         {
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -115,7 +117,7 @@ public class DruidGrowFramework : MonoBehaviour
                 }
             }
         }
-
+        */
       
         if (!UI.dead)
         {
