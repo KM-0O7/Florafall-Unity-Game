@@ -141,7 +141,7 @@ public class DruidGrowFramework : MonoBehaviour
                                 {
                                     // Grow the plant
                                     plant.Grow();
-                                    Debug.Log("Growing");
+                                    Debug.Log("Growing" + hit.collider.name);
                                     growplant(hit.collider.transform);
                                 }
                                 else if (plant.CanDie)
@@ -168,7 +168,7 @@ public class DruidGrowFramework : MonoBehaviour
                                         {
                                             // Grow the enemy
                                             enemy.Grow();
-                                            Debug.Log("Growing");
+                                            Debug.Log("Growing" + hit.collider.name);
                                             growplant(hit.collider.transform);
                                         }
                                         else if (enemy.CanDie)

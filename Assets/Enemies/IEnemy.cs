@@ -4,5 +4,5 @@ public interface IEnemy
     bool Dead { get; }
 
 
-    void takeDamage(float damage);
+    void TakeDamage(float damage);
 }
