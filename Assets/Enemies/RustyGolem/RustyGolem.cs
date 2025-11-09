@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class RustyGolem : MonoBehaviour, IGrowableEnemy
+public class RustyGolem : MonoBehaviour, IGrowableEnemy, IDamageAble
 {
     /* RUSTY GOLEM
      * Handles all of rusty golem's logic
@@ -46,6 +46,7 @@ public class RustyGolem : MonoBehaviour, IGrowableEnemy
 
     private MaterialPropertyBlock mpb;
     private Coroutine flashRoutine;
+    private bool hitImmune = false;
 
     //BouncePad
     [SerializeField] private GameObject collide;
@@ -225,8 +226,13 @@ public class RustyGolem : MonoBehaviour, IGrowableEnemy
     {
         if (!dead)
         {
-            health -= damage;
-            Flash();
+            if (!hitImmune)
+            {
+                hitImmune = true;
+                StartCoroutine(HitImmuneCoroutine(0.5f));
+                health -= damage;
+                Flash();
+            }
         }
     }
 
@@ -245,6 +251,7 @@ public class RustyGolem : MonoBehaviour, IGrowableEnemy
      * Handles Growing
      * Handles Dying
      * Handles Idle at end of walking
+     * Handles HitImmunity
      */
 
     //flash coroutine
@@ -272,6 +279,11 @@ public class RustyGolem : MonoBehaviour, IGrowableEnemy
         flashRoutine = null; // Clear reference
     }
 
+    private IEnumerator HitImmuneCoroutine(float time)
+    {
+        yield return new WaitForSeconds(time);
+        hitImmune = false;
+    }
     private IEnumerator PauseAtEnd(bool turnRight) // pauses at the end of the movement
     {
         isPaused = true;

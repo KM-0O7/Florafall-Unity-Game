@@ -3,24 +3,36 @@ using UnityEngine;
 
 public class IcicleFloorSpike : MonoBehaviour, IGrowablePlant
 {
+    /* ICICLEFLOORSPIKE
+     * Handles growing of iciclefloorspike
+     * Handles damaging enemies when walked over
+     * Handles death of iciclefloorspike
+     */
+
     private Animator animator;
+    public static bool candamage = false;
+
+    //---- INTERFACE ----
     public bool icicledb = false;
     public bool candie = false;
-    public static bool candamage = false;
-    private bool damagecd = false;
     private int spirits = 1;
     public int spiritCost => spirits;
-
-    //interface
+    
     public bool IsGrown => icicledb;
-
     public bool CanDie => candie;
+
+    //START - Gets animator component
 
     private void Start()
     {
         animator = GetComponent<Animator>();
     }
 
+    /* FUNCTIONS 
+     * Grow is called through druridgrowframework when clicking on iciclefloorspike
+     * Die is called through druidgrowframework when click on a grown iciclefloorspike
+     * OnTriggerEnter2D manages enemies stepping on floorspike through the persistence script's damagemanager
+     */
     public void Grow()
     {
         if (!icicledb)
@@ -43,6 +55,24 @@ public class IcicleFloorSpike : MonoBehaviour, IGrowablePlant
         }
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Debug.Log("Trigger entered by: " + collision.name);
+        if (collision && candamage)
+        {
+            IDamageAble enemy = collision.gameObject.GetComponent<IDamageAble>();
+            if (enemy != null)
+            {
+                Debug.Log(collision.gameObject.name + " has stepped over IcicleSpike!");
+                Persistence.instance.ApplyDamage(collision.gameObject, 2f);
+            }
+        }
+    }
+
+    /* Coroutines
+     * Growcycle manages grow animations for the icicle floor spike
+     * Diecycle manages the death animations for the icicle floor spike
+     */
     private IEnumerator GrowCycle()
     {
         animator.SetTrigger("Grow");
@@ -62,30 +92,4 @@ public class IcicleFloorSpike : MonoBehaviour, IGrowablePlant
         icicledb = false;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision && candamage && !damagecd)
-        {
-            if (collision.gameObject.CompareTag("GrowableEnemy"))
-            {
-                IGrowableEnemy enemy = collision.gameObject.GetComponent<IGrowableEnemy>();
-                if (enemy != null)
-                {
-                    if (!enemy.Dead)
-                    {
-                        damagecd = true;
-                        enemy.TakeDamage(2f);
-                        StartCoroutine(DamageCooldown());
-                        Debug.Log(collision.gameObject.name + "walked on" + gameObject.name);
-                    }
-                }
-            }
-        }
-    }
-
-    private IEnumerator DamageCooldown()
-    {
-        yield return new WaitForSeconds(1f);
-        damagecd = false;
-    }
 }

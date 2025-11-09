@@ -71,7 +71,7 @@ public class DruidFrameWork : MonoBehaviour
     public static bool bearattackcd = false;
     public static bool isTransformed = false;
 
-    [SerializeField] private float biteLength = 2.5f;
+    [SerializeField] private Vector2 biteSize = new Vector2(3.2f, 2f);
 
     /* START
      * Handles all components
@@ -303,25 +303,28 @@ public class DruidFrameWork : MonoBehaviour
         yield return new WaitForSeconds(0.7f);
 
         float direction = druidspriterender.flipX ? -1f : 1f; //checks which way facing
-        RaycastHit2D hit = Physics2D.Raycast(druidtransform.position, new Vector2(direction, 0f), biteLength, LayerMask.GetMask("GrowEnemy"));
-        if (hit)
+        Vector2 directionVector = new Vector2(direction, 0f);
+        Vector2 offset = directionVector * (biteSize.x / 2f + 0.1f);
+
+        RaycastHit2D hit = Physics2D.BoxCast((Vector2)druidtransform.position + offset, biteSize, 0f, directionVector, LayerMask.GetMask("GrowEnemy", "RoboticEnemy"));
+        if (hit.collider != null)
         {
-            Debug.Log("RaycastConnected");
             if (!damagecd)
             {
                 if (hit.collider != null)
                 {
-                    IGrowableEnemy enemy = hit.collider.GetComponent<IGrowableEnemy>();
+                    IDamageAble enemy = hit.collider.GetComponent<IDamageAble>();
                     if (enemy != null)
                     {
                         if (!enemy.Dead)
                         {
-                            Debug.Log("Hit");
+                            Debug.Log( hit.collider.gameObject.name + " has been hit!");
                             damagecd = true;
-                            enemy.TakeDamage(3f);
+                            Persistence.instance.ApplyDamage(hit.collider.gameObject, 2f);
                             yield return StartCoroutine(FreezeFrame(0.25f));
-                            float burstSpeed = 4f; // Apply burst of speed in facing direction
-
+                            float burstSpeed = 4f; 
+                            
+                            //Applys a backwards force when hitting something
                             druidrb.AddForce(new Vector2(burstSpeed * -direction, 0f), ForceMode2D.Impulse);
                         }
                     }

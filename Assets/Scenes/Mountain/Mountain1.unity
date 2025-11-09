@@ -15965,7 +15965,7 @@ GameObject:
   - component: {fileID: 1031406483}
   - component: {fileID: 1031406482}
   m_Layer: 11
-  m_Name: RollingBotFrozen
+  m_Name: RollingBot
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16014,7 +16014,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 2d13dfa8af205d646b69eab2daf239a7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -16035,7 +16035,7 @@ Transform:
   m_GameObject: {fileID: 1031406477}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.294, y: 69.363, z: 0}
+  m_LocalPosition: {x: -1.97, y: 69.363, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -16075,10 +16075,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc2ff83784127af4cb2d4b63f30e882e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 4
-  activationDistance: 2.5
   flashDuration: 0.3
   flashPeak: 1
+  moveSpeed: 2
+  pauseTime: 0.5
+  health: 4
+  moveDistance: 5
+  activationDistance: 2.5
 --- !u!50 &1031406482
 Rigidbody2D:
   serializedVersion: 5
@@ -31006,7 +31009,7 @@ MonoBehaviour:
   bearJumpHeight: 6
   cursorTexture: {fileID: 2800000, guid: 21f1aeab1c4e1014990a55c89c94d423, type: 3}
   UIwalker: {fileID: 1351026799}
-  biteLength: 2.5
+  biteSize: {x: 2.5, y: 2}
 --- !u!61 &1815524646
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -31125,7 +31128,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 44717c1bdf14a3e4aaa683383570cb53, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
