@@ -1,3 +1,4 @@
+using UnityEditor.Tilemaps;
 using UnityEngine;
 
 public class Persistence : MonoBehaviour
@@ -9,6 +10,8 @@ public class Persistence : MonoBehaviour
      * Call this to damage any class with the interface IDamageAble
      */
     public static Persistence instance;
+
+    private GameObject druid;
 
     //---- PERSISTENCE FRAMEWORK ----
     private void Awake()
@@ -24,12 +27,18 @@ public class Persistence : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        druid = GameObject.FindGameObjectWithTag("Player");
+    }
+
     //---- DAMAGE MANAGER ---- 
     public void ApplyDamage(GameObject target, float amount)
     {
         IDamageAble damageable = target.GetComponent<IDamageAble>();
-        if (damageable != null && !damageable.Dead)
+        if (damageable != null && !damageable.Dead && target != druid)
         {
+           
             damageable.TakeDamage(amount);
             Debug.Log("PersistentGameManager: " + target.name +  " took " + amount + "  damage.");
         }

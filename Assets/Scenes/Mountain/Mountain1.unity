@@ -16077,7 +16077,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   flashDuration: 0.3
   flashPeak: 1
-  moveSpeed: 2
+  moveSpeed: 4
   pauseTime: 0.5
   health: 4
   moveDistance: 5
@@ -30983,6 +30983,8 @@ MonoBehaviour:
   druid: {fileID: 1815524641}
   deathScreen: {fileID: 1219829554}
   spawnSceneName: 
+  flashDuration: 0.3
+  flashPeak: 1
 --- !u!114 &1815524645
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30997,6 +30999,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   druidspeed: 3
   druidtransform: {fileID: 1815524642}
+  druid: {fileID: 1815524641}
   groundCheck: {fileID: 1374191287}
   variableJumpMultiplier: 0.5
   groundLayer:

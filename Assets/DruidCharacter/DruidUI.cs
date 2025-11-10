@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class DruidUI : MonoBehaviour
+public class DruidUI : MonoBehaviour, IDamageAble
 {
     public Image[] spiritimages;
 
@@ -22,11 +22,25 @@ public class DruidUI : MonoBehaviour
     public string spawnSceneName;
     private Animator druidanims;
     private Rigidbody2D druidRig;
-    private DeadTree treespawn;
+    private bool hitImmune = false;
+
+    private SpriteRenderer spriterenderer;
+    private MaterialPropertyBlock mpb;
+    private Coroutine flashRoutine;
+
+    [SerializeField] private float flashDuration = 0.3f;
+    [SerializeField] private float flashPeak = 1f;
+
+    public bool Dead => dead;
+
+
 
     private void Start()
     {
+        spriterenderer = gameObject.GetComponent<SpriteRenderer>();
+        spriterenderer.material = new Material(spriterenderer.material);
         druidanims = GetComponent<Animator>();
+        mpb = new MaterialPropertyBlock();
         health = MaxHealth;
         druidRig = GetComponent<Rigidbody2D>();
     }
@@ -74,6 +88,53 @@ public class DruidUI : MonoBehaviour
         }
     }
 
+    public void TakeDamage(float damage) //call to take damage put damage in parameters
+    {
+        if (!dead)
+        {
+            if (!hitImmune)
+            {
+                hitImmune = true;
+                health -= damage;
+                StartCoroutine(HitImmuneCoroutine(0.5f));
+                Flash();
+            }
+        }
+    }
+
+    public void Flash()
+    {
+        if (flashRoutine != null)
+        {
+            StopCoroutine(flashRoutine);
+        }
+        flashRoutine = StartCoroutine(FlashCoroutine());
+    }
+
+    private IEnumerator FlashCoroutine()
+    {
+        float timer = 0f;
+
+        spriterenderer.GetPropertyBlock(mpb);
+
+        while (timer < flashDuration)
+        {
+            timer += Time.deltaTime;
+            float t = 1f - (timer / flashDuration);
+            float intensity = t * flashPeak;
+
+            mpb.SetFloat("_FlashIntensity", intensity);
+            spriterenderer.SetPropertyBlock(mpb);
+
+            yield return null;
+        }
+
+        mpb.SetFloat("_FlashIntensity", 0f);
+        spriterenderer.SetPropertyBlock(mpb);
+
+        flashRoutine = null; // Clear reference
+    }
+
     private IEnumerator DeathScreenCycle()
     {
         health = 0;
@@ -85,6 +146,12 @@ public class DruidUI : MonoBehaviour
 
         yield return new WaitForSeconds(0.3f);
         dead = true;
+    }
+
+    private IEnumerator HitImmuneCoroutine(float time)
+    {
+        yield return new WaitForSeconds(time);
+        hitImmune = false;
     }
 
     private IEnumerator RespawnCycle()
@@ -106,11 +173,7 @@ public class DruidUI : MonoBehaviour
         yield return null;
 
         spawnPoint = GameObject.FindWithTag("RespawnPoint")?.transform;
-        if (spawnPoint.GetComponent<DeadTree>())
-        {
-            treespawn = spawnPoint.GetComponent<DeadTree>();
-
-        }
+       
         druidRig.gravityScale = 1f;
         health = MaxHealth;
         dead = false;

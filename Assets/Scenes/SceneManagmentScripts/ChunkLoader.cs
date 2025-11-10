@@ -75,7 +75,8 @@ public class ChunkLoader : MonoBehaviour
                 yield return null;
         }
 
+        Debug.Log("Chunkloader Loaded scene " + sceneName + ", unloaded " + currentChunk + ".");
+
         currentChunk = sceneName;
-        Debug.Log($"[ChunkLoader] Loaded scene '{sceneName}', unloaded '{currentChunk}'.");
     }
 }

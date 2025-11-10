@@ -31,6 +31,8 @@ public class DruidFrameWork : MonoBehaviour
     public static bool canmove = true;
     public Transform druidtransform;
 
+    [SerializeField] private GameObject druid;
+
     // ---- CUSTOM JUMP PHYSICS ----
     private float coyoteTimeCounter;
 
@@ -306,7 +308,7 @@ public class DruidFrameWork : MonoBehaviour
         Vector2 directionVector = new Vector2(direction, 0f);
         Vector2 offset = directionVector * (biteSize.x / 2f + 0.1f);
 
-        RaycastHit2D hit = Physics2D.BoxCast((Vector2)druidtransform.position + offset, biteSize, 0f, directionVector, LayerMask.GetMask("GrowEnemy", "RoboticEnemy"));
+        RaycastHit2D hit = Physics2D.BoxCast((Vector2)druidtransform.position + offset, biteSize, 0f, directionVector, 0f, LayerMask.GetMask("GrowEnemy", "RoboticEnemy"));
         if (hit.collider != null)
         {
             if (!damagecd)
@@ -314,7 +316,7 @@ public class DruidFrameWork : MonoBehaviour
                 if (hit.collider != null)
                 {
                     IDamageAble enemy = hit.collider.GetComponent<IDamageAble>();
-                    if (enemy != null)
+                    if (enemy != null && hit.collider != druid)
                     {
                         if (!enemy.Dead)
                         {
