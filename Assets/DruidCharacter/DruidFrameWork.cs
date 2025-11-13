@@ -39,9 +39,10 @@ public class DruidFrameWork : MonoBehaviour
     private float jumpBufferCounter;
 
     private bool isJumping;
-    private bool isGrounded;
+    public bool isGrounded;
     private bool gravityjump = false;
     private float jumpheight = 7.5f;
+    private bool hasJumped = false;
 
     [SerializeField] private Transform groundCheck;
     [SerializeField] private float variableJumpMultiplier = 0.5f;
@@ -199,10 +200,11 @@ public class DruidFrameWork : MonoBehaviour
                     jumpBufferCounter -= Time.deltaTime;
                 }
 
-                if (jumpBufferCounter > 0f && coyoteTimeCounter > 0f && !isAttacking && !istransforming)
+                if (jumpBufferCounter > 0f && coyoteTimeCounter > 0f && !isAttacking && !istransforming && !hasJumped)
                 {
                     druidrb.linearVelocityY = jumpheight;
                     isJumping = true;
+                    hasJumped = true;
                     jumpBufferCounter = 0f;
                 }
 
@@ -213,8 +215,20 @@ public class DruidFrameWork : MonoBehaviour
                     {
                         druidrb.linearVelocityY *= variableJumpMultiplier;
                     }
-
                     isJumping = false;
+                }
+
+                // ---- RESET ON LAND ----
+                if (isGrounded && druidrb.linearVelocityY <= 0.1f)
+                {
+                    coyoteTimeCounter = coyoteTime;
+                    canjump = true;
+                    hasJumped = false; 
+                }
+                else
+                {
+                    coyoteTimeCounter -= Time.deltaTime;
+                    canjump = false;
                 }
 
                 // ---- FASTER JUMP FALL ----
@@ -346,7 +360,7 @@ public class DruidFrameWork : MonoBehaviour
     {
         float originalTimeScale = Time.timeScale;
         Time.timeScale = 0f;
-        yield return new WaitForSecondsRealtime(duration); // unaffected by timeScale
+        yield return new WaitForSecondsRealtime(duration); 
         Time.timeScale = originalTimeScale;
     }
 

@@ -124,7 +124,7 @@ public class DruidGrowFramework : MonoBehaviour
             // ---- GROW FRAMEWORK ----
             if (Input.GetMouseButtonDown(0))
             {
-                if (DruidFrameWork.isTransformed == false)
+                if (DruidFrameWork.isTransformed == false && DruidLedgeClimb.isMantled == false)
                 {
                     //find mouse pos
                     Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
