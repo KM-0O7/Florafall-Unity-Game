@@ -32,8 +32,6 @@ public class SpiritFloat : MonoBehaviour
             {
                 float t = Time.time * speed + offset;
                 rect.anchoredPosition = startPos + new Vector2(0, Mathf.Sin(t) * amplitude);
-
-               
             }
             else
             {
