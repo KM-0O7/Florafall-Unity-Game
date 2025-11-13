@@ -60,5 +60,8 @@ TagManager:
   - name: Background
     uniqueID: 2249725835
     locked: 0
+  - name: GUI
+    uniqueID: 3844069091
+    locked: 0
   m_RenderingLayers:
   - Default
