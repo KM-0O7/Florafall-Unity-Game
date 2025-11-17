@@ -172,7 +172,6 @@ public class DruidFrameWork : MonoBehaviour
                 }
             }
         }
-           
     }
 
     /* UPDATE
@@ -223,7 +222,7 @@ public class DruidFrameWork : MonoBehaviour
                 {
                     coyoteTimeCounter = coyoteTime;
                     canjump = true;
-                    hasJumped = false; 
+                    hasJumped = false;
                 }
                 else
                 {
@@ -280,7 +279,7 @@ public class DruidFrameWork : MonoBehaviour
                     }
                 }
             }
-        }    
+        }
     }
 
     /* FUNCTIONS
@@ -334,12 +333,12 @@ public class DruidFrameWork : MonoBehaviour
                     {
                         if (!enemy.Dead)
                         {
-                            Debug.Log( hit.collider.gameObject.name + " has been hit!");
+                            Debug.Log(hit.collider.gameObject.name + " has been hit!");
                             damagecd = true;
                             Persistence.instance.ApplyDamage(hit.collider.gameObject, 2f);
                             yield return StartCoroutine(FreezeFrame(0.25f));
-                            float burstSpeed = 4f; 
-                            
+                            float burstSpeed = 4f;
+
                             //Applys a backwards force when hitting something
                             druidrb.AddForce(new Vector2(burstSpeed * -direction, 0f), ForceMode2D.Impulse);
                         }
@@ -360,7 +359,7 @@ public class DruidFrameWork : MonoBehaviour
     {
         float originalTimeScale = Time.timeScale;
         Time.timeScale = 0f;
-        yield return new WaitForSecondsRealtime(duration); 
+        yield return new WaitForSecondsRealtime(duration);
         Time.timeScale = originalTimeScale;
     }
 

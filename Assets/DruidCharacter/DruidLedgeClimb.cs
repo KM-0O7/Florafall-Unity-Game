@@ -14,10 +14,12 @@ public class DruidLedgeClimb : MonoBehaviour
 
     [SerializeField] private float ledgeClimbDistance = 0.52f;
     [SerializeField] private float topOffset = 0.5f;
+    [SerializeField] private float cellingCheckDistance = 0.5f;
     [SerializeField] private float ledgeClimbOffsetX = 0.5f;
     [SerializeField] private float ledgeClimbOffsetY = 1f;
     [SerializeField] private Vector2 climbSize = new Vector2(0.2f, 0.2f);
 
+    private float direction;
     public LineRenderer tether;
     private LineRenderer tetherClone;
     private Vector2 ledgePosition;
@@ -34,45 +36,56 @@ public class DruidLedgeClimb : MonoBehaviour
 
     private void Update()
     {
-        float direction = druidSpriteRenderer.flipX ? -1f : 1f;
+        direction = druidSpriteRenderer.flipX ? -1f : 1f;
 
         Debug.DrawRay(transform.position, new Vector2(direction, 0f) * ledgeClimbDistance, Color.red);
         Debug.DrawRay((Vector2)transform.position + new Vector2(0, topOffset), new Vector2(direction, 0f) * ledgeClimbDistance, Color.green);
+
         //LEDGE CLIMB
         if (Input.GetKey(KeyCode.Space))
         {
-            if (druidFrameWork.isGrounded == false && isMantled == false && DruidFrameWork.isTransformed == false)
+            if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
             {
-                Vector2 horizontalOffset = new Vector2(direction * 0.1f, 0f);
-                Vector2 offset = new Vector2(0, topOffset);
-                RaycastHit2D bottomHit = Physics2D.BoxCast((Vector2)transform.position + horizontalOffset, climbSize, 0f, new Vector2(direction, 0f), ledgeClimbDistance, LayerMask.GetMask("Ground"));
-
-                RaycastHit2D topHit = Physics2D.BoxCast((Vector2)druidTransform.position + offset + horizontalOffset, climbSize, 0f, new Vector2(direction, 0f), ledgeClimbDistance, LayerMask.GetMask("Ground"));
-
-                if (topHit.collider == null && bottomHit.collider != null)
+                if (druidFrameWork.isGrounded == false && isMantled == false && DruidFrameWork.isTransformed == false)
                 {
-                    isMantled = true;
-                    DruidFrameWork.canmove = false;
-                    druidRig.bodyType = RigidbodyType2D.Static;
-                    Debug.Log("Druid Is Climbing!");
-                    DruidFrameWork.canjump = false;
-
-                    //find ledge position
-
-                    druidAnimator.SetTrigger("Mantle");
-                    druidAnimator.SetBool("IsMantling", true);
-                    ledgePosition = bottomHit.point;
-                    climbTargetPos = new Vector2(ledgePosition.x + (direction * ledgeClimbOffsetX), ledgePosition.y + ledgeClimbOffsetY);
-
-                    tetherClone = Instantiate(tether);
-                    tetherClone.positionCount = 2;
-                    tetherClone.SetPosition(0, druidTransform.position);
-                    tetherClone.SetPosition(1, ledgePosition);
-                    tetherClone.useWorldSpace = true;
-
-                    StartCoroutine(LedgeClimb());
+                    LedgeClimbFunction();
                 }
             }
+        }
+    }
+
+    private void LedgeClimbFunction()
+    {
+        Vector2 horizontalOffset = new Vector2(direction * 0.1f, 0f);
+        Vector2 offset = new Vector2(0, topOffset);
+
+        RaycastHit2D cellingCheck = Physics2D.Raycast((Vector2)druidTransform.position, Vector2.up, cellingCheckDistance, LayerMask.GetMask("Ground"));
+        RaycastHit2D bottomHit = Physics2D.BoxCast((Vector2)transform.position + horizontalOffset, climbSize, 0f, new Vector2(direction, 0f), ledgeClimbDistance, LayerMask.GetMask("Ground"));
+
+        RaycastHit2D topHit = Physics2D.BoxCast((Vector2)druidTransform.position + offset + horizontalOffset, climbSize, 0f, new Vector2(direction, 0f), ledgeClimbDistance, LayerMask.GetMask("Ground"));
+
+        if (topHit.collider == null && bottomHit.collider != null && cellingCheck.collider == null)
+        {
+            isMantled = true;
+            DruidFrameWork.canmove = false;
+            druidRig.bodyType = RigidbodyType2D.Static;
+            Debug.Log("Druid Is Climbing!");
+            DruidFrameWork.canjump = false;
+
+            //find ledge position
+
+            druidAnimator.SetTrigger("Mantle");
+            druidAnimator.SetBool("IsMantling", true);
+            ledgePosition = bottomHit.point;
+            climbTargetPos = new Vector2(ledgePosition.x + (direction * ledgeClimbOffsetX), ledgePosition.y + ledgeClimbOffsetY);
+
+            tetherClone = Instantiate(tether);
+            tetherClone.positionCount = 2;
+            tetherClone.SetPosition(0, druidTransform.position);
+            tetherClone.SetPosition(1, ledgePosition);
+            tetherClone.useWorldSpace = true;
+
+            StartCoroutine(LedgeClimb());
         }
     }
 

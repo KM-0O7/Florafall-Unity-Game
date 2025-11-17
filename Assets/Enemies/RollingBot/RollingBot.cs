@@ -1,22 +1,22 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.InputSystem.iOS;
 
 public class RollingBot : MonoBehaviour, IDamageAble
 {
-
     /* ROLLING BOT
      * Handles the movement of a rolling bot
      * Handles activation of rolling bot
-     * Handles damage and flash 
+     * Handles damage and flash
      */
 
     //---- INTERFACE ----
     private bool dead = false;
+
     public bool Dead => dead;
 
     //---- BASE COMPONENTS ----
     private Transform druidTransform;
+
     private Transform rollingBotTransform;
     private SpriteRenderer spriterenderer;
     private MaterialPropertyBlock mpb;
@@ -26,15 +26,18 @@ public class RollingBot : MonoBehaviour, IDamageAble
 
     //---- DAMAGE ----
     private bool hitImmune = false;
+
     [SerializeField] private float flashDuration = 0.3f;
     [SerializeField] private float flashPeak = 1f;
 
     //---- ACTIVATION ----
     private bool activated = false;
+
     private bool isActivating = false;
 
     //---- MOVEMENT ----
     [SerializeField] private float moveSpeed = 2f;
+
     [SerializeField] private float pauseTime = 3f;
     [SerializeField] private float health = 4f;
     [SerializeField] private float moveDistance = 5f;
@@ -44,12 +47,12 @@ public class RollingBot : MonoBehaviour, IDamageAble
     private bool isPaused = false;
     private Vector2 startpos;
 
-
     /* START
      * Handles components
      * Handles getting player
      * Handles flash components
      */
+
     private void Start()
     {
         startpos = transform.position;
@@ -71,6 +74,7 @@ public class RollingBot : MonoBehaviour, IDamageAble
      * Handles movement
      * Handles pausing and starting at end via coroutine call
      */
+
     private void FixedUpdate()
     {
         if (activated)
@@ -133,7 +137,6 @@ public class RollingBot : MonoBehaviour, IDamageAble
         {
             if (druidTransform != null && rollingBotTransform.transform != null)
             {
-
                 float distance = Vector2.Distance(druidTransform.position, rollingBotTransform.position);
 
                 if (distance <= activationDistance)
@@ -141,10 +144,8 @@ public class RollingBot : MonoBehaviour, IDamageAble
                     isActivating = true;
                     StartCoroutine(ActivationCoroutine());
                 }
-
             }
         }
-       
     }
 
     /* FUNCTIONS
@@ -186,9 +187,9 @@ public class RollingBot : MonoBehaviour, IDamageAble
     }
 
     /* COROUTINES
-     * FlashCoroutine handles flashing when called 
+     * FlashCoroutine handles flashing when called
      * HitImmuneCoroutine handles disabling hitimmunity after time set in parameters
-     * ActivationCoroutine handles the activation after anims 
+     * ActivationCoroutine handles the activation after anims
      * PauseAtEnd handles the rolling bot pausing at the end of their roll
      */
 
@@ -232,7 +233,6 @@ public class RollingBot : MonoBehaviour, IDamageAble
         activated = true;
     }
 
-   
     private IEnumerator PauseAtEnd(bool turnRight) // pauses at the end of the movement
     {
         isPaused = true;
@@ -243,5 +243,4 @@ public class RollingBot : MonoBehaviour, IDamageAble
         movingright = turnRight;
         isPaused = false;
     }
-
 }
