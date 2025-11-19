@@ -98,6 +98,7 @@ public class Speak : MonoBehaviour, IDialogue
 
         DruidFrameWork.canjump = true;
         DruidFrameWork.canmove = true;
+        textOn = false;
         yield return new WaitForSeconds(0.1f);
         skippedText = false;
         yield return new WaitForSeconds(0.9f);
