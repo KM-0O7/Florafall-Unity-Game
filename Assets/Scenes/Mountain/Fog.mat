@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  version: 9
+  version: 10
 --- !u!21 &2100000
 Material:
   serializedVersion: 8
@@ -62,7 +62,7 @@ Material:
     - _QueueOffset: 0
     - _scrollspeed: 2
     m_Colors:
-    - _CharacterPosition: {r: -5.6107025, g: 69.36, b: 0, a: 0}
+    - _CharacterPosition: {r: 1.2687913, g: 69.36002, b: 0, a: 0}
     - _FogColor: {r: 0.758989, g: 0.7642435, b: 0.7735849, a: 0}
     - _FogColour: {r: 0.9198113, g: 0.9198113, b: 0.9198113, a: 0}
   m_BuildTextureStacks: []

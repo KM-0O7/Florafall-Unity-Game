@@ -20,6 +20,9 @@ TagManager:
   - RespawnPoint
   - Enemy
   - Breakable
+  - NPC
+  - DialogueBox
+  - DialogueText
   layers:
   - Default
   - TransparentFX
@@ -34,7 +37,7 @@ TagManager:
   - FallingPlatform
   - RoboticEnemy
   - Breakable
-  - 
+  - Dialogue
   - 
   - 
   - 
