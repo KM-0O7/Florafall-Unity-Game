@@ -13,6 +13,7 @@ public class Speak : MonoBehaviour, IDialogue
     [SerializeField] private Image dialogueBox;
     [SerializeField] private TextMeshProUGUI textBox;
     [SerializeField] private Animator dialogueAnimator;
+    [SerializeField] private TextMeshProUGUI npcName; 
     private Rigidbody2D druidRig;
     private Animator druidAnimator;
 
@@ -61,6 +62,10 @@ public class Speak : MonoBehaviour, IDialogue
 
         if (dialogueAnimator == null)
             dialogueAnimator = GameObject.FindGameObjectWithTag("DialogueBox").GetComponent<Animator>();
+
+        if (npcName == null)
+            npcName = GameObject.FindGameObjectWithTag("DialogueName").GetComponent<TextMeshProUGUI>();
+
     }
 
     private IEnumerator InteractingCoroutine()
@@ -68,6 +73,7 @@ public class Speak : MonoBehaviour, IDialogue
         DruidFrameWork.canjump = false;
         DruidFrameWork.canmove = false;
         druidRig.linearVelocity = new Vector2(0, 0);
+        npcName.text = gameObject.name;
 
         druidAnimator.SetFloat("XVelo", 0f);
         textOn = true;

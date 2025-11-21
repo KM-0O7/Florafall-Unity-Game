@@ -23,6 +23,8 @@ TagManager:
   - NPC
   - DialogueBox
   - DialogueText
+  - DialogueName
+  - DeadFan
   layers:
   - Default
   - TransparentFX
