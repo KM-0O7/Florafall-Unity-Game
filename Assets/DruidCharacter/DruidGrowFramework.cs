@@ -42,7 +42,6 @@ public class DruidGrowFramework : MonoBehaviour
         UI = GetComponent<DruidUI>();
     }
 
-
     /* UPDATE
      * Inlcudes Highlighting for plants
      * Includes Plant Growth and death
@@ -118,7 +117,7 @@ public class DruidGrowFramework : MonoBehaviour
             }
         }
         */
-      
+
         if (!UI.dead)
         {
             // ---- GROW FRAMEWORK ----
@@ -141,13 +140,18 @@ public class DruidGrowFramework : MonoBehaviour
                                 {
                                     // Grow the plant
                                     plant.Grow();
+                                    animator.SetBool("Growing", true);
+                                    Invoke("StopGrowing", 0.2f);
                                     Debug.Log("Growing" + hit.collider.name);
                                     growplant(hit.collider.transform);
                                 }
                                 else if (plant.CanDie)
                                 {
                                     // Degrow the plant
+                                    animator.SetBool("Growing", true);
+                                    Invoke("StopGrowing", 0.2f);
                                     DeGrowPlant(hit.collider.transform);
+
                                     animator.SetTrigger("Grow");
                                 }
                             }
@@ -168,14 +172,18 @@ public class DruidGrowFramework : MonoBehaviour
                                         {
                                             // Grow the enemy
                                             enemy.Grow();
+                                            animator.SetBool("Growing", true);
+                                            Invoke("StopGrowing", 0.2f);
                                             Debug.Log("Growing" + hit.collider.name);
                                             growplant(hit.collider.transform);
                                         }
                                         else if (enemy.CanDie)
                                         {
                                             // Degrow the enemy
+                                            animator.SetBool("Growing", true);
                                             DeGrowPlant(hit.collider.transform);
                                             animator.SetTrigger("Grow");
+                                            Invoke("StopGrowing", 0.2f);
                                         }
                                     }
                                 }
@@ -198,11 +206,13 @@ public class DruidGrowFramework : MonoBehaviour
             }
         }
     }
+
     /* FUNCTIONS
      * RemoveTether - Call to remove tether at specified transform
      * DeGrowPlant - Call to degrow the plant/enemy at specified transform
      * GrowPlant - Call to grow the plant/enemy at specified transform
-     */ 
+     */
+
     public void RemoveTether(Transform plantTransform)
     {
         // Find which index in the list this plant is at
@@ -215,6 +225,12 @@ public class DruidGrowFramework : MonoBehaviour
             activeTethers.RemoveAt(index);
             tetherTargets.RemoveAt(index);
         }
+    }
+
+    //call to stop the grow anim
+    private void StopGrowing()
+    {
+        animator.SetBool("Growing", false);
     }
 
     //call function to kill plant
