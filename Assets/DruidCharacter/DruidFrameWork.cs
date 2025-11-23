@@ -1,5 +1,7 @@
 using System.Collections;
+using Unity.Mathematics;
 using UnityEngine;
+using static UnityEngine.UI.Image;
 
 public class DruidFrameWork : MonoBehaviour
 {
@@ -30,8 +32,9 @@ public class DruidFrameWork : MonoBehaviour
     public static bool canjump = true;
     public static bool canmove = true;
     public Transform druidtransform;
-
+    [SerializeField] private ParticleSystem walkingParticle;
     [SerializeField] private GameObject druid;
+    [SerializeField] private ParticleSystem fallingParticle;
 
     // ---- CUSTOM JUMP PHYSICS ----
     private float coyoteTimeCounter;
@@ -43,6 +46,8 @@ public class DruidFrameWork : MonoBehaviour
     private bool gravityjump = false;
     private float jumpheight = 7.5f;
     private bool hasJumped = false;
+    private bool wasGroundedLastFrame = false;
+    private float impactSpeed = 0f;
 
     [SerializeField] private Transform groundCheck;
     [SerializeField] private float variableJumpMultiplier = 0.5f;
@@ -107,6 +112,13 @@ public class DruidFrameWork : MonoBehaviour
     {
         if (!UI.dead) //checks if not dead
         {
+            if (walkingParticle != null)
+            {
+                var VOL = walkingParticle.velocityOverLifetime;
+                VOL.enabled = true;
+                VOL.xMultiplier = druidspriterender.flipX ? 1f : -1f;
+            }
+
             if (canmove)
             {
                 // ---- WALKING ----
@@ -147,6 +159,18 @@ public class DruidFrameWork : MonoBehaviour
                     if (!Transitioning)
                     {
                         UIwalker.SetBool("Backwards", true);
+                    }
+                }
+
+                // ---- WALKING PARTICLES ----
+                if (speedx > 0f || speedx < 0f)
+                {
+                    if (isGrounded)
+                    {
+                        if (!isAttacking)
+                        {
+                            walkingParticle.Emit(1);
+                        }
                     }
                 }
 
@@ -220,15 +244,29 @@ public class DruidFrameWork : MonoBehaviour
                 // ---- RESET ON LAND ----
                 if (isGrounded && druidrb.linearVelocityY <= 0.1f)
                 {
-                    coyoteTimeCounter = coyoteTime;
-                    canjump = true;
-                    hasJumped = false;
+                    if (!wasGroundedLastFrame && impactSpeed > 9)
+                    {
+                        fallingParticle.Emit(10);
+                        canjump = false;
+                        canmove = false;
+                        druidrb.linearVelocityX = 0f;
+                        animator.SetTrigger("Land");
+                        Invoke("Recover", 0.4f);
+                    }
+                    else
+                    {
+                        coyoteTimeCounter = coyoteTime;
+                        canjump = true;
+                        hasJumped = false;
+                    }
                 }
                 else
                 {
                     coyoteTimeCounter -= Time.deltaTime;
                     canjump = false;
                 }
+
+                wasGroundedLastFrame = isGrounded;
 
                 // ---- FASTER JUMP FALL ----
                 if (!istransforming)
@@ -249,6 +287,12 @@ public class DruidFrameWork : MonoBehaviour
                             druidrb.gravityScale = 1f; //set back to normal gravity
                         }
                     }
+                }
+
+                // ---- STUN FALL ----
+                if (!isGrounded)
+                {
+                    impactSpeed = Mathf.Abs(druidrb.linearVelocityY);
                 }
 
                 // ---- TRANSFORMATIONS INPUT ----
@@ -297,6 +341,14 @@ public class DruidFrameWork : MonoBehaviour
     {
         boxcollider.offset = newoffset;
         boxcollider.size = newsize;
+    }
+
+    //Call to recover from stun
+    private void Recover()
+    {
+        canjump = true;
+        canmove = true;
+        animator.SetTrigger("Recover");
     }
 
     /* COROUTINES
