@@ -13,7 +13,8 @@ public class Speak : MonoBehaviour, IDialogue
     [SerializeField] private Image dialogueBox;
     [SerializeField] private TextMeshProUGUI textBox;
     [SerializeField] private Animator dialogueAnimator;
-    [SerializeField] private TextMeshProUGUI npcName; 
+    [SerializeField] private TextMeshProUGUI npcName;
+    private Transform druidTransform;
     private Rigidbody2D druidRig;
     private Animator druidAnimator;
 
@@ -29,7 +30,20 @@ public class Speak : MonoBehaviour, IDialogue
         {
             druidAnimator = player.GetComponent<Animator>();
             druidRig = player.GetComponent<Rigidbody2D>();
+            druidTransform = player.transform;
         }
+
+        if (dialogueBox == null)
+            dialogueBox = GameObject.FindGameObjectWithTag("DialogueBox").GetComponent<Image>();
+
+        if (textBox == null)
+            textBox = GameObject.FindGameObjectWithTag("DialogueText").GetComponent<TextMeshProUGUI>();
+
+        if (dialogueAnimator == null)
+            dialogueAnimator = GameObject.FindGameObjectWithTag("DialogueBox").GetComponent<Animator>();
+
+        if (npcName == null)
+            npcName = GameObject.FindGameObjectWithTag("DialogueName").GetComponent<TextMeshProUGUI>();
     }
 
     private void Update()
@@ -41,6 +55,7 @@ public class Speak : MonoBehaviour, IDialogue
                 skippedText = true;
             }
         }
+        
     }
 
     public void Interact()
