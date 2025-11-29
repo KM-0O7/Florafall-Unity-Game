@@ -10,10 +10,15 @@ public class Speak : MonoBehaviour, IDialogue
     [SerializeField] private float typingSpeed = 0.1f;
 
     public string text = string.Empty;
-    [SerializeField] private Image dialogueBox;
-    [SerializeField] private TextMeshProUGUI textBox;
-    [SerializeField] private Animator dialogueAnimator;
-    [SerializeField] private TextMeshProUGUI npcName;
+    private Image dialogueBox;
+    private TextMeshProUGUI textBox;
+    private Animator dialogueAnimator;
+    private TextMeshProUGUI npcName;
+    [SerializeField] private float rangeOfSight = 12f;
+    private SpriteRenderer NPCSprite;
+    private Transform NPCTransform;
+  
+
     private Transform druidTransform;
     private Rigidbody2D druidRig;
     private Animator druidAnimator;
@@ -26,6 +31,9 @@ public class Speak : MonoBehaviour, IDialogue
     private void Start()
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
+        NPCTransform = GetComponent<Transform>();
+        NPCSprite = GetComponent<SpriteRenderer>();
+
         if (player != null)
         {
             druidAnimator = player.GetComponent<Animator>();
@@ -48,6 +56,7 @@ public class Speak : MonoBehaviour, IDialogue
 
     private void Update()
     {
+
         if (textOn == true && skippedText == false)
         {
             if (Input.GetKeyDown(KeyCode.Space))
@@ -55,6 +64,21 @@ public class Speak : MonoBehaviour, IDialogue
                 skippedText = true;
             }
         }
+
+        float flipDistance = Vector2.Distance(NPCTransform.position, druidTransform.position);
+
+        if (flipDistance < rangeOfSight)
+        {
+            if (druidTransform.position.x < NPCTransform.position.x)
+            {
+                NPCSprite.flipX = true;
+
+            } else if (druidTransform.position.x > NPCTransform.position.x)
+            {
+                NPCSprite.flipX = false;
+            }
+        }
+
         
     }
 

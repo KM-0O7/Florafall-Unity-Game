@@ -51,7 +51,7 @@ public class DruidGrowFramework : MonoBehaviour
     private void Update()
     {
         //---- TETHER LOOP -----
-        for (int i = 0; i < activeTethers.Count; i++)
+        for (int i = 0; i < activeTethers.Count; i++) 
         {
             if (activeTethers[i] != null && tetherTargets[i] != null)
             {
