@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class FlyingEnemyMovement : MonoBehaviour
 {
-
     [SerializeField] private float moveSpeed = 2f;
     [SerializeField] private float swoopSpeed = 2f;
     [SerializeField] private float playerDetectionDistance = 2f;
@@ -20,48 +19,48 @@ public class FlyingEnemyMovement : MonoBehaviour
     private Transform enemyTransform;
     private Transform playerTransform;
 
-
-
-    void Start()
+    private void Start()
     {
         animator = GetComponent<Animator>();
         enemyTransform = GetComponent<Transform>();
-    
 
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (player != null)
         {
             playerTransform = player.gameObject.GetComponent<Transform>();
         }
-
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-
         float distance = Vector2.Distance(enemyTransform.position, playerTransform.position);
         if (distance < playerDetectionDistance)
         {
             playerInSight = true;
-        } else
+        }
+        else
         {
             playerInSight = false;
         }
 
-        //Calculate bobbing up and down with a sine wave
-        var bobbingOffset = Time.deltaTime * bobbingSpeed;
+        var bobbingOffset = Time.time * bobbingSpeed;
 
         float yBobbing = Mathf.Sin(bobbingOffset) * bobbingHeight;
 
         Vector3 pos = transform.position;
-        pos.y += yBobbing * Time.deltaTime;  
+        pos.y += yBobbing * Time.deltaTime;
         transform.position = pos;
 
-        //Detect if enemy is near a wall
         Collider2D wall = Physics2D.OverlapBox(transform.position, wallDetectionBoxSize, 0f, LayerMask.GetMask("Ground"));
         if (wall != null)
         {
+
+        }
+
+        if (!playerInSight)
+        {
+            Vector2 target = (Vector2) enemyTransform.position + Random.insideUnitCircle;
 
         }
     }
