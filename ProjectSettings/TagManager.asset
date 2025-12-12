@@ -25,6 +25,7 @@ TagManager:
   - DialogueText
   - DialogueName
   - DeadFan
+  - IceCrow
   layers:
   - Default
   - TransparentFX
