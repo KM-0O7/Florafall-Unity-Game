@@ -1,19 +1,16 @@
 fileFormatVersion: 2
-guid: 01cc69038308c9248905f4597e21f9f0
+guid: d6b56d3d2bd2f3c41afb410f0eeb4305
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 3794143038485240273
-    second: IceCrowFlyingSpriteSheet_0
+      213: -2727456677698507187
+    second: IceCrowShootSheet_0
   - first:
-      213: -8325850970849612719
-    second: IceCrowFlyingSpriteSheet_1
+      213: -88351195683480378
+    second: IceCrowShootSheet_1
   - first:
-      213: -17514341016634129
-    second: IceCrowFlyingSpriteSheet_2
-  - first:
-      213: -2658836056651216691
-    second: IceCrowFlyingSpriteSheet_3
+      213: 315266636851664179
+    second: IceCrowShootSheet_2
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -109,13 +106,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: IceCrowFlyingSpriteSheet_0
+      name: IceCrowShootSheet_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 48
-        height: 48
+        height: 32
       alignment: 9
       pivot: {x: 0.5, y: 0.34}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -124,20 +121,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 1d91fe3cdf087a430800000000000000
-      internalID: 3794143038485240273
+      spriteID: d4e63813a90262ad0800000000000000
+      internalID: -2727456677698507187
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: IceCrowFlyingSpriteSheet_1
+      name: IceCrowShootSheet_1
       rect:
         serializedVersion: 2
         x: 48
         y: 0
         width: 48
-        height: 48
+        height: 32
       alignment: 9
       pivot: {x: 0.5, y: 0.34}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -146,20 +143,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 15ceaad77a2a47c80800000000000000
-      internalID: -8325850970849612719
+      spriteID: 6cc1ecd3e0d16cef0800000000000000
+      internalID: -88351195683480378
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: IceCrowFlyingSpriteSheet_2
+      name: IceCrowShootSheet_2
       rect:
         serializedVersion: 2
         x: 96
         y: 0
         width: 48
-        height: 48
+        height: 32
       alignment: 9
       pivot: {x: 0.5, y: 0.34}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -168,30 +165,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: fec7a35bcc6c1cff0800000000000000
-      internalID: -17514341016634129
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: IceCrowFlyingSpriteSheet_3
-      rect:
-        serializedVersion: 2
-        x: 144
-        y: 0
-        width: 48
-        height: 48
-      alignment: 9
-      pivot: {x: 0.5, y: 0.34}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: dc8cd4f81bae91bd0800000000000000
-      internalID: -2658836056651216691
+      spriteID: 335531bf55d006400800000000000000
+      internalID: 315266636851664179
       vertices: []
       indices: 
       edges: []
@@ -200,7 +175,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 08413d63657c7004d86840b304f5c015
+    spriteID: a291f16bf300d6d4d9f7a8fd333ca8bf
     internalID: 0
     vertices: []
     indices: 
@@ -210,12 +185,11 @@ TextureImporter:
     spriteCustomMetadata:
       entries:
       - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":48.0,"y":48.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":48.0,"y":32.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      IceCrowFlyingSpriteSheet_0: 3794143038485240273
-      IceCrowFlyingSpriteSheet_1: -8325850970849612719
-      IceCrowFlyingSpriteSheet_2: -17514341016634129
-      IceCrowFlyingSpriteSheet_3: -2658836056651216691
+      IceCrowShootSheet_0: -2727456677698507187
+      IceCrowShootSheet_1: -88351195683480378
+      IceCrowShootSheet_2: 315266636851664179
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

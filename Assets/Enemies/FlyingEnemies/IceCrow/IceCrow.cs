@@ -1,4 +1,6 @@
+using DG.Tweening;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -11,7 +13,7 @@ public class IceCrow : MonoBehaviour, IGrowableEnemy
     [SerializeField] private float dashForce = 10f;
     [SerializeField] private float hoverDistance = 4f;
     [SerializeField] private float dashAttackDetectionDistance = 3f;
-
+    [SerializeField] private float bulletXOffset = 2;
     [SerializeField] private float wallDetectionDistance = 1f;
     [SerializeField] private Vector2 wallDetectionBoxSize;
 
@@ -28,10 +30,13 @@ public class IceCrow : MonoBehaviour, IGrowableEnemy
     private bool isShooting = false;
     private bool hasReachedTarget = true;
     private Vector2 randomTarget;
+    private GameObject bullet;
     private Animator animator;
     private bool playerInSight = false;
     private Transform enemyTransform;
     private Transform playerTransform;
+    private int direction;
+    
 
     private void Start()
     {
@@ -48,6 +53,7 @@ public class IceCrow : MonoBehaviour, IGrowableEnemy
 
     private void Update()
     {
+        direction = enemySprite.flipX ? 1 : -1;
         float distance = Vector2.Distance(enemyTransform.position, playerTransform.position);
         if (distance < playerDetectionDistance)
         {
@@ -78,7 +84,7 @@ public class IceCrow : MonoBehaviour, IGrowableEnemy
                 enemyTransform.position = Vector2.MoveTowards(enemyTransform.position, new Vector2(target, playerTransform.position.y), moveSpeed * Time.deltaTime);
             }
           
-            var direction = enemySprite.flipX ? 1 : -1;
+            
             RaycastHit2D dashHit = Physics2D.Raycast(enemyTransform.position, new Vector2(direction, 0), dashDetectionDistance, LayerMask.GetMask("Player"));
 
             if (dashHit && isDashing == false && dashCD == false)
@@ -149,7 +155,8 @@ public class IceCrow : MonoBehaviour, IGrowableEnemy
 
     private IEnumerator shootingCoroutine(float shotCd) 
     {
-
+        GameObject bulletClone = Instantiate(bullet);
+        bulletClone.transform.position = (Vector2) enemyTransform.position * direction + new Vector2(bulletXOffset, 0);
         
         yield return new WaitForSeconds(shotCd);
         isShooting = false; 

@@ -5,8 +5,8 @@ public class FollowPlayer : MonoBehaviour
     public static Transform target;
     public GameObject Maincharacter;
 
-    private Vector2 minBounds;// bottom-left of room
-    private Vector2 maxBounds; // top-right of room
+    private Vector2 minBounds;
+    private Vector2 maxBounds; 
 
     private float camHalfWidth;
     private float camHalfHeight;
@@ -15,7 +15,6 @@ public class FollowPlayer : MonoBehaviour
     private bool snapThisFrame = false;
     private Camera cam;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Start()
     {
         target = Maincharacter.transform;
@@ -26,7 +25,7 @@ public class FollowPlayer : MonoBehaviour
         camHalfWidth = camHalfHeight * cam.aspect;
     }
 
-    // Update is called once per frame
+
     private void Update()
     {
         target = Maincharacter.transform;

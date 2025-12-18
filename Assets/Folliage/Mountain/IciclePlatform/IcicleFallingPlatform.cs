@@ -27,7 +27,6 @@ public class IcicleFallingPlatform : MonoBehaviour
             if (DruidFrameWork.canjump == true)
             {
                 playercheck();
-          
             }
         }
     }

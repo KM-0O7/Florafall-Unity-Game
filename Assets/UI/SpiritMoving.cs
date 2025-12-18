@@ -20,7 +20,7 @@ public class SpiritFloat : MonoBehaviour
      
         startPos = rect.anchoredPosition;
         
-        float offset = Random.Range(0f, Mathf.PI * 2f);
+        float offset = Random.Range(0f, Mathf.PI * 2);
         StartCoroutine(FloatRoutine(offset));
     }
 
@@ -35,9 +35,7 @@ public class SpiritFloat : MonoBehaviour
             }
             else
             {
-                
                 rect.anchoredPosition = startPos;
-                
             }
 
             yield return null;

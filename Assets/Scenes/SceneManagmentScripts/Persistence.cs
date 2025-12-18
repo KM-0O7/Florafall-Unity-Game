@@ -1,4 +1,3 @@
-using UnityEditor.Tilemaps;
 using UnityEngine;
 
 public class Persistence : MonoBehaviour
@@ -9,6 +8,7 @@ public class Persistence : MonoBehaviour
      * Handles damage via calling Persistence.instance.ApplyDamage(gameobject, damage);
      * Call this to damage any class with the interface IDamageAble
      */
+
     public static Persistence instance;
 
     private GameObject druid;
