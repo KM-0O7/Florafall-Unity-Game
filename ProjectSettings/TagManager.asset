@@ -26,6 +26,7 @@ TagManager:
   - DialogueName
   - DeadFan
   - IceCrow
+  - IceBullet
   layers:
   - Default
   - TransparentFX
@@ -41,7 +42,7 @@ TagManager:
   - RoboticEnemy
   - Breakable
   - Dialogue
-  - 
+  - Bullets
   - 
   - 
   - 
