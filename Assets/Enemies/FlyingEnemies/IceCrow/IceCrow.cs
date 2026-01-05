@@ -9,7 +9,6 @@ public class IceCrow : MonoBehaviour, IGrowableEnemy
     [SerializeField] private float dashDetectionDistance = 1.5f;
     [SerializeField] private float dashForce = 10f;
     [SerializeField] private float hoverDistance = 4f;
-    [SerializeField] private float dashAttackDetectionDistance = 3f;
     [SerializeField] private float bulletXOffset = 2;
     [SerializeField] private float wallDetectionDistance = 1f;
     [SerializeField] private float bulletForce = 3f;
@@ -36,8 +35,9 @@ public class IceCrow : MonoBehaviour, IGrowableEnemy
     private Transform enemyTransform;
     private Transform playerTransform;
     private int direction;
-    private float moveTarget;
+    private Vector2 moveTarget;
     private Vector2 moveDirection;
+
 
     private void Start()
     {
@@ -54,78 +54,17 @@ public class IceCrow : MonoBehaviour, IGrowableEnemy
 
     private void Update()
     {
-        direction = enemySprite.flipX ? 1 : -1;
-        float distance = Vector2.Distance(enemyTransform.position, playerTransform.position);
-        if (distance < playerDetectionDistance && playerInSight == false && hasReachedTarget == false)
+        if (!isDashing && !isShooting)
         {
-            StartCoroutine(PlayerSpotted());
-        }
-
-        //---- AVOIDANCE -----
-
-        if (playerInSight)
-        {
-            RaycastHit2D forwardHit = Physics2D.Raycast((Vector2)enemyTransform.position, new Vector2(direction, 0), 0.6f, LayerMask.GetMask("Ground"));
-            if (forwardHit) //FORWARD
+            if (playerTransform.position.x < enemyTransform.position.x)
             {
-                Debug.Log(gameObject.name + "Detected Ground forward");
+                enemySprite.flipX = false;
             }
-
-            // ---- DASH AVOIDANCE ----
-
-            if (isDashing)
+            else
             {
-                RaycastHit2D dashRay = Physics2D.Raycast((Vector2)enemyTransform.position, new Vector2(direction, 0), 1, LayerMask.GetMask("Ground"));
-                if (dashRay)
-                {
-                    StartCoroutine(StopDash());
-                }
-            }
-
-            moveTarget = playerTransform.position.x + (enemySprite.flipX ? -hoverDistance : hoverDistance);
-            moveDirection = (new Vector2(moveTarget, playerTransform.position.y) - (Vector2)enemyTransform.position).normalized;
-
-            if (!isDashing && !isShooting)
-            {
-                //MOVE TOWARDS TARGET
-                enemyRig.linearVelocity = Vector2.Lerp(enemyRig.linearVelocity, moveDirection * moveSpeed, Time.deltaTime * 5f);
-            }
-
-            RaycastHit2D dashHit = Physics2D.Raycast(enemyTransform.position, new Vector2(direction, 0), dashDetectionDistance, LayerMask.GetMask("Player"));
-
-            if (dashHit && isDashing == false && dashCD == false && isShooting == false)
-            {
-                dashCD = true;
-                isDashing = true;
-                StartCoroutine(Dash());
-            }
-
-            if (!isDashing && !isShooting)
-            {
-                if (playerTransform.position.x < enemyTransform.position.x)
-                {
-                    enemySprite.flipX = false;
-                }
-                else
-                {
-                    enemySprite.flipX = true;
-                }
-            }
-
-            if (!isShooting && !isDashing && canShoot && !dashCD)
-            {
-                if (Vector2.Distance(enemyTransform.position, playerTransform.position) < shootingDistance)
-                {
-                    if (enemyTransform.position.x < (playerTransform.position.x + 1) && enemyTransform.position.x < (playerTransform.position.x - 1))
-                    {
-                        canShoot = false;
-                        isShooting = true;
-                        StartCoroutine(shootingCoroutine(Random.Range(2, 4)));
-                    }
-                }
+                enemySprite.flipX = true;
             }
         }
-
 
         //---- WANDER ----
         if (!playerInSight)
@@ -143,13 +82,107 @@ public class IceCrow : MonoBehaviour, IGrowableEnemy
                 hasReachedTarget = true;
             }
 
-            if (randomTarget.x > enemyTransform.position.x)
+            if (!hasReachedTarget || playerInSight)
             {
-                enemySprite.flipX = true;
+                if (randomTarget.x > enemyTransform.position.x)
+                {
+                    enemySprite.flipX = true;
+                }
+                else
+                {
+                    enemySprite.flipX = false;
+                }
             }
-            else
+
+        }
+
+        direction = enemySprite.flipX ? 1 : -1;
+        float distance = Vector2.Distance(enemyTransform.position, playerTransform.position);
+        if (distance < playerDetectionDistance && playerInSight == false && hasReachedTarget == false)
+        {
+            StartCoroutine(PlayerSpotted());
+        }
+
+        if (playerInSight)
+        {
+            
+            // ---- DASH AVOIDANCE ----
+            if (isDashing)
             {
-                enemySprite.flipX = false;
+                RaycastHit2D dashRay = Physics2D.Raycast((Vector2)enemyTransform.position, new Vector2(direction, 0), 1, LayerMask.GetMask("Ground"));
+                if (dashRay)
+                {
+                    StartCoroutine(StopDash());
+                }
+            }
+
+            // ---- MOVEMENT ----
+            moveTarget = new Vector2(playerTransform.position.x + (enemySprite.flipX ? -hoverDistance : hoverDistance), playerTransform.position.y);
+
+
+            //---- AVOIDANCE -----
+
+            //FORWARD
+            RaycastHit2D forwardHit = Physics2D.Raycast((Vector2)enemyTransform.position, new Vector2(direction, 0), wallDetectionDistance, LayerMask.GetMask("Ground"));
+            if (forwardHit) 
+            {
+                float verticalOffset = enemyTransform.position.y < playerTransform.position.y ? 1.5f : -1.5f;
+                moveTarget.x = enemyTransform.position.x;
+                moveTarget.y += verticalOffset;
+            }
+
+            //BACK
+            RaycastHit2D backHit = Physics2D.Raycast((Vector2)enemyTransform.position, new Vector2(-1 * direction, 0), wallDetectionDistance, LayerMask.GetMask("Ground"));
+            if (backHit)
+            {
+                float horizontalOffset = enemySprite.flipX ? 1.5f : -1.5f;
+                moveTarget.x += horizontalOffset;
+            }
+
+            //UP
+            RaycastHit2D upHit = Physics2D.Raycast((Vector2)enemyTransform.position, Vector2.up, wallDetectionDistance, LayerMask.GetMask("Ground"));
+            if (upHit)
+            {
+                float horizontalOffset = enemySprite.flipX ? 1.5f : -1.5f;
+                moveTarget.x += horizontalOffset;
+                moveTarget.y -= 1f;
+            }
+
+            //DOWN
+            RaycastHit2D downHit = Physics2D.Raycast((Vector2)enemyTransform.position, Vector2.down, wallDetectionDistance, LayerMask.GetMask("Ground"));
+            if (downHit)
+            {
+                moveTarget.y += 0.5f;
+            }
+
+            if (!isDashing && !isShooting)
+            {
+                moveDirection = (moveTarget - (Vector2)enemyTransform.position).normalized;
+                enemyRig.linearVelocity = Vector2.Lerp(enemyRig.linearVelocity, moveDirection * moveSpeed, Time.deltaTime * 5f);
+            }
+
+            RaycastHit2D dashHit = Physics2D.Raycast(enemyTransform.position, new Vector2(direction, 0), dashDetectionDistance, LayerMask.GetMask("Player"));
+
+            if (dashHit && isDashing == false && dashCD == false && isShooting == false)
+            {
+                dashCD = true;
+                isDashing = true;
+                StartCoroutine(Dash());
+            }
+
+          
+
+            if (!isShooting && !isDashing && canShoot && !dashCD)
+            {
+                if (Vector2.Distance(enemyTransform.position, playerTransform.position) < shootingDistance)
+                {
+                    if (enemyTransform.position.x < (playerTransform.position.x + 1) && enemyTransform.position.x < (playerTransform.position.x - 1))
+                    {
+                        canShoot = false;
+                        isShooting = true;
+                        StartCoroutine(shootingCoroutine(Random.Range(2, 4)));
+                    }
+                }
             }
         }
     }

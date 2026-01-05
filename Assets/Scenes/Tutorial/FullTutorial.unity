@@ -30036,7 +30036,7 @@ Transform:
   m_GameObject: {fileID: 1439491947}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -95.03, y: 77.84, z: 0}
+  m_LocalPosition: {x: -94.07, y: 76.11, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -30083,7 +30083,6 @@ MonoBehaviour:
   dashDetectionDistance: 3.5
   dashForce: 10
   hoverDistance: 3
-  dashAttackDetectionDistance: 3
   bulletXOffset: 0.6
   wallDetectionDistance: 1
   bulletForce: 4
