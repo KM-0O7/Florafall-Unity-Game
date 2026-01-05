@@ -1,3 +1,4 @@
+using Pathfinding;
 using System.Collections;
 using UnityEngine;
 
@@ -35,12 +36,17 @@ public class IceCrow : MonoBehaviour, IGrowableEnemy
     private Transform enemyTransform;
     private Transform playerTransform;
     private int direction;
-    private Vector2 moveTarget;
-    private Vector2 moveDirection;
 
+    //PATHFINDING
+    private Seeker seeker;
+    private Path path;
+    [SerializeField] private float pathRepeatRate = 0.2f;
+    public float nextWaypointDistance = 0.2f;
+    private int currentWaypoint = 0;
 
     private void Start()
     {
+        seeker = GetComponent<Seeker>();
         animator = GetComponent<Animator>();
         enemyTransform = GetComponent<Transform>();
         enemySprite = GetComponent<SpriteRenderer>();
@@ -50,6 +56,40 @@ public class IceCrow : MonoBehaviour, IGrowableEnemy
         {
             playerTransform = player.gameObject.GetComponent<Transform>();
         }
+
+        InvokeRepeating("UpdatePath", 0f, pathRepeatRate);
+    }
+
+    private void UpdatePath()
+    {
+        if (seeker.IsDone())
+        {
+            seeker.StartPath(transform.position, playerTransform.position, OnPathComplete);
+        }
+    }
+    private void OnPathComplete(Path p)
+    {
+        if (!p.error)
+        {
+            path = p;
+            currentWaypoint = 0;
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (path == null) return;
+        if (currentWaypoint >= path.vectorPath.Count) return;
+
+        if (playerInSight && !isShooting && !isDashing)
+        {
+            Vector2 direction = ((Vector2)path.vectorPath[currentWaypoint] - (Vector2)transform.position).normalized;
+            transform.position = Vector2.MoveTowards(transform.position, (Vector2)transform.position + direction, moveSpeed * Time.fixedDeltaTime);
+
+            float distance = Vector2.Distance(transform.position, path.vectorPath[currentWaypoint]);
+            if (distance < nextWaypointDistance) currentWaypoint++;
+
+        } 
     }
 
     private void Update()
@@ -114,51 +154,6 @@ public class IceCrow : MonoBehaviour, IGrowableEnemy
                 {
                     StartCoroutine(StopDash());
                 }
-            }
-
-            // ---- MOVEMENT ----
-            moveTarget = new Vector2(playerTransform.position.x + (enemySprite.flipX ? -hoverDistance : hoverDistance), playerTransform.position.y);
-
-
-            //---- AVOIDANCE -----
-
-            //FORWARD
-            RaycastHit2D forwardHit = Physics2D.Raycast((Vector2)enemyTransform.position, new Vector2(direction, 0), wallDetectionDistance, LayerMask.GetMask("Ground"));
-            if (forwardHit) 
-            {
-                float verticalOffset = enemyTransform.position.y < playerTransform.position.y ? 1.5f : -1.5f;
-                moveTarget.x = enemyTransform.position.x;
-                moveTarget.y += verticalOffset;
-            }
-
-            //BACK
-            RaycastHit2D backHit = Physics2D.Raycast((Vector2)enemyTransform.position, new Vector2(-1 * direction, 0), wallDetectionDistance, LayerMask.GetMask("Ground"));
-            if (backHit)
-            {
-                float horizontalOffset = enemySprite.flipX ? 1.5f : -1.5f;
-                moveTarget.x += horizontalOffset;
-            }
-
-            //UP
-            RaycastHit2D upHit = Physics2D.Raycast((Vector2)enemyTransform.position, Vector2.up, wallDetectionDistance, LayerMask.GetMask("Ground"));
-            if (upHit)
-            {
-                float horizontalOffset = enemySprite.flipX ? 1.5f : -1.5f;
-                moveTarget.x += horizontalOffset;
-                moveTarget.y -= 1f;
-            }
-
-            //DOWN
-            RaycastHit2D downHit = Physics2D.Raycast((Vector2)enemyTransform.position, Vector2.down, wallDetectionDistance, LayerMask.GetMask("Ground"));
-            if (downHit)
-            {
-                moveTarget.y += 0.5f;
-            }
-
-            if (!isDashing && !isShooting)
-            {
-                moveDirection = (moveTarget - (Vector2)enemyTransform.position).normalized;
-                enemyRig.linearVelocity = Vector2.Lerp(enemyRig.linearVelocity, moveDirection * moveSpeed, Time.deltaTime * 5f);
             }
 
             RaycastHit2D dashHit = Physics2D.Raycast(enemyTransform.position, new Vector2(direction, 0), dashDetectionDistance, LayerMask.GetMask("Player"));
