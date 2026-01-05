@@ -30168,13 +30168,13 @@ MonoBehaviour:
   moveSpeed: 1.5
   playerDetectionDistance: 6
   wanderRadius: 0.75
-  dashDetectionDistance: 3.5
+  dashDetectionDistance: 4.5
   dashForce: 10
   hoverDistance: 3
   bulletXOffset: 0.6
   wallDetectionDistance: 1
-  bulletForce: 4
-  shootingDistance: 5
+  bulletForce: 7
+  shootingDistance: 10
   bullet: {fileID: 957320645}
   pathRepeatRate: 0.2
   nextWaypointDistance: 0.2

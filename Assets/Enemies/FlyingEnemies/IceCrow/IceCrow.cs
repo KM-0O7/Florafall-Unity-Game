@@ -30,7 +30,7 @@ public class IceCrow : MonoBehaviour, IGrowableEnemy
     private bool hasReachedTarget = true;
     private Vector2 randomTarget;
     private bool canShoot = true;
-  
+
     private Animator animator;
     private bool playerInSight = false;
     private Transform enemyTransform;
@@ -39,6 +39,7 @@ public class IceCrow : MonoBehaviour, IGrowableEnemy
 
     //PATHFINDING
     private Seeker seeker;
+
     private Path path;
     [SerializeField] private float pathRepeatRate = 0.2f;
     public float nextWaypointDistance = 0.2f;
@@ -64,9 +65,12 @@ public class IceCrow : MonoBehaviour, IGrowableEnemy
     {
         if (seeker.IsDone())
         {
-            seeker.StartPath(transform.position, playerTransform.position, OnPathComplete);
+            var hoverDirection = enemySprite.flipX ? -1f : 1f;
+            Vector2 hoverTarget = new Vector2(hoverDirection * hoverDistance + playerTransform.position.x, playerTransform.position.y);
+            seeker.StartPath(transform.position, hoverTarget, OnPathComplete);
         }
     }
+
     private void OnPathComplete(Path p)
     {
         if (!p.error)
@@ -88,8 +92,7 @@ public class IceCrow : MonoBehaviour, IGrowableEnemy
 
             float distance = Vector2.Distance(transform.position, path.vectorPath[currentWaypoint]);
             if (distance < nextWaypointDistance) currentWaypoint++;
-
-        } 
+        }
     }
 
     private void Update()
@@ -133,7 +136,6 @@ public class IceCrow : MonoBehaviour, IGrowableEnemy
                     enemySprite.flipX = false;
                 }
             }
-
         }
 
         direction = enemySprite.flipX ? 1 : -1;
@@ -145,7 +147,6 @@ public class IceCrow : MonoBehaviour, IGrowableEnemy
 
         if (playerInSight)
         {
-            
             // ---- DASH AVOIDANCE ----
             if (isDashing)
             {
@@ -165,13 +166,11 @@ public class IceCrow : MonoBehaviour, IGrowableEnemy
                 StartCoroutine(Dash());
             }
 
-          
-
             if (!isShooting && !isDashing && canShoot && !dashCD)
             {
                 if (Vector2.Distance(enemyTransform.position, playerTransform.position) < shootingDistance)
                 {
-                    if (enemyTransform.position.x < (playerTransform.position.x + 1) && enemyTransform.position.x < (playerTransform.position.x - 1))
+                    if (enemyTransform.position.y < (playerTransform.position.y + 2) && enemyTransform.position.y < (playerTransform.position.y - 2))
                     {
                         canShoot = false;
                         isShooting = true;
@@ -195,7 +194,6 @@ public class IceCrow : MonoBehaviour, IGrowableEnemy
         Debug.DrawRay(transform.position, new Vector3(direction * dashDetectionDistance, 0, 0), Color.red);
         Gizmos.DrawWireSphere(transform.position, playerDetectionDistance);
         Gizmos.DrawWireSphere(transform.position, shootingDistance);
-
     }
 
     private IEnumerator StopDash()
@@ -224,7 +222,7 @@ public class IceCrow : MonoBehaviour, IGrowableEnemy
 
         bulletSprite.flipX = enemySprite.flipX;
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
         if (bulletClone)
         {
             Animator bulletAnimator = bulletClone.GetComponent<Animator>();
@@ -262,5 +260,4 @@ public class IceCrow : MonoBehaviour, IGrowableEnemy
             StartCoroutine(StopDash());
         }
     }
-
 }
