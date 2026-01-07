@@ -14,10 +14,12 @@ public class RustyGolem : MonoBehaviour, IGrowableEnemy, IDamageAble
     public bool dead = false;
     public bool candie = false;
     public bool isgrown = false;
+   
 
     public bool CanDie => candie;
     public bool IsGrown => isgrown;
     public bool Dead => dead;
+    public int spiritCost => 3;
 
     // ---- BASE COMPONENTS ----
     public float health;

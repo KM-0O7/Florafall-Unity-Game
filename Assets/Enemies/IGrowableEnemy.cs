@@ -4,6 +4,7 @@ public interface IGrowableEnemy
     bool CanDie { get; }
 
     bool Dead { get; }
+    int spiritCost { get; }
 
     void Grow();
 

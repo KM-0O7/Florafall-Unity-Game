@@ -1,7 +1,5 @@
 using System.Collections;
-using Unity.Mathematics;
 using UnityEngine;
-using static UnityEngine.UI.Image;
 
 public class DruidFrameWork : MonoBehaviour
 {

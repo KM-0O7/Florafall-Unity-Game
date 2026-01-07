@@ -41,4 +41,14 @@ public class Persistence : MonoBehaviour
             Debug.Log("PersistentGameManager: " + target.name + " took " + amount + "  damage.");
         }
     }
+
+    public void ApplyDamageToDruid(GameObject target, float amount)
+    {
+        IDamageAble damageable = target.GetComponent<IDamageAble>();
+        if (damageable != null && !damageable.Dead && target == druid)
+        {
+            damageable.TakeDamage(amount);
+            Debug.Log("PersistentGameManager: " + target.name + " took " + amount + "  damage.");
+        }
+    }
 }

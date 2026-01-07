@@ -2,7 +2,7 @@ using Pathfinding;
 using System.Collections;
 using UnityEngine;
 
-public class IceCrow : MonoBehaviour, IGrowableEnemy
+public class IceCrow : MonoBehaviour, IGrowableEnemy, IDamageAble
 {
     [SerializeField] private float moveSpeed = 2f;
     [SerializeField] private float playerDetectionDistance = 2f;
@@ -15,6 +15,7 @@ public class IceCrow : MonoBehaviour, IGrowableEnemy
     [SerializeField] private float bulletForce = 3f;
     [SerializeField] private float shootingDistance = 6f;
     [SerializeField] private GameObject bullet;
+    [SerializeField] private float health = 7f;
 
     private bool isDashing = false;
     private bool dashCD = false;
@@ -23,12 +24,11 @@ public class IceCrow : MonoBehaviour, IGrowableEnemy
     private bool growDb;
     public bool IsGrown => growDb;
     private bool candie = false;
+    public int spiritCost => 4;
     public bool CanDie => candie;
     private Rigidbody2D enemyRig;
     private SpriteRenderer enemySprite;
     private bool isShooting = false;
-    private bool hasReachedTarget = true;
-    private Vector2 randomTarget;
     private bool canShoot = true;
 
     private Animator animator;
@@ -36,6 +36,13 @@ public class IceCrow : MonoBehaviour, IGrowableEnemy
     private Transform enemyTransform;
     private Transform playerTransform;
     private int direction;
+
+    //FLASH
+    private bool hitImmune = false;
+    private MaterialPropertyBlock mpb;
+    private Coroutine flashRoutine;
+    [SerializeField] private float flashDuration = 0.3f;
+    [SerializeField] private float flashPeak = 1f;
 
     //PATHFINDING
     private Seeker seeker;
@@ -53,6 +60,8 @@ public class IceCrow : MonoBehaviour, IGrowableEnemy
         enemySprite = GetComponent<SpriteRenderer>();
         enemyRig = GetComponent<Rigidbody2D>();
         GameObject player = GameObject.FindGameObjectWithTag("Player");
+        mpb = new MaterialPropertyBlock();
+        enemySprite.material = new Material(enemySprite.material);
         if (player != null)
         {
             playerTransform = player.gameObject.GetComponent<Transform>();
@@ -82,111 +91,149 @@ public class IceCrow : MonoBehaviour, IGrowableEnemy
 
     private void FixedUpdate()
     {
-        if (path == null) return;
-        if (currentWaypoint >= path.vectorPath.Count) return;
-
-        if (playerInSight && !isShooting && !isDashing)
+        if (!growDb)
         {
-            Vector2 direction = ((Vector2)path.vectorPath[currentWaypoint] - (Vector2)transform.position).normalized;
-            transform.position = Vector2.MoveTowards(transform.position, (Vector2)transform.position + direction, moveSpeed * Time.fixedDeltaTime);
+            if (path == null) return;
+            if (currentWaypoint >= path.vectorPath.Count) return;
 
-            float distance = Vector2.Distance(transform.position, path.vectorPath[currentWaypoint]);
-            if (distance < nextWaypointDistance) currentWaypoint++;
+            if (playerInSight && !isShooting && !isDashing)
+            {
+                Vector2 direction = ((Vector2)path.vectorPath[currentWaypoint] - (Vector2)transform.position).normalized;
+                transform.position = Vector2.MoveTowards(transform.position, (Vector2)transform.position + direction, moveSpeed * Time.fixedDeltaTime);
+
+                float distance = Vector2.Distance(transform.position, path.vectorPath[currentWaypoint]);
+                if (distance < nextWaypointDistance) currentWaypoint++;
+            }
         }
     }
 
     private void Update()
     {
-        if (!isDashing && !isShooting)
+
+        //---- DEATH ----
+        if (health < 1 || health == 0)
         {
-            if (playerTransform.position.x < enemyTransform.position.x)
+            animator.SetTrigger("Death");
+            enemyRig.linearVelocityX = 0f;
+            enemyRig.linearVelocityY = 0f;
+            if (dead == false)
             {
-                enemySprite.flipX = false;
-            }
-            else
-            {
-                enemySprite.flipX = true;
+                dead = true;
             }
         }
 
-        //---- WANDER ----
-        if (!playerInSight)
+        if (!growDb && !dead)
         {
-            if (hasReachedTarget)
+            if (!isDashing && !isShooting)
             {
-                hasReachedTarget = false;
-                randomTarget = (Vector2)enemyTransform.position + Random.insideUnitCircle * wanderRadius;
-            }
-
-            enemyTransform.position = Vector2.MoveTowards(enemyTransform.position, randomTarget, moveSpeed * Time.deltaTime);
-
-            if (Vector2.Distance(enemyTransform.position, randomTarget) < 0.1 && hasReachedTarget == false)
-            {
-                hasReachedTarget = true;
-            }
-
-            if (!hasReachedTarget || playerInSight)
-            {
-                if (randomTarget.x > enemyTransform.position.x)
-                {
-                    enemySprite.flipX = true;
-                }
-                else
+                if (playerTransform.position.x < enemyTransform.position.x)
                 {
                     enemySprite.flipX = false;
                 }
-            }
-        }
-
-        direction = enemySprite.flipX ? 1 : -1;
-        float distance = Vector2.Distance(enemyTransform.position, playerTransform.position);
-        if (distance < playerDetectionDistance && playerInSight == false && hasReachedTarget == false)
-        {
-            StartCoroutine(PlayerSpotted());
-        }
-
-        if (playerInSight)
-        {
-            // ---- DASH AVOIDANCE ----
-            if (isDashing)
-            {
-                RaycastHit2D dashRay = Physics2D.Raycast((Vector2)enemyTransform.position, new Vector2(direction, 0), 1, LayerMask.GetMask("Ground"));
-                if (dashRay)
+                else
                 {
-                    StartCoroutine(StopDash());
+                    enemySprite.flipX = true;
                 }
             }
 
-            RaycastHit2D dashHit = Physics2D.Raycast(enemyTransform.position, new Vector2(direction, 0), dashDetectionDistance, LayerMask.GetMask("Player"));
-
-            if (dashHit && isDashing == false && dashCD == false && isShooting == false)
+            direction = enemySprite.flipX ? 1 : -1;
+            float distance = Vector2.Distance(enemyTransform.position, playerTransform.position);
+            if (distance < playerDetectionDistance && playerInSight == false)
             {
-                dashCD = true;
-                isDashing = true;
-                StartCoroutine(Dash());
+                StartCoroutine(PlayerSpotted());
             }
 
-            if (!isShooting && !isDashing && canShoot && !dashCD)
+            if (playerInSight)
             {
-                if (Vector2.Distance(enemyTransform.position, playerTransform.position) < shootingDistance)
+                // ---- DASH AVOIDANCE ----
+                if (isDashing)
                 {
-                    if (enemyTransform.position.y < (playerTransform.position.y + 2) && enemyTransform.position.y < (playerTransform.position.y - 2))
+                    RaycastHit2D dashRay = Physics2D.Raycast((Vector2)enemyTransform.position, new Vector2(direction, 0), 1, LayerMask.GetMask("Ground"));
+                    if (dashRay)
                     {
-                        canShoot = false;
-                        isShooting = true;
-                        StartCoroutine(shootingCoroutine(Random.Range(2, 4)));
+                        StartCoroutine(StopDash());
+                    }
+                }
+
+                RaycastHit2D dashHit = Physics2D.Raycast(enemyTransform.position, new Vector2(direction, 0), dashDetectionDistance, LayerMask.GetMask("Player", "Ground"));
+
+                if (dashHit && isDashing == false && dashCD == false && isShooting == false && dashHit.collider.CompareTag("Player"))
+                {
+                    dashCD = true;
+                    isDashing = true;
+                    StartCoroutine(Dash());
+                }
+
+                if (!isShooting && !isDashing && canShoot)
+                {
+                    if (Vector2.Distance(enemyTransform.position, playerTransform.position) < shootingDistance)
+                    {
+                        if (enemyTransform.position.y < (playerTransform.position.y + 0.5f) && enemyTransform.position.y > (playerTransform.position.y - 0.5f))
+                        {
+                            canShoot = false;
+                            isShooting = true;
+                            StartCoroutine(shootingCoroutine(4));
+                        }
                     }
                 }
             }
         }
     }
 
+    public void TakeDamage(float damage) //call to take damage put damage in parameters
+    {
+        if (!dead)
+        {
+            if (!hitImmune)
+            {
+                hitImmune = true;
+                health -= damage;
+                StartCoroutine(HitImmuneCoroutine(0.5f));
+                Flash();
+            }
+        }
+    }
+
+    // ---- FLASH CALL ----
+    public void Flash()
+    {
+        if (flashRoutine != null)
+        {
+            StopCoroutine(flashRoutine);
+        }
+        flashRoutine = StartCoroutine(FlashCoroutine());
+    }
+
     public void Grow()
     {
+        if (!dead)
+        {
+            if (IsGrown == false)
+            {
+                if (candie == false)
+                {
+                    growDb = true;
+                    candie = true;
+                    StartCoroutine(GrowCycle());
+                }
+            }
+        }
     }
 
     public void Die()
     {
+        if (!dead)
+        {
+            if (growDb == true)
+            {
+                if (candie == true)
+                {
+                    growDb = false;
+                    candie = false;
+                    StartCoroutine(DieCycle());
+                }
+            }
+        }
     }
 
     private void OnDrawGizmosSelected()
@@ -195,6 +242,50 @@ public class IceCrow : MonoBehaviour, IGrowableEnemy
         Gizmos.DrawWireSphere(transform.position, playerDetectionDistance);
         Gizmos.DrawWireSphere(transform.position, shootingDistance);
     }
+
+    private IEnumerator FlashCoroutine()
+    {
+        Debug.Log("IceCrowFlash");
+        float timer = 0f;
+
+        enemySprite.GetPropertyBlock(mpb);
+
+        while (timer < flashDuration)
+        {
+            timer += Time.deltaTime;
+            float t = 1f - (timer / flashDuration);
+            float intensity = t * flashPeak;
+
+            mpb.SetFloat("_FlashIntensity", intensity);
+            enemySprite.SetPropertyBlock(mpb);
+
+            yield return null;
+        }
+
+        mpb.SetFloat("_FlashIntensity", 0f);
+        enemySprite.SetPropertyBlock(mpb);
+
+        flashRoutine = null; 
+    }
+
+    private IEnumerator HitImmuneCoroutine(float time)
+    {
+        yield return new WaitForSeconds(time);
+        hitImmune = false;
+    }
+
+    private IEnumerator GrowCycle()
+    {
+        enemyRig.gravityScale = 1f;
+        yield return null;
+    }
+
+    private IEnumerator DieCycle()
+    {
+        enemyRig.gravityScale = 0f;
+        yield return null;
+    }
+
 
     private IEnumerator StopDash()
     {
@@ -219,7 +310,12 @@ public class IceCrow : MonoBehaviour, IGrowableEnemy
         SpriteRenderer bulletSprite = bulletClone.GetComponent<SpriteRenderer>();
         bulletSprite.enabled = true;
         bulletRig.AddForce(Vector2.right * direction * bulletForce, ForceMode2D.Impulse);
-
+        bulletClone.AddComponent<BoxCollider2D>();
+        BoxCollider2D box = bulletClone.GetComponent <BoxCollider2D>();
+        box.size = new Vector2(0.4f, 0.1f);
+        box.isTrigger = true;
+        box.enabled = true;
+    
         bulletSprite.flipX = enemySprite.flipX;
 
         yield return new WaitForSeconds(1f);
@@ -241,9 +337,8 @@ public class IceCrow : MonoBehaviour, IGrowableEnemy
     private IEnumerator PlayerSpotted()
     {
         enemyRig.linearVelocityX = 0;
-        hasReachedTarget = true;
         animator.SetTrigger("SpotPlayer");
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.35f);
         playerInSight = true;
     }
 

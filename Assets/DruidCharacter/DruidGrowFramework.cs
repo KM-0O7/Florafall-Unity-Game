@@ -208,7 +208,7 @@ public class DruidGrowFramework : MonoBehaviour
     }
 
     /* FUNCTIONS
-     * RemoveTether - Call to remove tether at specified transform
+     * RemoveTether - Call to remove tether at specified transformb
      * DeGrowPlant - Call to degrow the plant/enemy at specified transform
      * GrowPlant - Call to grow the plant/enemy at specified transform
      */
@@ -218,7 +218,7 @@ public class DruidGrowFramework : MonoBehaviour
         // Find which index in the list this plant is at
         int index = tetherTargets.IndexOf(plantTransform);
 
-        if (index != -1) // if found
+        if (index != -1) 
         {
             Destroy(activeTethers[index].gameObject);
 
@@ -249,7 +249,7 @@ public class DruidGrowFramework : MonoBehaviour
             IGrowableEnemy enemy = planttransform.GetComponent<IGrowableEnemy>();
             if (enemy != null)
             {
-                UI.spirits += 3;
+                UI.spirits += enemy.spiritCost;
 
                 enemy.Die();
                 RemoveTether(planttransform);
@@ -286,7 +286,7 @@ public class DruidGrowFramework : MonoBehaviour
                 activeTethers.Add(tetherclone);
                 tetherTargets.Add(plantTransform);
 
-                UI.spirits -= 3;
+                UI.spirits -= enemy.spiritCost;
                 animator.SetTrigger("Grow");
             }
         }
