@@ -341,7 +341,7 @@ public class DruidFrameWork : MonoBehaviour
         boxcollider.size = newsize;
     }
 
-    //Call to recover from stun
+    //Call to recover from fall
     private void Recover()
     {
         canjump = true;
@@ -405,7 +405,7 @@ public class DruidFrameWork : MonoBehaviour
         bearattackcd = false;
     }
 
-    private IEnumerator FreezeFrame(float duration) //freezeframe
+    public IEnumerator FreezeFrame(float duration) //freezeframe
     {
         float originalTimeScale = Time.timeScale;
         Time.timeScale = 0f;

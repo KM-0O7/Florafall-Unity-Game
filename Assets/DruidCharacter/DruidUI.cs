@@ -27,6 +27,7 @@ public class DruidUI : MonoBehaviour, IDamageAble
     private SpriteRenderer spriterenderer;
     private MaterialPropertyBlock mpb;
     private Coroutine flashRoutine;
+    private DruidFrameWork frameWork;
 
     [SerializeField] private float flashDuration = 0.3f;
     [SerializeField] private float flashPeak = 1f;
@@ -39,6 +40,7 @@ public class DruidUI : MonoBehaviour, IDamageAble
     {
         spriterenderer = gameObject.GetComponent<SpriteRenderer>();
         spriterenderer.material = new Material(spriterenderer.material);
+        frameWork = GetComponent<DruidFrameWork>();
         druidanims = GetComponent<Animator>();
         mpb = new MaterialPropertyBlock();
         health = MaxHealth;
@@ -98,6 +100,7 @@ public class DruidUI : MonoBehaviour, IDamageAble
                 health -= damage;
                 StartCoroutine(HitImmuneCoroutine(0.5f));
                 Flash();
+                StartCoroutine(frameWork.FreezeFrame(0.3f));
             }
         }
     }

@@ -6,12 +6,10 @@ public class IceCrow : MonoBehaviour, IGrowableEnemy, IDamageAble
 {
     [SerializeField] private float moveSpeed = 2f;
     [SerializeField] private float playerDetectionDistance = 2f;
-    [SerializeField] private float wanderRadius = 1.5f;
     [SerializeField] private float dashDetectionDistance = 1.5f;
     [SerializeField] private float dashForce = 10f;
     [SerializeField] private float hoverDistance = 4f;
     [SerializeField] private float bulletXOffset = 2;
-    [SerializeField] private float wallDetectionDistance = 1f;
     [SerializeField] private float bulletForce = 3f;
     [SerializeField] private float shootingDistance = 6f;
     [SerializeField] private GameObject bullet;
