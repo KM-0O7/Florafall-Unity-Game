@@ -14,6 +14,7 @@ public class IceCrow : MonoBehaviour, IGrowableEnemy, IDamageAble
     [SerializeField] private float shootingDistance = 6f;
     [SerializeField] private GameObject bullet;
     [SerializeField] private float health = 7f;
+    [SerializeField] private GameObject spikeObject;
 
     private bool isDashing = false;
     private bool dashCD = false;
@@ -25,6 +26,7 @@ public class IceCrow : MonoBehaviour, IGrowableEnemy, IDamageAble
     public int spiritCost => 4;
     public bool CanDie => candie;
     private Rigidbody2D enemyRig;
+    private BoxCollider2D spikeGrowHitbox;
     private SpriteRenderer enemySprite;
     private bool isShooting = false;
     private bool canShoot = true;
@@ -57,6 +59,7 @@ public class IceCrow : MonoBehaviour, IGrowableEnemy, IDamageAble
         enemyTransform = GetComponent<Transform>();
         enemySprite = GetComponent<SpriteRenderer>();
         enemyRig = GetComponent<Rigidbody2D>();
+        spikeGrowHitbox = spikeObject.GetComponent<BoxCollider2D>();
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         mpb = new MaterialPropertyBlock();
         enemySprite.material = new Material(enemySprite.material);
@@ -275,12 +278,14 @@ public class IceCrow : MonoBehaviour, IGrowableEnemy, IDamageAble
     private IEnumerator GrowCycle()
     {
         enemyRig.gravityScale = 1f;
+        spikeGrowHitbox.isTrigger = true;
         yield return null;
     }
 
     private IEnumerator DieCycle()
     {
         enemyRig.gravityScale = 0f;
+        spikeGrowHitbox.isTrigger = false;
         yield return null;
     }
 
