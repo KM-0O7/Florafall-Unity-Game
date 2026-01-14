@@ -157,7 +157,6 @@ public class IceCrow : MonoBehaviour, IGrowableEnemy, IDamageAble
                 }
 
                 RaycastHit2D dashHit = Physics2D.Raycast(enemyTransform.position, new Vector2(direction, 0), dashDetectionDistance, LayerMask.GetMask("Player", "Ground"));
-
                 if (dashHit && isDashing == false && dashCD == false && isShooting == false && dashHit.collider.CompareTag("Player"))
                 {
                     dashCD = true;
@@ -279,6 +278,7 @@ public class IceCrow : MonoBehaviour, IGrowableEnemy, IDamageAble
     {
         enemyRig.gravityScale = 1f;
         spikeGrowHitbox.isTrigger = true;
+        animator.SetTrigger("Grow");
         yield return null;
     }
 
@@ -286,6 +286,7 @@ public class IceCrow : MonoBehaviour, IGrowableEnemy, IDamageAble
     {
         enemyRig.gravityScale = 0f;
         spikeGrowHitbox.isTrigger = false;
+        animator.SetTrigger("UnGrow");
         yield return null;
     }
 
