@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: c40bf0b744b8c0b479b50c97227055cd
+guid: 9c63dc651524889438646dfbe3ff2ee6
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5542664288371463276
-    second: realmountain2_0
+      213: 6209665222881751223
+    second: MidMountainTree1_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -72,7 +72,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 1024
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: realmountain2_0
+      name: MidMountainTree1_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 1080
-        height: 308
+        width: 30
+        height: 61
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c64df91ddcf7bec40800000000000000
-      internalID: 5542664288371463276
+      spriteID: 7b0b6f7be992d2650800000000000000
+      internalID: 6209665222881751223
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      realmountain2_0: 5542664288371463276
+      MidMountainTree1_0: 6209665222881751223
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

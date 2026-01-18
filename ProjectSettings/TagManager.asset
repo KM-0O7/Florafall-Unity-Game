@@ -28,6 +28,7 @@ TagManager:
   - IceCrow
   - IceBullet
   - Hitbox
+  - Void
   layers:
   - Default
   - TransparentFX
@@ -44,7 +45,7 @@ TagManager:
   - Breakable
   - Dialogue
   - Bullets
-  - 
+  - Void
   - 
   - 
   - 
