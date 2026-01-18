@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: ccff2a35fdc8696408098fbf1060e121
+guid: ee1d94e42b84fd14a822215e26d98f12
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 2325561511908608934
-    second: MountainTopMiddleBackground_0
+      213: 21616415730870400
+    second: Connector_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: MountainTopMiddleBackground_0
+      name: Connector_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 1600
-        height: 257
+        width: 128
+        height: 100
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 6ab02acafdd064020800000000000000
-      internalID: 2325561511908608934
+      spriteID: 088a4fcf30ccc4000800000000000000
+      internalID: 21616415730870400
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      MountainTopMiddleBackground_0: 2325561511908608934
+      Connector_0: 21616415730870400
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

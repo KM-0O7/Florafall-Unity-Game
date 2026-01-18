@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 634536f46e1c39b48bf46517dc72ab5d
+guid: c53a7e87dd2d26d4f8edeb6162c43a20
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7973608370832443796
-    second: IcicleFarDropCaveBackground_0
+      213: -2155532413834681640
+    second: CloseMountain3_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -72,7 +72,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 1024
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: IcicleFarDropCaveBackground_0
+      name: CloseMountain3_0
       rect:
         serializedVersion: 2
-        x: 0
+        x: 11
         y: 0
-        width: 640
-        height: 360
+        width: 116
+        height: 174
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 4998c893192f7ae60800000000000000
-      internalID: 7973608370832443796
+      spriteID: 8d22b8ba0b20612e0800000000000000
+      internalID: -2155532413834681640
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      IcicleFarDropCaveBackground_0: 7973608370832443796
+      CloseMountain3_0: -2155532413834681640
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 8bc565ad67c841e48ad07dfff8912c8a
+guid: b195999287d5fae4cab426ab8e03a1f6
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1852794518013214928
-    second: MountainTopClose_0
+      213: -7166304595356783005
+    second: CloseConnector2_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -72,7 +72,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 1024
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: MountainTopClose_0
+      name: CloseConnector2_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 1920
-        height: 186
+        width: 128
+        height: 121
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 0d008ff2cc276b910800000000000000
-      internalID: 1852794518013214928
+      spriteID: 36e628170fb2c8c90800000000000000
+      internalID: -7166304595356783005
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      MountainTopClose_0: 1852794518013214928
+      CloseConnector2_0: -7166304595356783005
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

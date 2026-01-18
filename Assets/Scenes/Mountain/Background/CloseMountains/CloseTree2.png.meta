@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 2348dc0a03d057440bfe7f9e2d1d207e
+guid: 49baf5db0f36231418ff4bdb77ddb6db
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 2527010363529832957
-    second: MountainTopFarBackground_0
+      213: -5450926920366177978
+    second: CloseTree2_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -49,8 +49,8 @@ TextureImporter:
   spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
-  alignment: 9
-  spritePivot: {x: 0.5051185, y: 0.6595926}
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 32
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
@@ -72,7 +72,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 1024
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -100,23 +100,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: MountainTopFarBackground_0
+      name: CloseTree2_0
       rect:
         serializedVersion: 2
-        x: 0
+        x: 28
         y: 0
-        width: 1920
-        height: 319
+        width: 74
+        height: 97
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: df92de5798eb11320800000000000000
-      internalID: 2527010363529832957
+      spriteID: 641c5fe98da6a54b0800000000000000
+      internalID: -5450926920366177978
       vertices: []
       indices: 
       edges: []
@@ -126,7 +126,7 @@ TextureImporter:
     physicsShape: []
     bones: []
     spriteID: 5e97eb03825dee720800000000000000
-    internalID: 1537655665
+    internalID: 0
     vertices: []
     indices: 
     edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      MountainTopFarBackground_0: 2527010363529832957
+      CloseTree2_0: -5450926920366177978
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
