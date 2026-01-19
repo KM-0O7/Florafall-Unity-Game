@@ -341,8 +341,8 @@ TextureImporter:
       name: MountainTopTilemap_9
       rect:
         serializedVersion: 2
-        x: 0
-        y: 128
+        x: 96
+        y: 160
         width: 32
         height: 32
       alignment: 0
@@ -351,10 +351,10 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape:
-      - - {x: 16, y: 16}
-        - {x: -15, y: 16}
-        - {x: -15, y: -16}
-        - {x: 16, y: -16}
+      - - {x: 15, y: 16}
+        - {x: -16, y: 16}
+        - {x: -16, y: -16}
+        - {x: 15, y: -16}
       tessellationDetail: 0
       bones: []
       spriteID: 0e5cdd28045881940950645f33f725b1
@@ -367,7 +367,7 @@ TextureImporter:
       name: MountainTopTilemap_10
       rect:
         serializedVersion: 2
-        x: 32
+        x: 0
         y: 128
         width: 32
         height: 32
@@ -389,7 +389,7 @@ TextureImporter:
       name: MountainTopTilemap_11
       rect:
         serializedVersion: 2
-        x: 64
+        x: 32
         y: 128
         width: 32
         height: 32
@@ -415,8 +415,8 @@ TextureImporter:
       name: MountainTopTilemap_12
       rect:
         serializedVersion: 2
-        x: 32
-        y: 96
+        x: 64
+        y: 128
         width: 32
         height: 32
       alignment: 0
@@ -437,8 +437,8 @@ TextureImporter:
       name: MountainTopTilemap_13
       rect:
         serializedVersion: 2
-        x: 64
-        y: 96
+        x: 96
+        y: 128
         width: 32
         height: 32
       alignment: 0
@@ -446,7 +446,11 @@ TextureImporter:
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
-      physicsShape: []
+      physicsShape:
+      - - {x: 16, y: 16}
+        - {x: -15, y: 16}
+        - {x: -15, y: -16}
+        - {x: 16, y: -16}
       tessellationDetail: 0
       bones: []
       spriteID: 37a355d8792509d488754f325b3cbb4a
@@ -460,7 +464,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 32
-        y: 64
+        y: 96
         width: 32
         height: 32
       alignment: 0
@@ -485,8 +489,8 @@ TextureImporter:
       name: MountainTopTilemap_15
       rect:
         serializedVersion: 2
-        x: 0
-        y: 32
+        x: 64
+        y: 96
         width: 32
         height: 32
       alignment: 0
@@ -513,7 +517,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 32
-        y: 32
+        y: 64
         width: 32
         height: 32
       alignment: 0
@@ -540,7 +544,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 64
-        y: 32
+        y: 64
         width: 32
         height: 32
       alignment: 0
@@ -567,6 +571,87 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: 16, y: 12}
+        - {x: -12, y: 12}
+        - {x: -15, y: 12}
+        - {x: -15, y: -16}
+        - {x: 16, y: -16}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4ab84f0d5ce3e50419d58683a2b0d5ef
+      internalID: -1274766090
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MountainTopTilemap_19
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: 16, y: 12}
+        - {x: -12, y: 12}
+        - {x: -15, y: 12}
+        - {x: -15, y: -16}
+        - {x: 16, y: -16}
+      tessellationDetail: 0
+      bones: []
+      spriteID: f0effbe7868d80f4ba2e05e7ff5db229
+      internalID: -1146747189
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MountainTopTilemap_20
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: 16, y: 12}
+        - {x: -12, y: 12}
+        - {x: -15, y: 12}
+        - {x: -15, y: -16}
+        - {x: 16, y: -16}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 821b57df40b5fae41acd2d8bb62c6f13
+      internalID: 1073346290
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MountainTopTilemap_21
+      rect:
+        serializedVersion: 2
+        x: 0
         y: 0
         width: 32
         height: 32
@@ -578,8 +663,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4ab84f0d5ce3e50419d58683a2b0d5ef
-      internalID: -1274766090
+      spriteID: c4668247cb4ad784886ce9dbe504caaa
+      internalID: 319223318
       vertices: []
       indices: 
       edges: []
@@ -596,7 +681,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries: []
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":32.0,"y":32.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
       MountainTopTilemap_0: -1442016968705977174
       MountainTopTilemap_1: -6500929510289590704
@@ -609,7 +696,10 @@ TextureImporter:
       MountainTopTilemap_16: 1278987000
       MountainTopTilemap_17: -413675999
       MountainTopTilemap_18: -1274766090
+      MountainTopTilemap_19: -1146747189
       MountainTopTilemap_2: -1916298556
+      MountainTopTilemap_20: 1073346290
+      MountainTopTilemap_21: 319223318
       MountainTopTilemap_3: 2105928489
       MountainTopTilemap_4: 882045836
       MountainTopTilemap_5: -1760667459

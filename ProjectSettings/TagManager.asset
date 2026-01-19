@@ -29,6 +29,7 @@ TagManager:
   - IceBullet
   - Hitbox
   - Void
+  - CircleExpand
   layers:
   - Default
   - TransparentFX

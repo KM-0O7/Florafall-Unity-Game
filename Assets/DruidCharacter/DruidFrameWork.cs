@@ -56,6 +56,9 @@ public class DruidFrameWork : MonoBehaviour
     [SerializeField] private float druidJumpHeight;
     [SerializeField] private float bearJumpHeight;
 
+    // ---- VOID CHECK ----
+    public Vector2 lastGroundPosition = Vector2.zero;
+
     // ---- CUSTOM CURSOR ----
     public Texture2D cursorTexture;
 
@@ -244,12 +247,7 @@ public class DruidFrameWork : MonoBehaviour
                 {
                     if (!wasGroundedLastFrame && impactSpeed > 9)
                     {
-                        fallingParticle.Emit(10);
-                        canjump = false;
-                        canmove = false;
-                        druidrb.linearVelocityX = 0f;
-                        animator.SetTrigger("Land");
-                        Invoke("Recover", 0.4f);
+                        Stun();
                     }
                     else
                     {
@@ -257,6 +255,7 @@ public class DruidFrameWork : MonoBehaviour
                         canjump = true;
                         hasJumped = false;
                     }
+                    lastGroundPosition = druidtransform.position;
                 }
                 else
                 {
@@ -327,7 +326,18 @@ public class DruidFrameWork : MonoBehaviour
     /* FUNCTIONS
      * Beartattack will trigger the bear to attack by calling a coroutine
      * Changecollidersize will change the druids collider to a new size and a new offset useful for transformations
+     * Stun will stun the player
      */
+
+    public void Stun()
+    {
+        fallingParticle.Emit(10);
+        canjump = false;
+        canmove = false;
+        druidrb.linearVelocityX = 0f;
+        animator.SetTrigger("Land");
+        Invoke("Recover", 0.4f);
+    }
 
     public void BearAttack() //call this to attack while bear
     {

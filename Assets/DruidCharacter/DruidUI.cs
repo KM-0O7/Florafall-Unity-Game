@@ -145,7 +145,7 @@ public class DruidUI : MonoBehaviour, IDamageAble
         druidanims.SetTrigger("Death");
 
         yield return new WaitForSeconds(0.5f);
-        deathScreen.SetTrigger("Death");
+        deathScreen.SetTrigger("Expand");
 
         yield return new WaitForSeconds(0.3f);
         dead = true;
@@ -164,7 +164,7 @@ public class DruidUI : MonoBehaviour, IDamageAble
         yield return new WaitForSeconds(0.1f);
 
         Scene currentScene = SceneManager.GetActiveScene();
-        druidanims.SetTrigger("Respawn");
+        druidanims.SetTrigger("Deflate");
 
         if (SceneManager.GetActiveScene().name != spawnSceneName)
         {
