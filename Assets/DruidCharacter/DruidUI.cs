@@ -160,11 +160,11 @@ public class DruidUI : MonoBehaviour, IDamageAble
     private IEnumerator RespawnCycle()
     {
         waitCycle = false;
-        deathScreen.SetTrigger("Respawn");
+        deathScreen.SetTrigger("Deflate");
         yield return new WaitForSeconds(0.1f);
 
         Scene currentScene = SceneManager.GetActiveScene();
-        druidanims.SetTrigger("Deflate");
+        druidanims.SetTrigger("Respawn");
 
         if (SceneManager.GetActiveScene().name != spawnSceneName)
         {

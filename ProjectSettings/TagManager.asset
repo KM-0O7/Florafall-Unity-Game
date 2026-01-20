@@ -30,6 +30,7 @@ TagManager:
   - Hitbox
   - Void
   - CircleExpand
+  - CheckPoint
   layers:
   - Default
   - TransparentFX
@@ -47,7 +48,7 @@ TagManager:
   - Dialogue
   - Bullets
   - Void
-  - 
+  - Platform
   - 
   - 
   - 

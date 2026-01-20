@@ -181,20 +181,17 @@ public class DruidFrameWork : MonoBehaviour
                     animator.SetTrigger("Jump");
                 }
 
-                // ---- COYOTE TIME & RESET JUMP ----
-                isGrounded = Physics2D.OverlapCircle(groundCheck.position, checkRadius, groundLayer);
-                animator.SetBool("IsGrounded", isGrounded);
+                // ---- GROUND CHECK ----
+                float rayLength = 0.2f;
+                LayerMask platformLayer = LayerMask.GetMask("Platform");
 
-                if (isGrounded && druidrb.linearVelocityY <= 0.1f)
-                {
-                    coyoteTimeCounter = coyoteTime;
-                    canjump = true;
-                }
-                else
-                {
-                    coyoteTimeCounter -= Time.deltaTime;
-                    canjump = false;
-                }
+                RaycastHit2D hit = Physics2D.Raycast(groundCheck.position, Vector2.down, rayLength, platformLayer);
+                bool touchingPlatform = hit.collider != null;
+                bool validPlatformGround = touchingPlatform && druidrb.linearVelocityY <= 0f;
+
+                bool touchingGround = Physics2D.OverlapCircle(groundCheck.position, checkRadius, LayerMask.GetMask("Ground"));
+                isGrounded = touchingGround || validPlatformGround;
+                animator.SetBool("IsGrounded", isGrounded);
             }
         }
     }
@@ -224,6 +221,11 @@ public class DruidFrameWork : MonoBehaviour
                     jumpBufferCounter -= Time.deltaTime;
                 }
 
+                if (druidrb.linearVelocityY > 0.1f)
+                {
+                    jumpBufferCounter = 0f;
+                }
+
                 if (jumpBufferCounter > 0f && coyoteTimeCounter > 0f && !isAttacking && !istransforming && !hasJumped)
                 {
                     druidrb.linearVelocityY = jumpheight;
@@ -245,7 +247,7 @@ public class DruidFrameWork : MonoBehaviour
                 // ---- RESET ON LAND ----
                 if (isGrounded && druidrb.linearVelocityY <= 0.1f)
                 {
-                    if (!wasGroundedLastFrame && impactSpeed > 9)
+                    if (impactSpeed > 9  && !wasGroundedLastFrame)
                     {
                         Stun();
                     }
@@ -255,7 +257,8 @@ public class DruidFrameWork : MonoBehaviour
                         canjump = true;
                         hasJumped = false;
                     }
-                    lastGroundPosition = druidtransform.position;
+                    RaycastHit2D groundPosCheck = Physics2D.Raycast(druid.transform.position, Vector2.down, 1f, LayerMask.GetMask("Ground"));
+                    if (groundPosCheck) lastGroundPosition = druidtransform.position;
                 }
                 else
                 {
