@@ -27,7 +27,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Mountain/FinalMountainStealth.unity
     guid: 56be3af95cb90ea4097b466c1db7f111
   - enabled: 1
-    path: Assets/Scenes/Tutorial/FullTutorial.unity
+    path: Assets/Scenes/Tutorial/GrowTutorial.unity
     guid: 3b194e68b2fc50440be2ad71cd842d5d
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}

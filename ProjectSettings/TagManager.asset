@@ -31,6 +31,7 @@ TagManager:
   - Void
   - CircleExpand
   - CheckPoint
+  - IcicleTurret
   layers:
   - Default
   - TransparentFX

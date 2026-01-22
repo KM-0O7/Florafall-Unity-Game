@@ -12,6 +12,7 @@ public class IcicleFallingPlatform : MonoBehaviour
     private Animator animator;
     DruidFrameWork druidFrameWork;
     private GameObject druid;
+    [SerializeField] private GameObject icicleHitbox;
 
     private void Start()
     {
@@ -54,13 +55,17 @@ public class IcicleFallingPlatform : MonoBehaviour
 
     private IEnumerator platformfall()
     {
+        var hitbox = icicleHitbox.GetComponent<BoxCollider2D>();
         Debug.Log("Falling");
         isfalling = true;
         yield return new WaitForSeconds(fallingtime);
+        hitbox.enabled = true;
         rig.bodyType = RigidbodyType2D.Dynamic;
         rig.gravityScale = 2f;
         collider2Dicicle.enabled = false;
         yield return new WaitForSeconds(respawntime);
+        hitbox.enabled = false;
+
         animator.SetTrigger("respawn");
         rig.bodyType = RigidbodyType2D.Static;
         transform.position = basespawn;
