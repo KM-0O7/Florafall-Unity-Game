@@ -149,7 +149,7 @@ public class IceCrow : MonoBehaviour, IGrowableEnemy, IDamageAble
                 // ---- DASH AVOIDANCE ----
                 if (isDashing)
                 {
-                    RaycastHit2D dashRay = Physics2D.Raycast((Vector2)enemyTransform.position, new Vector2(direction, 0), 1, LayerMask.GetMask("Ground"));
+                    RaycastHit2D dashRay = Physics2D.Raycast((Vector2)enemyTransform.position, new Vector2(direction, 0), 1, LayerMask.GetMask("Ground", "Breakables"));
                     if (dashRay)
                     {
                         StartCoroutine(StopDash());

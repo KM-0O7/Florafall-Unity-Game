@@ -45,12 +45,12 @@ TagManager:
   - Background
   - FallingPlatform
   - RoboticEnemy
-  - Breakable
+  - 
   - Dialogue
   - Bullets
   - Void
   - Platform
-  - 
+  - Breakables
   - 
   - 
   - 
