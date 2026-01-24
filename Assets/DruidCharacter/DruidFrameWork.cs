@@ -247,7 +247,7 @@ public class DruidFrameWork : MonoBehaviour
                 // ---- RESET ON LAND ----
                 if (isGrounded && druidrb.linearVelocityY <= 0.1f)
                 {
-                    if (impactSpeed > 9  && !wasGroundedLastFrame)
+                    if (impactSpeed > 9 && !wasGroundedLastFrame)
                     {
                         Stun();
                     }

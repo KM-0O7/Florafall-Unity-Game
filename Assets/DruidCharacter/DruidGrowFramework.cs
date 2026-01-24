@@ -1,4 +1,6 @@
+using NUnit.Framework;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class DruidGrowFramework : MonoBehaviour
@@ -18,6 +20,7 @@ public class DruidGrowFramework : MonoBehaviour
 
     private List<LineRenderer> activeTethers = new List<LineRenderer>();
     private List<Transform> tetherTargets = new List<Transform>();
+    [SerializeField] private ParticleSystem tetherBreak;
 
     //HIGHLIGHTS
     private Transform lastHoveredObject;
@@ -51,7 +54,7 @@ public class DruidGrowFramework : MonoBehaviour
     private void Update()
     {
         //---- TETHER LOOP -----
-        for (int i = 0; i < activeTethers.Count; i++) 
+        for (int i = 0; i < activeTethers.Count; i++)
         {
             if (activeTethers[i] != null && tetherTargets[i] != null)
             {
@@ -72,7 +75,6 @@ public class DruidGrowFramework : MonoBehaviour
 
         //---- HIGHLIGHTS ----
 
-        /*
         if (!UI.dead && !DruidFrameWork.isTransformed)
         {
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -116,8 +118,24 @@ public class DruidGrowFramework : MonoBehaviour
                 }
             }
         }
-        */
 
+        // ---- UNGROW ALL ACTIVE PLANTS ----
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            if (DruidFrameWork.isTransformed == false && DruidLedgeClimb.isMantled == false)
+            {
+                while (activeTethers.Any())
+                {
+                    for (int i = 0; i < activeTethers.Count; ++i)
+                    {
+                        if (activeTethers[i] != null && tetherTargets[i] != null)
+                        {
+                            DeGrowPlant(tetherTargets[i]);
+                        }
+                    }
+                }
+            }
+        }
         if (!UI.dead)
         {
             // ---- GROW FRAMEWORK ----
@@ -140,20 +158,10 @@ public class DruidGrowFramework : MonoBehaviour
                                 {
                                     // Grow the plant
                                     plant.Grow();
-                                    animator.SetBool("Growing", true);
-                                    Invoke("StopGrowing", 0.2f);
                                     Debug.Log("Growing" + hit.collider.name);
                                     growplant(hit.collider.transform);
                                 }
-                                else if (plant.CanDie)
-                                {
-                                    // Degrow the plant
-                                    animator.SetBool("Growing", true);
-                                    Invoke("StopGrowing", 0.2f);
-                                    DeGrowPlant(hit.collider.transform);
-
-                                    animator.SetTrigger("Grow");
-                                }
+                                else if (plant.CanDie) DeGrowPlant(hit.collider.transform);
                             }
                         }
 
@@ -172,19 +180,10 @@ public class DruidGrowFramework : MonoBehaviour
                                         {
                                             // Grow the enemy
                                             enemy.Grow();
-                                            animator.SetBool("Growing", true);
-                                            Invoke("StopGrowing", 0.2f);
                                             Debug.Log("Growing" + hit.collider.name);
                                             growplant(hit.collider.transform);
                                         }
-                                        else if (enemy.CanDie)
-                                        {
-                                            // Degrow the enemy
-                                            animator.SetBool("Growing", true);
-                                            DeGrowPlant(hit.collider.transform);
-                                            animator.SetTrigger("Grow");
-                                            Invoke("StopGrowing", 0.2f);
-                                        }
+                                        else if (enemy.CanDie) DeGrowPlant(hit.collider.transform);
                                     }
                                 }
                             }
@@ -218,7 +217,7 @@ public class DruidGrowFramework : MonoBehaviour
         // Find which index in the list this plant is at
         int index = tetherTargets.IndexOf(plantTransform);
 
-        if (index != -1) 
+        if (index != -1)
         {
             Destroy(activeTethers[index].gameObject);
 
@@ -236,12 +235,17 @@ public class DruidGrowFramework : MonoBehaviour
     //call function to kill plant
     private void DeGrowPlant(Transform planttransform)
     {
+        animator.SetTrigger("Grow");
+        animator.SetBool("Growing", true);
+        Invoke("StopGrowing", 0.2f);
+
         IGrowablePlant plant = planttransform.GetComponent<IGrowablePlant>();
         if (plant != null)
         {
             UI.spirits += plant.spiritCost;
             plant.Die();
             RemoveTether(planttransform);
+            tetherBreak.Emit(3);
         }
         else
         {
@@ -253,12 +257,17 @@ public class DruidGrowFramework : MonoBehaviour
 
                 enemy.Die();
                 RemoveTether(planttransform);
+                tetherBreak.Emit(3);
             }
         }
     }
 
     private void growplant(Transform plantTransform) //call this function add tether to growed plant
     {
+        animator.SetTrigger("Grow");
+        animator.SetBool("Growing", true);
+        Invoke("StopGrowing", 0.2f);
+
         IGrowablePlant plant = plantTransform.GetComponent<IGrowablePlant>();
         if (plant != null)
         {
@@ -271,7 +280,6 @@ public class DruidGrowFramework : MonoBehaviour
             tetherTargets.Add(plantTransform);
 
             UI.spirits -= plant.spiritCost;
-            animator.SetTrigger("Grow");
         }
         else //enemies
         {
@@ -287,7 +295,6 @@ public class DruidGrowFramework : MonoBehaviour
                 tetherTargets.Add(plantTransform);
 
                 UI.spirits -= enemy.spiritCost;
-                animator.SetTrigger("Grow");
             }
         }
     }
