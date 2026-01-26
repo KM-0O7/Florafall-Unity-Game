@@ -124,14 +124,11 @@ public class DruidGrowFramework : MonoBehaviour
         {
             if (DruidFrameWork.isTransformed == false && DruidLedgeClimb.isMantled == false)
             {
-                while (activeTethers.Any())
+                for (int i = tetherTargets.Count - 1; i >= 0; i--)
                 {
-                    for (int i = 0; i < activeTethers.Count; ++i)
+                    if (activeTethers[i] != null && tetherTargets[i] != null)
                     {
-                        if (activeTethers[i] != null && tetherTargets[i] != null)
-                        {
-                            DeGrowPlant(tetherTargets[i]);
-                        }
+                        DeGrowPlant(tetherTargets[i]);
                     }
                 }
             }
@@ -233,7 +230,7 @@ public class DruidGrowFramework : MonoBehaviour
     }
 
     //call function to kill plant
-    private void DeGrowPlant(Transform planttransform)
+    public void DeGrowPlant(Transform planttransform)
     {
         animator.SetTrigger("Grow");
         animator.SetBool("Growing", true);

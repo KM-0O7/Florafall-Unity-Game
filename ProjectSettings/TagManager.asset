@@ -32,6 +32,8 @@ TagManager:
   - CircleExpand
   - CheckPoint
   - IcicleTurret
+  - SwordPlant
+  - PlantTether
   layers:
   - Default
   - TransparentFX
