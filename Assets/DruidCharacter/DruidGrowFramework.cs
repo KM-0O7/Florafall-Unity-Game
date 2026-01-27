@@ -75,49 +75,49 @@ public class DruidGrowFramework : MonoBehaviour
 
         //---- HIGHLIGHTS ----
 
-        if (!UI.dead && !DruidFrameWork.isTransformed)
-        {
-            Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero, Mathf.Infinity, LayerMask.GetMask("GrowPlants", "GrowEnemy"));
+        /* if (!UI.dead && !DruidFrameWork.isTransformed)
+         {
+             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+             RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero, Mathf.Infinity, LayerMask.GetMask("GrowPlants", "GrowEnemy"));
 
-            if (lastHoveredObject != null && lastHoveredMaterial != null) //reset to avoid multiple instances
-            {
-                lastHoveredMaterial.SetFloat("_On_Off", 0);
-                lastHoveredObject = null;
-                lastHoveredMaterial = null;
-            }
+             if (lastHoveredObject != null && lastHoveredMaterial != null) //reset to avoid multiple instances
+             {
+                 lastHoveredMaterial.SetFloat("_On_Off", 0);
+                 lastHoveredObject = null;
+                 lastHoveredMaterial = null;
+             }
 
-            if (hit.collider != null)
-            {
-                Transform target = hit.collider.transform;
-                float distance = Vector2.Distance(druidtransform.position, target.position);
+             if (hit.collider != null)
+             {
+                 Transform target = hit.collider.transform;
+                 float distance = Vector2.Distance(druidtransform.position, target.position);
 
-                if (distance < maxTetherDistance - 2)
-                {
-                    IGrowableEnemy enemy = hit.collider.GetComponent<IGrowableEnemy>();
-                    IGrowablePlant plant = hit.collider.GetComponent<IGrowablePlant>();
+                 if (distance < maxTetherDistance - 2)
+                 {
+                     IGrowableEnemy enemy = hit.collider.GetComponent<IGrowableEnemy>();
+                     IGrowablePlant plant = hit.collider.GetComponent<IGrowablePlant>();
 
-                    if (plant != null || enemy != null)
-                    {
-                        SpriteRenderer growableRender = hit.collider.GetComponent<SpriteRenderer>();
+                     if (plant != null || enemy != null)
+                     {
+                         SpriteRenderer growableRender = hit.collider.GetComponent<SpriteRenderer>();
 
-                        if (growableRender != null)
-                        {
-                            if (!growableRender.material.name.EndsWith("(Instance)"))
-                            {
-                                growableRender.material = new Material(growableRender.material);
-                            }
+                         if (growableRender != null)
+                         {
+                             if (!growableRender.material.name.EndsWith("(Instance)"))
+                             {
+                                 growableRender.material = new Material(growableRender.material);
+                             }
 
-                            Debug.Log(hit.collider.name + "Highlighted");
-                            growableRender.material.SetFloat("_On_Off", 1);
+                             Debug.Log(hit.collider.name + "Highlighted");
+                             growableRender.material.SetFloat("_On_Off", 1);
 
-                            lastHoveredObject = target;
-                            lastHoveredMaterial = growableRender.material;
-                        }
-                    }
-                }
-            }
-        }
+                             lastHoveredObject = target;
+                             lastHoveredMaterial = growableRender.material;
+                         }
+                     }
+                 }
+             }
+         }*/
 
         // ---- UNGROW ALL ACTIVE PLANTS ----
         if (Input.GetKeyDown(KeyCode.F))
@@ -151,14 +151,14 @@ public class DruidGrowFramework : MonoBehaviour
                             float distance = Vector2.Distance(druidtransform.position, hit.collider.transform.position);
                             if (distance <= maxTetherDistance - 2)
                             {
-                                if (!plant.IsGrown && UI.spirits >= plant.spiritCost)
+                                if (!plant.IsGrown && !plant.CanDie && UI.spirits >= plant.spiritCost)
                                 {
                                     // Grow the plant
                                     plant.Grow();
                                     Debug.Log("Growing" + hit.collider.name);
                                     growplant(hit.collider.transform);
                                 }
-                                else if (plant.CanDie) DeGrowPlant(hit.collider.transform);
+                                else if (plant.CanDie && plant.IsGrown) DeGrowPlant(hit.collider.transform);
                             }
                         }
 
