@@ -10,5 +10,10 @@ public class IceCrowBulletDetection : MonoBehaviour
             Persistence.instance.ApplyDamageToDruid(collision.gameObject, 1f);
             Destroy(gameObject);
         }
+        else if (collision.gameObject.CompareTag("Ground") || collision.gameObject.CompareTag("Breakable"))
+        {
+            Debug.Log("Ice Bullet Hit Ground!");
+            Destroy(gameObject);
+        }
     }
 }
