@@ -37,6 +37,7 @@ TagManager:
   - IceWall
   - NutText
   - Nut
+  - HiddenWalls
   layers:
   - Default
   - TransparentFX
@@ -56,7 +57,7 @@ TagManager:
   - Void
   - Platform
   - Breakables
-  - 
+  - HiddenAreas
   - 
   - 
   - 
