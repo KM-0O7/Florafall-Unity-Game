@@ -32,7 +32,7 @@ public class Void : MonoBehaviour
     {
         yield return new WaitForSeconds(0.2f);
         druid.transform.position = druidFrameWork.lastGroundPosition;
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.3f);
         circleExpand.SetTrigger("Deflate");
         yield return new WaitForSeconds(0.4f);
         druidUI.health -= 1;

@@ -62,7 +62,7 @@ Material:
     - _QueueOffset: 0
     - _scrollspeed: 2
     m_Colors:
-    - _CharacterPosition: {r: -76.83123, g: 82.35997, b: 0, a: 0}
+    - _CharacterPosition: {r: -120.43982, g: 77.620346, b: 0, a: 0}
     - _FogColor: {r: 0.8198202, g: 0.82532084, b: 0.8396226, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
