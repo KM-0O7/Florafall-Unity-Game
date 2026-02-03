@@ -15,6 +15,7 @@ public class IceCrow : MonoBehaviour, IGrowableEnemy, IDamageAble
     [SerializeField] private GameObject bullet;
     [SerializeField] private float health = 7f;
     [SerializeField] private GameObject spikeObject;
+    [SerializeField] private float deActivationDistance = 12f;
 
     private bool isDashing = false;
     private bool dashCD = false;
@@ -175,6 +176,11 @@ public class IceCrow : MonoBehaviour, IGrowableEnemy, IDamageAble
                             StartCoroutine(shootingCoroutine(4));
                         }
                     }
+                }
+
+                if (Vector2.Distance(gameObject.transform.position, playerTransform.position) > deActivationDistance)
+                {
+                    playerInSight = false;
                 }
             }
         }

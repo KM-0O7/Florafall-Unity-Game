@@ -35,6 +35,8 @@ TagManager:
   - SwordPlant
   - PlantTether
   - IceWall
+  - NutText
+  - Nut
   layers:
   - Default
   - TransparentFX

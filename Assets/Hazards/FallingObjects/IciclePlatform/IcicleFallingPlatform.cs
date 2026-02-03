@@ -13,6 +13,7 @@ public class IcicleFallingPlatform : MonoBehaviour
     DruidFrameWork druidFrameWork;
     private GameObject druid;
     [SerializeField] private GameObject icicleHitbox;
+    Rigidbody2D druidRig;
 
     private void Start()
     {
@@ -23,6 +24,7 @@ public class IcicleFallingPlatform : MonoBehaviour
         druid = GameObject.FindGameObjectWithTag("Player");
         animator = GetComponent<Animator>();
         druidFrameWork = druid.GetComponent<DruidFrameWork>();
+        druidRig = druid.GetComponent<Rigidbody2D>();
     }
 
     private void Update()
@@ -38,19 +40,19 @@ public class IcicleFallingPlatform : MonoBehaviour
 
     private void playercheck()
     {
-        Collider2D col = GetComponent<Collider2D>();
+        Collider2D col = collider2Dicicle;
+        Collider2D playerCol = druid.GetComponent<Collider2D>();
+        float contactTolerance = 0.15f;
 
-        Vector2 checkPoint = new Vector2(col.bounds.center.x, col.bounds.center.y + col.bounds.extents.y + 0.1f);
-        Collider2D[] hits = Physics2D.OverlapPointAll(checkPoint);
+        float platformTop = col.bounds.max.y;
+        float playerFeet = playerCol.bounds.min.y;
 
-        foreach (var hit in hits)
-        {
-            if (hit.CompareTag("Player"))
-            {  
-                StartCoroutine(platformfall());
-                 break;   
-            }
-        }
+        if (playerFeet < platformTop - 0.05f) return;
+        if (playerFeet < platformTop - contactTolerance || playerFeet > platformTop + contactTolerance) return;
+        if (playerCol.bounds.max.x < col.bounds.min.x || playerCol.bounds.min.x > col.bounds.max.x) return;
+
+        isfalling = true;
+        StartCoroutine(platformfall());
     }
 
     private IEnumerator platformfall()

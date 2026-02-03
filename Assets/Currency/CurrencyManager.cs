@@ -1,35 +1,53 @@
-
+using System.Collections;
+using TMPro;
 using UnityEngine;
 
 public class CurrencyManager : MonoBehaviour
 {
-    public static CurrencyManager instance;
-    public float nuts = 0;
+    public int nuts = 0;
+    private TextMeshProUGUI nutText;
 
-    private void Awake()
+    private void Start()
     {
-        if (instance == null)
+        nutText = GetComponent<TextMeshProUGUI>();
+        if (nutText != null)
         {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
+            nutText.text = nuts.ToString();
+        }   
+    }
+
+    public void gainBolts(int amount)
+    {
+        int start = nuts;
+        nuts += amount;
+
+        StopAllCoroutines();
+        StartCoroutine(counter(start, nuts));
+    }
+    public void looseBolts(int amount)
+    {
+        int start = nuts;
+        nuts -= amount;
+
+        StopAllCoroutines();
+        StartCoroutine(counter(start, nuts));
+    }
+    public void setBolts(int amount)
+    {
+        nuts = amount;
+    }
+
+    private IEnumerator counter(int currentNuts, int endNuts)
+    {
+      int step = currentNuts < endNuts ? 1 : -1;
+
+        for (int i = currentNuts; step > 0 ? i < endNuts : i > endNuts; i += step)
         {
-            Destroy(gameObject);
+            nutText.text = i.ToString();
+            yield return new WaitForSeconds(0.04f);
         }
-    }
-    
-    public void gainBolts(float nuts)
-    {
-        this.nuts += nuts;
-    }
-    public void looseBolts(float nuts)
-    {
-        this.nuts -= nuts;
-    }
-    public void setBolts(float nuts)
-    {
-        this.nuts = nuts;
+       
+        nutText.text = nuts.ToString();
     }
 
 }
