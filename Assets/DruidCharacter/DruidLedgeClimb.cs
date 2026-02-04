@@ -56,6 +56,8 @@ public class DruidLedgeClimb : MonoBehaviour
 
     private void LedgeClimbFunction()
     {
+        if (isMantled) return;
+
         Vector2 horizontalOffset = new Vector2(direction * 0.1f, 0f);
         Vector2 offset = new Vector2(0, topOffset);
 
@@ -68,7 +70,9 @@ public class DruidLedgeClimb : MonoBehaviour
         {
             isMantled = true;
             DruidFrameWork.canmove = false;
-            druidRig.bodyType = RigidbodyType2D.Static;
+            druidRig.linearVelocity = Vector2.zero;
+            druidRig.gravityScale = 0f;
+            druidRig.constraints = RigidbodyConstraints2D.FreezeAll;
             Debug.Log("Druid Is Climbing!");
             DruidFrameWork.canjump = false;
 
@@ -122,7 +126,8 @@ public class DruidLedgeClimb : MonoBehaviour
             druidTransform.position += Vector3.up * 0.05f;
         }
         Destroy(tetherClone.gameObject);
-        druidRig.bodyType = RigidbodyType2D.Dynamic;
+        druidRig.gravityScale = 1f;
+        druidRig.constraints = RigidbodyConstraints2D.FreezeRotation;
         druidAnimator.SetBool("IsMantling", false);
         DruidFrameWork.canjump = true;
         DruidFrameWork.canmove = true;
