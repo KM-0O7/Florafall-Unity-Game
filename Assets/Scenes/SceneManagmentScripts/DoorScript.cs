@@ -25,6 +25,7 @@ public class DoorScript : MonoBehaviour
     {
         if (!other.CompareTag("Player")) return;
 
+        if (DruidFrameWork.Transitioning) return;
         StartCoroutine(TeleportPlayer(other));
     }
 
@@ -45,7 +46,8 @@ public class DoorScript : MonoBehaviour
             UI.circleWipe.color = new Color(29f / 255f, 142f / 255f, 47f / 255f);
         }
 
-        yield return new WaitForSeconds(1.3f);
+        yield return new WaitUntil(() =>
+        fade.GetCurrentAnimatorStateInfo(0).IsName("CircleWipeExposed"));
 
         DruidFrameWork druid = player.GetComponent<DruidFrameWork>();
 
@@ -60,8 +62,6 @@ public class DoorScript : MonoBehaviour
         {
             Debug.LogWarning("no framework lol");
         }
-
-        DruidFrameWork.canmove = true;
 
         ChunkLoader.Instance.EnterChunk(targetChunk.SceneName);
 
@@ -81,16 +81,15 @@ public class DoorScript : MonoBehaviour
             player.transform.position = spawnPoint.position;
             Rigidbody2D playerRig = player.GetComponent<Rigidbody2D>();
             playerRig.linearVelocity = new Vector2(0, 0);
+            fade.SetTrigger("End");
+            DruidFrameWork.Transitioning = false;
+            DruidFrameWork.canmove = true;
+            camFollow.SnapToTarget();
         }
         else
         {
             Debug.LogWarning($"SpawnPoint '{targetSpawnID}' not found in scene '{targetChunk.SceneName}'");
         }
-
-        camFollow.SnapToTarget();
-
-        DruidFrameWork.Transitioning = false;
-        fade.SetTrigger("End");
     }
 
     private Transform FindSpawnRecursively(Transform parent, string name)
