@@ -38,6 +38,7 @@ TagManager:
   - NutText
   - Nut
   - HiddenWalls
+  - MovementText
   layers:
   - Default
   - TransparentFX

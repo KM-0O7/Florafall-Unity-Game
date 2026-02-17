@@ -67,8 +67,6 @@ public class DruidFrameWork : MonoBehaviour
     // ---- UI ----
     private DruidUI UI;
 
-    [SerializeField] private Animator UIwalker;
-
     // ---- TRANSFORMATIONS ----
     private bool isAttacking = false;
 
@@ -148,19 +146,10 @@ public class DruidFrameWork : MonoBehaviour
                 if (speedx > 0f) //forwards
                 {
                     druidspriterender.flipX = false;
-
-                    if (!Transitioning)
-                    {
-                        UIwalker.SetBool("Backwards", false);
-                    }
                 }
                 else if (speedx < 0f) //backwards
                 {
                     druidspriterender.flipX = true;
-                    if (!Transitioning)
-                    {
-                        UIwalker.SetBool("Backwards", true);
-                    }
                 }
 
                 // ---- WALKING PARTICLES ----
@@ -443,7 +432,7 @@ public class DruidFrameWork : MonoBehaviour
                 canjump = false;
 
                 yield return new WaitForSeconds(0.4f);//after anim plays
-                UIwalker.SetBool("Bear", true);
+          
                 animator.SetBool("Bear", true);
                 istransforming = false;
                 isAttacking = false;
@@ -462,7 +451,7 @@ public class DruidFrameWork : MonoBehaviour
     {
         transformcd = true;
         canjump = false;
-        UIwalker.SetBool("Bear", false);
+       
         UI.spirits = 5;
         druidrb.linearVelocityX = 0f;
         druidrb.linearVelocityY = 0f;
