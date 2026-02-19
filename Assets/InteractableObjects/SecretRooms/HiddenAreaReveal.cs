@@ -72,6 +72,7 @@ public class HiddenAreaReveal : MonoBehaviour
 
         while (t < fadeTime)
         {
+            if (hiddenTileMap == null) break;
             t += Time.deltaTime;
             float k = t / fadeTime;
             k = 1f - Mathf.Cos(k * Mathf.PI * 0.5f);

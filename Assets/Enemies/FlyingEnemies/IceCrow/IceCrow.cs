@@ -4,6 +4,14 @@ using UnityEngine;
 
 public class IceCrow : MonoBehaviour, IGrowableEnemy, IDamageAble
 {
+    /* ICE CROW
+     * Handles the Ice Crow AI
+     * Includes PathFinding
+     * Grow Behaviour
+     * Dash Behaviour
+     * Shooting Behaviour
+     */
+
     [SerializeField] private float moveSpeed = 2f;
     [SerializeField] private float playerDetectionDistance = 2f;
     [SerializeField] private float dashDetectionDistance = 1.5f;

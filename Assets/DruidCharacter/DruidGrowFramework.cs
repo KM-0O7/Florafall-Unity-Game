@@ -75,7 +75,7 @@ public class DruidGrowFramework : MonoBehaviour
 
         //---- HIGHLIGHTS ----
 
-        /* if (!UI.dead && !DruidFrameWork.isTransformed)
+         if (!UI.dead && !DruidFrameWork.isTransformed)
          {
              Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
              RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero, Mathf.Infinity, LayerMask.GetMask("GrowPlants", "GrowEnemy"));
@@ -117,7 +117,7 @@ public class DruidGrowFramework : MonoBehaviour
                      }
                  }
              }
-         }*/
+         }
 
         // ---- UNGROW ALL ACTIVE PLANTS ----
         if (Input.GetKeyDown(KeyCode.F))
