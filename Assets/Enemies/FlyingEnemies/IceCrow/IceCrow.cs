@@ -32,8 +32,14 @@ public class IceCrow : MonoBehaviour, IGrowableEnemy, IDamageAble, IEnemy
     private bool growDb;
     public bool IsGrown => growDb;
     private bool candie = false;
-    public bool FlyingEnemy => false;
-    public bool GroundEnemy => true;
+    public bool FlyingEnemy => true;
+    private bool isLerping = false;
+    public bool IsLerping => isLerping;
+    public void SetLerp(bool value)
+    {
+        isLerping = value;
+    }
+    public bool GroundEnemy => false;
     public int spiritCost => 4;
     public bool CanDie => candie;
     private Rigidbody2D enemyRig;
@@ -103,7 +109,7 @@ public class IceCrow : MonoBehaviour, IGrowableEnemy, IDamageAble, IEnemy
 
     private void FixedUpdate()
     {
-        if (!growDb)
+        if (!growDb && !isLerping)
         {
             if (path == null) return;
             if (currentWaypoint >= path.vectorPath.Count) return;
@@ -134,7 +140,7 @@ public class IceCrow : MonoBehaviour, IGrowableEnemy, IDamageAble, IEnemy
             }
         }
 
-        if (!growDb && !dead)
+        if (!growDb && !dead && !isLerping)
         {
             if (!isDashing && !isShooting)
             {
@@ -183,7 +189,7 @@ public class IceCrow : MonoBehaviour, IGrowableEnemy, IDamageAble, IEnemy
                         {
                             canShoot = false;
                             isShooting = true;
-                            StartCoroutine(shootingCoroutine(4));
+                            StartCoroutine(shootingCoroutine(Random.Range(4, 7)));
                         }
                     }
                 }
@@ -312,7 +318,7 @@ public class IceCrow : MonoBehaviour, IGrowableEnemy, IDamageAble, IEnemy
         isDashing = false;
         animator.SetTrigger("StopDash");
         enemyRig.linearVelocityX = 0;
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(Random.Range(5, 7));
         dashCD = false;
     }
 

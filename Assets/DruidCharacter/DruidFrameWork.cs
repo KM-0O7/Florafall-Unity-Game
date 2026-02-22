@@ -196,7 +196,7 @@ public class DruidFrameWork : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(impactSpeed);
+  
         if (!UI.dead)
         {
             if (canmove && !isStunned)

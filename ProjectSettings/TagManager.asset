@@ -40,6 +40,7 @@ TagManager:
   - HiddenWalls
   - MovementText
   - IcyGolem
+  - Arena
   layers:
   - Default
   - TransparentFX

@@ -14,6 +14,12 @@ public class RustyGolem : MonoBehaviour, IGrowableEnemy, IDamageAble, IEnemy
     public bool dead = false;
     public bool FlyingEnemy => false;
     public bool GroundEnemy => true;
+    private bool isLerping = false;
+    public bool IsLerping => isLerping;
+    public void SetLerp(bool value)
+    {
+        isLerping = value;
+    }
     public bool candie = false;
     public bool isgrown = false;
    

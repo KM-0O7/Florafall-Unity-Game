@@ -15,6 +15,13 @@ public class RollingBot : MonoBehaviour, IDamageAble, IEnemy
     public bool GroundEnemy => true;
     public bool Dead => dead;
 
+    private bool isLerping = false; 
+    public bool IsLerping => isLerping;
+    public void SetLerp(bool value)
+    {
+        isLerping = value;
+    }
+
     //---- BASE COMPONENTS ----
     private Transform druidTransform;
 
