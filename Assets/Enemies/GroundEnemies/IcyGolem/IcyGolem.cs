@@ -1,12 +1,12 @@
 using System.Collections;
 using UnityEngine;
 
-public class IcyGolem : MonoBehaviour, IGrowableEnemy, IDamageAble
+public class IcyGolem : MonoBehaviour, IGrowableEnemy, IDamageAble, IEnemy
 {
-    /* RUSTY GOLEM
-      * Handles all of rusty golem's logic
-      * Handles rusty golem's movement
-      * Handles rusty golem's
+    /* ICY GOLEM
+      * Handles all of icy golem's logic
+      * Handles icy golem's movement
+      * Handles icy golem's fan
       */
 
     // ---- INTERFACE ----
@@ -14,6 +14,8 @@ public class IcyGolem : MonoBehaviour, IGrowableEnemy, IDamageAble
     public bool dead = false;
     public bool candie = false;
     public bool isgrown = false;
+    public bool FlyingEnemy => false;
+    public bool GroundEnemy => true;
 
     public bool CanDie => candie;
     public bool IsGrown => isgrown;
@@ -155,7 +157,7 @@ public class IcyGolem : MonoBehaviour, IGrowableEnemy, IDamageAble
             rb.linearVelocityX = 0f;
         }
 
-        if (isgrown && !dead)
+        if (emission.enabled && !dead)
         {
             RaycastHit2D hit = Physics2D.BoxCast((Vector2)transform.position + new Vector2(0f, blowSize.y / 2), blowSize, 0f, Vector2.up, blowSize.y, LayerMask.GetMask("Player"));
             float ceilingY = transform.position.y + blowSize.y - 0.1f;
@@ -200,8 +202,6 @@ public class IcyGolem : MonoBehaviour, IGrowableEnemy, IDamageAble
             {
                 if (candie == false)
                 {
-                  
-                    
                     StartCoroutine(GrowCycle());
                 }
             }
@@ -304,21 +304,23 @@ public class IcyGolem : MonoBehaviour, IGrowableEnemy, IDamageAble
     private IEnumerator GrowCycle()
     {
         animator.SetTrigger("Grow");
-        candie = true;
+       
         rb.linearVelocityX = 0f;
-        yield return new WaitForSeconds(0.75f);
+        candie = true;
+      
+        yield return new WaitForSeconds(0.4f);
         isgrown = true;
         emission.enabled = true;
        
     }
     private IEnumerator DieCycle()
     {
-        emission.enabled = false;
-        
-        animator.SetTrigger("Die");
+     
         rb.linearVelocityX = 0f;
+        animator.SetTrigger("Die");
         isgrown = false;
-        yield return new WaitForSeconds(1f);
+        emission.enabled = false;
+        yield return new WaitForSeconds(1.6f);
         candie = false; 
     }
 }

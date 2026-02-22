@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class RustyGolem : MonoBehaviour, IGrowableEnemy, IDamageAble
+public class RustyGolem : MonoBehaviour, IGrowableEnemy, IDamageAble, IEnemy
 {
     /* RUSTY GOLEM
      * Handles all of rusty golem's logic
@@ -12,6 +12,8 @@ public class RustyGolem : MonoBehaviour, IGrowableEnemy, IDamageAble
     // ---- INTERFACE ----
 
     public bool dead = false;
+    public bool FlyingEnemy => false;
+    public bool GroundEnemy => true;
     public bool candie = false;
     public bool isgrown = false;
    

@@ -46,6 +46,7 @@ public class DruidFrameWork : MonoBehaviour
     private bool hasJumped = false;
     private bool wasGroundedLastFrame = false;
     private float impactSpeed = 0f;
+    private bool isStunned = false;
 
     [SerializeField] private Transform groundCheck;
     [SerializeField] private float variableJumpMultiplier = 0.5f;
@@ -55,6 +56,7 @@ public class DruidFrameWork : MonoBehaviour
     [SerializeField] private float coyoteTime = 0.1f;
     [SerializeField] private float druidJumpHeight;
     [SerializeField] private float bearJumpHeight;
+    [SerializeField] private float stunHeight = 9;
 
     // ---- VOID CHECK ----
     public Vector2 lastGroundPosition = Vector2.zero;
@@ -118,7 +120,7 @@ public class DruidFrameWork : MonoBehaviour
                 VOL.xMultiplier = druidspriterender.flipX ? 1f : -1f;
             }
 
-            if (canmove)
+            if (canmove && !isStunned)
             {
                 // ---- WALKING ----
                 animator.SetFloat("YVelo", druidrb.linearVelocityY);
@@ -194,9 +196,10 @@ public class DruidFrameWork : MonoBehaviour
 
     private void Update()
     {
+        Debug.Log(impactSpeed);
         if (!UI.dead)
         {
-            if (canmove)
+            if (canmove && !isStunned)
             {
                 // ---- JUMP ----
 
@@ -236,7 +239,7 @@ public class DruidFrameWork : MonoBehaviour
                 // ---- RESET ON LAND ----
                 if (isGrounded && druidrb.linearVelocityY <= 0.1f)
                 {
-                    if (impactSpeed > 9 && !wasGroundedLastFrame)
+                    if (impactSpeed >= stunHeight && !wasGroundedLastFrame)
                     {
                         Stun();
                     }
@@ -323,6 +326,7 @@ public class DruidFrameWork : MonoBehaviour
 
     public void Stun()
     {
+        isStunned = true;
         fallingParticle.Emit(10);
         canjump = false;
         canmove = false;
@@ -346,6 +350,7 @@ public class DruidFrameWork : MonoBehaviour
     //Call to recover from fall
     private void Recover()
     {
+        isStunned = false;
         canjump = true;
         canmove = true;
         animator.SetTrigger("Recover");
@@ -432,7 +437,7 @@ public class DruidFrameWork : MonoBehaviour
                 canjump = false;
 
                 yield return new WaitForSeconds(0.4f);//after anim plays
-          
+
                 animator.SetBool("Bear", true);
                 istransforming = false;
                 isAttacking = false;
@@ -451,7 +456,7 @@ public class DruidFrameWork : MonoBehaviour
     {
         transformcd = true;
         canjump = false;
-       
+
         UI.spirits = 5;
         druidrb.linearVelocityX = 0f;
         druidrb.linearVelocityY = 0f;

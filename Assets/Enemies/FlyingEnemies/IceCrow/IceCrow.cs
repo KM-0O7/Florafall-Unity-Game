@@ -2,7 +2,7 @@ using Pathfinding;
 using System.Collections;
 using UnityEngine;
 
-public class IceCrow : MonoBehaviour, IGrowableEnemy, IDamageAble
+public class IceCrow : MonoBehaviour, IGrowableEnemy, IDamageAble, IEnemy
 {
     /* ICE CROW
      * Handles the Ice Crow AI
@@ -32,6 +32,8 @@ public class IceCrow : MonoBehaviour, IGrowableEnemy, IDamageAble
     private bool growDb;
     public bool IsGrown => growDb;
     private bool candie = false;
+    public bool FlyingEnemy => false;
+    public bool GroundEnemy => true;
     public int spiritCost => 4;
     public bool CanDie => candie;
     private Rigidbody2D enemyRig;

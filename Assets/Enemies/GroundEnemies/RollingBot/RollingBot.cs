@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class RollingBot : MonoBehaviour, IDamageAble
+public class RollingBot : MonoBehaviour, IDamageAble, IEnemy
 {
     /* ROLLING BOT
      * Handles the movement of a rolling bot
@@ -11,7 +11,8 @@ public class RollingBot : MonoBehaviour, IDamageAble
 
     //---- INTERFACE ----
     private bool dead = false;
-
+    public bool FlyingEnemy => false;
+    public bool GroundEnemy => true;
     public bool Dead => dead;
 
     //---- BASE COMPONENTS ----
