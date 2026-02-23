@@ -3,9 +3,10 @@ using UnityEngine;
 public class CameraBounds : MonoBehaviour
 {
     Arena arena;
-
+    BoxCollider2D bc;
     private void Start()
     {
+         bc = GetComponent<BoxCollider2D>();
         arena = GameObject.FindGameObjectWithTag("Arena").GetComponent<Arena>();
     }
     private void OnTriggerEnter2D(Collider2D other)
@@ -14,15 +15,20 @@ public class CameraBounds : MonoBehaviour
         {
             if (arena.inArena == false)
             {
-                // get bounds of this room’s collider
-                BoxCollider2D bc = GetComponent<BoxCollider2D>();
-                Bounds b = bc.bounds;
-
-                Vector2 min = b.min;
-                Vector2 max = b.max;
-
-                Camera.main.GetComponent<FollowPlayer>().SetBounds(min, max);
+                
+                ResetBounds();
             }  
         }
+    }
+
+    public void ResetBounds()
+    {
+      
+        Bounds b = bc.bounds;
+
+        Vector2 min = b.min;
+        Vector2 max = b.max;
+
+        Camera.main.GetComponent<FollowPlayer>().SetBounds(min, max);
     }
 }

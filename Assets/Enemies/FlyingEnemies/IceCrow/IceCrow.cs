@@ -53,6 +53,7 @@ public class IceCrow : MonoBehaviour, IGrowableEnemy, IDamageAble, IEnemy
     private Transform enemyTransform;
     private Transform playerTransform;
     private int direction;
+    private ParticleSystem explodeParticle;
 
     //FLASH
     private bool hitImmune = false;
@@ -71,6 +72,7 @@ public class IceCrow : MonoBehaviour, IGrowableEnemy, IDamageAble, IEnemy
 
     private void Start()
     {
+        explodeParticle = GetComponent<ParticleSystem>();
         seeker = GetComponent<Seeker>();
         animator = GetComponent<Animator>();
         enemyTransform = GetComponent<Transform>();
@@ -109,7 +111,7 @@ public class IceCrow : MonoBehaviour, IGrowableEnemy, IDamageAble, IEnemy
 
     private void FixedUpdate()
     {
-        if (!growDb && !isLerping)
+        if (!growDb && !isLerping && !dead)
         {
             if (path == null) return;
             if (currentWaypoint >= path.vectorPath.Count) return;
@@ -131,12 +133,12 @@ public class IceCrow : MonoBehaviour, IGrowableEnemy, IDamageAble, IEnemy
         //---- DEATH ----
         if (health < 1 || health == 0)
         {
-            animator.SetTrigger("Death");
+            
             enemyRig.linearVelocityX = 0f;
             enemyRig.linearVelocityY = 0f;
             if (dead == false)
             {
-                dead = true;
+                StartCoroutine(Death());
             }
         }
 
@@ -200,6 +202,19 @@ public class IceCrow : MonoBehaviour, IGrowableEnemy, IDamageAble, IEnemy
                 }
             }
         }
+    }
+    private IEnumerator Death()
+    {
+        enemySprite.enabled = false;
+        explodeParticle.Emit(10);
+        dead = true;
+
+        foreach (Transform child in transform)
+        {
+            Destroy(child.gameObject);
+        }
+        yield return new WaitForSeconds(1);
+        Destroy(gameObject);
     }
 
     public void TakeDamage(float damage) //call to take damage put damage in parameters

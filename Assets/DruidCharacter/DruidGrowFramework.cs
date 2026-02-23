@@ -99,20 +99,24 @@ public class DruidGrowFramework : MonoBehaviour
 
                     if (plant != null || enemy != null)
                     {
-                        SpriteRenderer growableRender = hit.collider.GetComponent<SpriteRenderer>();
-
-                        if (growableRender != null)
+                        if ((plant.CanDie == false && plant.IsGrown == false) || (plant.CanDie == true && plant.IsGrown == true) ||
+                            (enemy.CanDie == false && enemy.IsGrown == false) || (enemy.CanDie == true && enemy.IsGrown == true))
                         {
-                            if (!growableRender.material.name.EndsWith("(Instance)"))
+                            SpriteRenderer growableRender = hit.collider.GetComponent<SpriteRenderer>();
+
+                            if (growableRender != null)
                             {
-                                growableRender.material = new Material(growableRender.material);
+                                if (!growableRender.material.name.EndsWith("(Instance)"))
+                                {
+                                    growableRender.material = new Material(growableRender.material);
+                                }
+
+                                Debug.Log(hit.collider.name + "Highlighted");
+                                growableRender.material.SetFloat("_On_Off", 1);
+
+                                lastHoveredObject = target;
+                                lastHoveredMaterial = growableRender.material;
                             }
-
-                            Debug.Log(hit.collider.name + "Highlighted");
-                            growableRender.material.SetFloat("_On_Off", 1);
-
-                            lastHoveredObject = target;
-                            lastHoveredMaterial = growableRender.material;
                         }
                     }
                 }

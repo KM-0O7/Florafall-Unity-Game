@@ -41,6 +41,8 @@ TagManager:
   - MovementText
   - IcyGolem
   - Arena
+  - RoomBounds
+  - SawPlant
   layers:
   - Default
   - TransparentFX
