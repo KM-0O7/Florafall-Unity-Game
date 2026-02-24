@@ -7,17 +7,29 @@ public class CameraBounds : MonoBehaviour
     private void Start()
     {
          bc = GetComponent<BoxCollider2D>();
-        arena = GameObject.FindGameObjectWithTag("Arena").GetComponent<Arena>();
+        GameObject arenaObj = GameObject.FindGameObjectWithTag("Arena");
+
+        if (arenaObj != null)
+        {
+            arena = arenaObj.GetComponent<Arena>();
+        }
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
         {
-            if (arena.inArena == false)
+            if (arena != null)
             {
-                
+                if (arena.inArena == false)
+                {
+
+                    ResetBounds();
+                }
+            } else
+            {
                 ResetBounds();
-            }  
+            }
+          
         }
     }
 

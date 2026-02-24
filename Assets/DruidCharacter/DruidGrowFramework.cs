@@ -1,4 +1,3 @@
-
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -75,7 +74,7 @@ public class DruidGrowFramework : MonoBehaviour
 
         //---- HIGHLIGHTS ----
 
-        if (!UI.dead && !DruidFrameWork.isTransformed)
+        if (!UI.dead && !DruidFrameWork.isTransformed && !DruidFrameWork.inCutscene)
         {
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero, Mathf.Infinity, LayerMask.GetMask("GrowPlants", "GrowEnemy"));
@@ -99,24 +98,20 @@ public class DruidGrowFramework : MonoBehaviour
 
                     if (plant != null || enemy != null)
                     {
-                        if ((plant.CanDie == false && plant.IsGrown == false) || (plant.CanDie == true && plant.IsGrown == true) ||
-                            (enemy.CanDie == false && enemy.IsGrown == false) || (enemy.CanDie == true && enemy.IsGrown == true))
+                        SpriteRenderer growableRender = hit.collider.GetComponent<SpriteRenderer>();
+
+                        if (growableRender != null)
                         {
-                            SpriteRenderer growableRender = hit.collider.GetComponent<SpriteRenderer>();
-
-                            if (growableRender != null)
+                            if (!growableRender.material.name.EndsWith("(Instance)"))
                             {
-                                if (!growableRender.material.name.EndsWith("(Instance)"))
-                                {
-                                    growableRender.material = new Material(growableRender.material);
-                                }
-
-                                Debug.Log(hit.collider.name + "Highlighted");
-                                growableRender.material.SetFloat("_On_Off", 1);
-
-                                lastHoveredObject = target;
-                                lastHoveredMaterial = growableRender.material;
+                                growableRender.material = new Material(growableRender.material);
                             }
+
+                            Debug.Log(hit.collider.name + "Highlighted");
+                            growableRender.material.SetFloat("_On_Off", 1);
+
+                            lastHoveredObject = target;
+                            lastHoveredMaterial = growableRender.material;
                         }
                     }
                 }
@@ -124,21 +119,15 @@ public class DruidGrowFramework : MonoBehaviour
         }
 
         // ---- UNGROW ALL ACTIVE PLANTS ----
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Input.GetKeyDown(KeyCode.F) && !DruidFrameWork.inCutscene)
         {
             if (DruidFrameWork.isTransformed == false && DruidLedgeClimb.isMantled == false)
             {
-                for (int i = tetherTargets.Count - 1; i >= 0; i--)
-                {
-                    if (activeTethers[i] != null && tetherTargets[i] != null)
-                    {
-                        DeGrowPlant(tetherTargets[i]);
-                    }
-                }
+                DeGrowAllPlants();
             }
         }
 
-        if (!UI.dead)
+        if (!UI.dead && !DruidFrameWork.inCutscene)
         {
             // ---- GROW FRAMEWORK ----
             if (Input.GetMouseButtonDown(0))
@@ -211,8 +200,20 @@ public class DruidGrowFramework : MonoBehaviour
     /* FUNCTIONS
      * RemoveTether - Call to remove tether at specified transformb
      * DeGrowPlant - Call to degrow the plant/enemy at specified transform
-     * GrowPlant - Call to grow the plant/enemy at specified transform
+     * GrowPlant - Call to grow the plant/enemy at specified transform'
+     * DeGrowAllPlants - Call to degrow all plants/enemies
      */
+
+    public void DeGrowAllPlants()
+    {
+        for (int i = tetherTargets.Count - 1; i >= 0; i--)
+        {
+            if (activeTethers[i] != null && tetherTargets[i] != null)
+            {
+                DeGrowPlant(tetherTargets[i]);
+            }
+        }
+    }
 
     public void RemoveTether(Transform plantTransform)
     {
@@ -242,7 +243,7 @@ public class DruidGrowFramework : MonoBehaviour
     {
         IGrowablePlant plant = planttransform.GetComponent<IGrowablePlant>();
         IGrowableEnemy enemy = planttransform.GetComponent<IGrowableEnemy>();
-        
+
         if (plant != null)
         {
             if (plant.CanDie && plant.IsGrown)
@@ -264,7 +265,7 @@ public class DruidGrowFramework : MonoBehaviour
                     enemy.Die();
                     RemoveTether(planttransform);
                     tetherBreak.Emit(3);
-                } 
+                }
             }
         }
     }

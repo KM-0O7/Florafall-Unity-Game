@@ -33,6 +33,7 @@ public class DruidFrameWork : MonoBehaviour
     [SerializeField] private ParticleSystem walkingParticle;
     [SerializeField] private GameObject druid;
     [SerializeField] private ParticleSystem fallingParticle;
+    public static bool inCutscene = false;
 
     // ---- CUSTOM JUMP PHYSICS ----
     private float coyoteTimeCounter;
@@ -111,7 +112,7 @@ public class DruidFrameWork : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!UI.dead) //checks if not dead
+        if (!UI.dead && !inCutscene) //checks if not dead
         {
             if (walkingParticle != null)
             {
@@ -197,7 +198,7 @@ public class DruidFrameWork : MonoBehaviour
     private void Update()
     {
   
-        if (!UI.dead)
+        if (!UI.dead && !inCutscene)
         {
             if (canmove && !isStunned)
             {
