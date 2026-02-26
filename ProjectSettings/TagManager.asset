@@ -43,6 +43,7 @@ TagManager:
   - Arena
   - RoomBounds
   - SawPlant
+  - Rocket
   layers:
   - Default
   - TransparentFX
@@ -56,7 +57,7 @@ TagManager:
   - Background
   - FallingPlatform
   - RoboticEnemy
-  - 
+  - Boss
   - Dialogue
   - Bullets
   - Void

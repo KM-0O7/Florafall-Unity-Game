@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class CutsceneBars : MonoBehaviour
 {
-    Animator animator;
+    private Animator animator;
     public static CutsceneBars Instance;
 
     private void Awake()
@@ -16,13 +16,13 @@ public class CutsceneBars : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-       
     }
 
     private void Start()
     {
         animator = GetComponent<Animator>();
     }
+
     public void CutsceneBarsStart()
     {
         animator.SetTrigger("CutsceneStart");
@@ -30,7 +30,6 @@ public class CutsceneBars : MonoBehaviour
 
     public void CutsceneBarsEnd()
     {
-        animator.SetTrigger("CutsceneEnd");
+        animator.SetTrigger("CutSceneEnd");
     }
-
 }
