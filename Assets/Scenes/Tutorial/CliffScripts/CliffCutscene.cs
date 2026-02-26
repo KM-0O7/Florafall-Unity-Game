@@ -59,6 +59,11 @@ public class CliffCutscene : MonoBehaviour
         }
     }
 
+    public void MechEnd()
+    {
+
+    }
+
     private IEnumerator CliffCutsceneRoutine()
     {
         druidAnimator.SetTrigger("Reset");
