@@ -18,6 +18,7 @@ public class CliffMech : MonoBehaviour, IDamageAble
     [SerializeField] private float jumpForceY = 5f;
     [SerializeField] private float movementSpeed = 2f;
     [SerializeField] private GameObject rocket;
+    [SerializeField] private float rocketBeamTime = 2f;
     private bool rocketCooldown = false;
     private bool isShooting = false;
     [SerializeField] private float timeBetweenRockets = 0.2f;
@@ -27,6 +28,7 @@ public class CliffMech : MonoBehaviour, IDamageAble
     [SerializeField] private float rocketCooldownTime = 6f;
     [SerializeField] private Transform checkPointPos;
     [SerializeField] private Transform rocketShootPos;
+    [SerializeField] private float offset = 3f;
 
     //FLASH
     private bool hitImmune = false;
@@ -71,24 +73,27 @@ public class CliffMech : MonoBehaviour, IDamageAble
                 }
             }
 
+            Vector2 movePos = new Vector2(druidTransform.position.x, gameObject.transform.position.y) + new Vector2((bossSprite.flipX ? 1 : -1) * offset, 0);
             if (!isJumping && !isShooting)
             {
-                if (druidPos < 0)
-                {
-                    bossSprite.flipX = false;
-                    bossRig.linearVelocityX = movementSpeed;
-                }
-                else
-                {
-                    bossSprite.flipX = true;
-                    bossRig.linearVelocityX = -movementSpeed;
-                }
-
-                if (!rocketCooldown)
-                {
-                    StartCoroutine(RocketShoot());
-                }
+                Debug.Log("Moving");
+                gameObject.transform.position = Vector2.MoveTowards(gameObject.transform.position, movePos, movementSpeed * Time.deltaTime);
             }
+            if (druidPos < 0)
+            {
+                bossSprite.flipX = false;
+            }
+            else
+            {
+                bossSprite.flipX = true;
+                
+            }
+
+            if (!rocketCooldown)
+            {
+                StartCoroutine(RocketShoot());
+            }
+            
 
             if (isJumping)
             {
@@ -163,9 +168,7 @@ public class CliffMech : MonoBehaviour, IDamageAble
             var newRocket = Instantiate(rocket);
             newRocket.SetActive(true);
             newRocket.transform.position = rocketShootPos.position;
-            Vector2 direction = druidTransform.position - newRocket.transform.position;
-            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            newRocket.transform.rotation = Quaternion.Euler(0, 0, angle);
+            newRocket.transform.rotation = Quaternion.Euler(0, 0, 90);
             rocketList.Add(newRocket);
             rocketHitPositions.Add(druidTransform);
             StartCoroutine(RocketMove(newRocket, druidTransform));
@@ -179,35 +182,63 @@ public class CliffMech : MonoBehaviour, IDamageAble
 
     private IEnumerator RocketMove(GameObject rocket, Transform rocketHitPos)
     {
-        float amplitude = 0.25f;
-        float frequency = 3f;
-        float speed = 10f;
+        var rocketLine = rocket.GetComponent<LineRenderer>();
+        rocketLine.positionCount = 2;
+        float launchTime = 1f;
 
         Vector2 startPos = rocket.transform.position;
 
         RaycastHit2D hit = Physics2D.Raycast(rocketHitPos.position, Vector2.down, 50f, LayerMask.GetMask("Ground"));
 
-        Vector2 targetPos = rocketHitPos.position;
-        Vector2 direction = (targetPos - startPos).normalized;
-        Vector2 perpendicular = new Vector2(-direction.y, direction.x);
-
-        float elapsed = 0f;
-
-        float distance = Vector2.Distance(startPos, targetPos);
-        float travelTime = distance / speed;
-
-        while (elapsed < distance)
+        float t = 0;
+        float launchHeight = 20;
+        Vector2 launchPos = new Vector2(rocket.transform.position.x, rocket.transform.position.y + launchHeight);
+        while (t < launchTime)
         {
-            elapsed += Time.deltaTime;
-            float progress = elapsed / travelTime;
-
-            Vector2 basePosition = Vector2.Lerp(startPos, targetPos, progress);
-
-            float wave = Mathf.Cos(elapsed * frequency * Mathf.PI * 2f) * amplitude;
-            Vector2 waveOffset = perpendicular * wave;
-
-            rocket.transform.position = basePosition + waveOffset;
+            t += Time.deltaTime;
+            rocket.transform.position = Vector2.Lerp(startPos, launchPos, t / launchTime);
             yield return null;
+        }
+
+        Vector2 targetPos = rocketHitPos.position;
+
+        rocket.transform.rotation = Quaternion.Euler(0, 0, -90f);
+        float speed = 5f;
+
+        while (Mathf.Abs(druidTransform.position.x - rocket.transform.position.x) > 0.5f)
+        {
+            RaycastHit2D beamCast = Physics2D.Raycast(rocket.transform.position, Vector2.down, 100, LayerMask.GetMask("Ground"));
+            rocketLine.SetPosition(0, rocket.transform.position);
+            rocketLine.SetPosition(1, beamCast.point);
+            Vector2 rotationPos = new Vector2(druidTransform.position.x, rocket.transform.position.y);
+            rocket.transform.position = Vector2.MoveTowards(rocket.transform.position, rotationPos, speed * Time.deltaTime);
+
+            yield return null;
+            targetPos = beamCast.point;
+        }
+
+        int flashCount = 5;
+        for (int i = 0; i < flashCount; i++)
+        {
+            rocketLine.startColor = Color.white;
+            rocketLine.endColor = Color.white;
+            yield return new WaitForSeconds(0.1f);
+            rocketLine.startColor = Color.red;
+            rocketLine.endColor = Color.red;
+            yield return new WaitForSeconds(0.1f);
+        }
+
+        Destroy(rocketLine);
+        t = 0;
+        float diveTime = 0.7f;
+        startPos = rocket.transform.position;
+
+        while (t < diveTime)
+        {
+            rocket.transform.position = Vector2.Lerp(startPos, targetPos, t / diveTime);
+            t += Time.deltaTime;
+            yield return null;
+
         }
         rocketHitPositions.Remove(rocketHitPos);
         rocketList.Remove(rocket);
