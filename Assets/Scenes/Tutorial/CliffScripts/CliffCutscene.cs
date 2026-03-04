@@ -22,6 +22,7 @@ public class CliffCutscene : MonoBehaviour
 
     [SerializeField] private int endPPU = 20;
     [SerializeField] private Transform firstCamLerpPos;
+    private bool inEndCutscene = false;
 
     private void Start()
     {
@@ -58,8 +59,19 @@ public class CliffCutscene : MonoBehaviour
 
     public void MechEnd()
     {
+        if (inEndCutscene) return;
+        DruidFrameWork.inCutscene = true;
+        druidAnimator.SetTrigger("Reset");
+        DGF.DeGrowAllPlants();
+        CutsceneBars.Instance.CutsceneBarsStart();
+        StartCoroutine(CliffThrowCutscene());
     }
 
+    private IEnumerator CliffThrowCutscene()
+    {
+        yield return null;
+    }
+    
     private IEnumerator CliffCutsceneRoutine()
     {
         druidAnimator.SetTrigger("Reset");
