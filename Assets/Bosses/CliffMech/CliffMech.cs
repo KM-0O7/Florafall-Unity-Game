@@ -18,7 +18,7 @@ public class CliffMech : MonoBehaviour, IDamageAble
     [SerializeField] private float jumpDetectionDistance = 3f;
     [SerializeField] private float jumpForceX = 3f;
     [SerializeField] private float jumpForceY = 5f;
-    [SerializeField] private float movementSpeed = 2f;
+    public float movementSpeed = 2f;
     [SerializeField] private GameObject rocket;
     private bool rocketCooldown = false;
     private bool isShooting = false;

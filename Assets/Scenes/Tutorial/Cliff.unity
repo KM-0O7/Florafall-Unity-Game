@@ -1321,7 +1321,7 @@ GameObject:
   - component: {fileID: 455882833}
   - component: {fileID: 455882834}
   m_Layer: 12
-  m_Name: Boss
+  m_Name: Boss(PLACEHOLDER)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8131,6 +8131,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 965678131}
   m_CullTransparentMesh: 1
+--- !u!1 &1017737547
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1017737548}
+  m_Layer: 0
+  m_Name: MechWalkPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1017737548
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1017737547}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.597, y: -0.067, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1249429524}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1087965871
 GameObject:
   m_ObjectHideFlags: 0
@@ -26654,10 +26685,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CliffCutscene
   firstMoveTo: {fileID: 459281265}
+  mechMovePos: {fileID: 1017737548}
   boss: {fileID: 455882827}
   zoomedOutSize: 6
+  knockBackForce: 10
   endPPU: 30
   firstCamLerpPos: {fileID: 1087965872}
+  holdDistance: 2
 --- !u!61 &1249429522
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -26777,6 +26811,8 @@ Transform:
   m_Children:
   - {fileID: 459281265}
   - {fileID: 1087965872}
+  - {fileID: 1371228978}
+  - {fileID: 1017737548}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1289588444
@@ -32099,6 +32135,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1370602783}
   m_CullTransparentMesh: 1
+--- !u!1 &1371228977
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1371228978}
+  m_Layer: 0
+  m_Name: DruidFallPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1371228978
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1371228977}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.938, y: -0.235, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1249429524}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1402190635
 GameObject:
   m_ObjectHideFlags: 0

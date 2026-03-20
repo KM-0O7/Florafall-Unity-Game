@@ -8,6 +8,7 @@ public class CliffCutscene : MonoBehaviour
     private bool cutsceneCompleted = false;
     private bool inCutscene = false;
     [SerializeField] private Transform firstMoveTo;
+    [SerializeField] private Transform mechMovePos;
     private DruidGrowFramework DGF;
     private Rigidbody2D druidRig;
     private Animator druidAnimator;
@@ -20,13 +21,17 @@ public class CliffCutscene : MonoBehaviour
     private PixelPerfectCamera ppc;
     private CliffMech cliffMech;
 
+    [SerializeField] private float knockBackForce = 10f; 
     [SerializeField] private int endPPU = 20;
     [SerializeField] private Transform firstCamLerpPos;
     private bool inEndCutscene = false;
+    private SpriteRenderer bossSprite;
+    [SerializeField] private float holdDistance = 5f;
+    GameObject player;
 
     private void Start()
     {
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        player = GameObject.FindGameObjectWithTag("Player");
         if (player != null)
         {
             DF = player.GetComponent<DruidFrameWork>();
@@ -40,6 +45,7 @@ public class CliffCutscene : MonoBehaviour
             cliffMech = boss.GetComponent<CliffMech>();
             bossRig = boss.GetComponent<Rigidbody2D>();
             bossCollider = boss.GetComponent<BoxCollider2D>();
+            bossSprite = boss.GetComponent<SpriteRenderer>();
         }
         ppc = Camera.main.GetComponent<PixelPerfectCamera>();
     }
@@ -69,7 +75,46 @@ public class CliffCutscene : MonoBehaviour
 
     private IEnumerator CliffThrowCutscene()
     {
-        yield return null;
+        var druidDir = boss.transform.position.x - druidTransform.position.x;
+        if (druidDir < 0)
+        {
+            bossSprite.flipX = false;
+        }
+        else bossSprite.flipX = true;
+        float directionFacing = bossSprite.flipX? -1 : 1;
+
+        while (Mathf.Abs(druidDir) > 0.1f)
+        {
+            druidDir = boss.transform.position.x - druidTransform.position.x;
+            bossRig.linearVelocityX = cliffMech.movementSpeed * directionFacing;
+            yield return null;
+        }
+
+        Debug.Log("finished Moving to Druid");
+        bool pickedUp = false;
+        bossRig.linearVelocity = Vector2.zero;
+        while (Mathf.Abs(boss.transform.position.x - mechMovePos.position.x) > 0.1)
+        {
+            druidRig.bodyType = RigidbodyType2D.Static;
+            if (pickedUp == false)
+            {
+                druidDir = boss.transform.position.x - druidTransform.position.x;
+                if (druidDir < 0)
+                {
+                    bossSprite.flipX = false;
+                }
+                else bossSprite.flipX = true;
+                directionFacing = bossSprite.flipX ? 1 : -1;
+            }
+            bossRig.linearVelocityX = cliffMech.movementSpeed * directionFacing;
+            var offset = holdDistance * directionFacing;
+            druidTransform.position = new Vector2(boss.transform.position.x + offset, boss.transform.position.y);
+            pickedUp = true;
+            yield return null;
+        } 
+        yield return new WaitForSeconds(1f);
+        druidRig.bodyType = RigidbodyType2D.Dynamic;
+        DruidFrameWork.inCutscene = false;
     }
     
     private IEnumerator CliffCutsceneRoutine()
