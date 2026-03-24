@@ -11,6 +11,7 @@ public class DoorScript : MonoBehaviour
     private Animator fade;
     public string targetSpawnID;
     private FollowPlayer camFollow;
+    [SerializeField] private bool interactDoor = false;
 
     private void Start()
     {
@@ -23,13 +24,14 @@ public class DoorScript : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if (interactDoor) return;
         if (!other.CompareTag("Player")) return;
 
         if (DruidFrameWork.Transitioning) return;
         StartCoroutine(TeleportPlayer(other));
     }
 
-    private IEnumerator TeleportPlayer(Collider2D player)
+    public IEnumerator TeleportPlayer(Collider2D player)
     {
         DruidFrameWork.Transitioning = true;
         fade.SetTrigger("Start");

@@ -6,7 +6,7 @@ public class PromptManager : MonoBehaviour
     private Transform druidTransform;
     [SerializeField] private Vector2 promptCheckSize = new Vector2(2, 2);
 
-  
+
     void Start()
     {
         druidTransform = GetComponent<Transform>();
@@ -23,7 +23,7 @@ public class PromptManager : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.E))
             {
                 IDialogue dialogue = promptCheck.gameObject.GetComponent<IDialogue>();
-                if ( dialogue != null)
+                if (dialogue != null)
                 {
                     if (dialogue.isInteracting == false)
                     {
@@ -31,9 +31,17 @@ public class PromptManager : MonoBehaviour
                         Debug.Log("interacting with " + promptCheck.gameObject.name);
                     }
                 }
+                else
+                {
+                    DoorScript doorScript = promptCheck.gameObject.GetComponent<DoorScript>();
+                    if (doorScript != null)
+                    {
+                        Collider2D playerCollider = druidTransform.gameObject.GetComponent<Collider2D>();
+                        StartCoroutine(doorScript.TeleportPlayer(playerCollider));
+                    }
 
+                }
             }
         }
-
     }
 }
