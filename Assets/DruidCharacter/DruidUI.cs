@@ -22,7 +22,7 @@ public class DruidUI : MonoBehaviour, IDamageAble
     public string spawnSceneName;
     private Animator druidanims;
     private Rigidbody2D druidRig;
-    private bool hitImmune = false;
+    public bool hitImmune = false;
 
     private SpriteRenderer spriterenderer;
     private MaterialPropertyBlock mpb;

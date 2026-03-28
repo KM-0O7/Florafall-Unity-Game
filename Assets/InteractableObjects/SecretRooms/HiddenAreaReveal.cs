@@ -13,6 +13,7 @@ public class HiddenAreaReveal : MonoBehaviour
     private Vignette vignette;
     [SerializeField] private float vignetteIntensity;
     private PixelPerfectCamera ppc;
+    [SerializeField] Volume areaVolume;
 
     private int startPPU;
     private float startIntensity;
@@ -27,7 +28,7 @@ public class HiddenAreaReveal : MonoBehaviour
         ppc = Camera.main.GetComponent<PixelPerfectCamera>();
         startPPU = ppc.assetsPPU;
         startOrthoSize = Camera.main.orthographicSize;
-        if (volume.profile.TryGet(out vignette))
+        if (areaVolume.profile.TryGet(out vignette))
         {
             startIntensity = vignette.intensity.value;
         }
