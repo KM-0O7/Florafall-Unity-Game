@@ -6,6 +6,8 @@ using UnityEngine.UI;
 public class DruidUI : MonoBehaviour, IDamageAble
 {
     public Image[] spiritimages;
+    public Animator[] healthAnimators;
+    public Image[] healthImage;
 
     public Sprite fullSpirit;
     public Sprite emptySpirit;
@@ -15,6 +17,7 @@ public class DruidUI : MonoBehaviour, IDamageAble
     private Transform spawnPoint; //current spawnpoint;
     public float health = 5;
     public float MaxHealth = 5;
+    private float previousHealth;
     public bool dead = false;
     public GameObject druid;
     [SerializeField] private Animator deathScreen;
@@ -34,8 +37,6 @@ public class DruidUI : MonoBehaviour, IDamageAble
 
     public bool Dead => dead;
 
-
-
     private void Start()
     {
         spriterenderer = gameObject.GetComponent<SpriteRenderer>();
@@ -45,6 +46,7 @@ public class DruidUI : MonoBehaviour, IDamageAble
         mpb = new MaterialPropertyBlock();
         health = MaxHealth;
         druidRig = GetComponent<Rigidbody2D>();
+        previousHealth = health;
     }
 
     private void Update()
@@ -68,6 +70,32 @@ public class DruidUI : MonoBehaviour, IDamageAble
             {
                 spiritimages[i].enabled = false;
             }
+        }
+
+        if (health != previousHealth)
+        {
+            for (int i = 0; i < healthAnimators.Length; i++)
+            {
+                if (i >= health && i < previousHealth)
+                {
+                    healthAnimators[i].SetTrigger("Die");
+                }
+                else if (i < health && i >= previousHealth)
+                {
+                    healthAnimators[i].SetTrigger("Appear");
+                }
+
+                if (i < MaxHealth)
+                {
+                    healthImage[i].enabled = true;
+                }
+                else
+                {
+                    healthImage[i].enabled = false;
+                }
+            }
+
+            previousHealth = health;
         }
 
         if (health <= 0)

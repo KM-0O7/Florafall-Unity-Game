@@ -29545,7 +29545,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   numberOfWaves: 2
-  numberOfEnemies: 0100000002000000
+  numberOfEnemies: 0100000001000000
   timeBetweenWaves: 2
   enemiesToSpawn:
   - {fileID: 254235786}
