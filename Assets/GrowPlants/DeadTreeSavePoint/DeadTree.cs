@@ -8,6 +8,12 @@ public class DeadTree : MonoBehaviour, IGrowablePlant
     public bool candie = false;
     public bool IsGrown => deadtreeDb;
     public bool CanDie => candie;
+    public bool waterGrown = false;
+    public bool WaterGrown => waterGrown;
+    public void setWaterGrow(bool value)
+    {
+        waterGrown = value;
+    }
     private int spirits = 5;
     public int spiritCost => spirits;
     private Animator druidAnimator;

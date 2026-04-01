@@ -9,6 +9,12 @@ public class Saw : MonoBehaviour, IGrowablePlant
     public bool CanDie => canDie;
     public int spiritCost => 1;
     [SerializeField] private GameObject sawObject;
+    public bool waterGrown = false;
+    public bool WaterGrown => waterGrown;
+    public void setWaterGrow(bool value)
+    {
+        waterGrown = value;
+    }
     private GameObject sawClone;
     private GameObject druid;
     [SerializeField] private float sawSpeed = 2f;

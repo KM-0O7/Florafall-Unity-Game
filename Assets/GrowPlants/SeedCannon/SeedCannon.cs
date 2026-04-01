@@ -9,6 +9,12 @@ public class SeedCannon : MonoBehaviour, IGrowablePlant
     private bool shotdb = false;
     [SerializeField] private Transform bulletspawn;
     [SerializeField] private GameObject Bullet;
+    public bool waterGrown = false;
+    public bool WaterGrown => waterGrown;
+    public void setWaterGrow(bool value)
+    {
+        waterGrown = value;
+    }
     private SpriteRenderer cannon;
     public float bulletspeed;
     public bool candie = false;

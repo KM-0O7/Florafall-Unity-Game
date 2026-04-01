@@ -15,6 +15,12 @@ public class IcicleFloorSpike : MonoBehaviour, IGrowablePlant
     //---- INTERFACE ----
     public bool icicledb = false;
     public bool candie = false;
+    public bool waterGrown = false;
+    public bool WaterGrown => waterGrown;
+    public void setWaterGrow(bool value)
+    {
+        waterGrown = value;
+    }
     private int spirits = 1;
     public int spiritCost => spirits;
     

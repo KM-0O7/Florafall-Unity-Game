@@ -4,6 +4,8 @@ public interface IGrowablePlant
     bool CanDie { get; }
     int spiritCost { get; }
 
+    bool WaterGrown { get; }
+    void setWaterGrow(bool value);
     void Grow();
 
     void Die();

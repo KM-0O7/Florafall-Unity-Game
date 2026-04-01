@@ -6,6 +6,12 @@ public class ExplosionShroom : MonoBehaviour, IGrowablePlant
     public bool candie = false;
     private Animator animator;
     [SerializeField] private DruidFrameWork druid;
+    public bool waterGrown = false;
+    public bool WaterGrown => waterGrown;
+    public void setWaterGrow(bool value)
+    {
+        waterGrown = value;
+    }
     public bool IsGrown => explosiondb;
     public bool CanDie => candie;
     [SerializeField] private GameObject shroom;

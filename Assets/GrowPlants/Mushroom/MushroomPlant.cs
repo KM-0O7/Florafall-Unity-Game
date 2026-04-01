@@ -10,6 +10,12 @@ public class MushroomPlant : MonoBehaviour, IGrowablePlant
     private BoxCollider2D platform;
     private int spirits = 1;
     public int spiritCost => spirits;
+    public void setWaterGrow(bool value)
+    {
+        waterGrown = value;
+    }
+    public bool waterGrown = false;
+    public bool WaterGrown => waterGrown;
 
     public bool IsGrown => mushdb;
     public bool CanDie => candie;

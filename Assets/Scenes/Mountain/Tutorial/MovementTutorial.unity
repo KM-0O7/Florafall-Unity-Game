@@ -66950,6 +66950,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   spirits: 1
   blowForce: 0.5
+  waterGrown: 0
   candie: 0
   blowSize: {x: 1, y: 5.5}
 --- !u!95 &1148254922
@@ -72625,6 +72626,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   spirits: 1
   blowForce: 0.5
+  waterGrown: 0
   candie: 0
   blowSize: {x: 1, y: 3.5}
 --- !u!95 &1235160095
@@ -82165,6 +82167,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   spirits: 1
   blowForce: 0.4
+  waterGrown: 0
   candie: 0
   blowSize: {x: 1, y: 11}
 --- !u!95 &1333808115
@@ -93227,6 +93230,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   spirits: 1
   blowForce: 0.5
+  waterGrown: 0
   candie: 0
   blowSize: {x: 1, y: 5.5}
 --- !u!95 &1439829817
@@ -110531,6 +110535,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   spirits: 1
   blowForce: 0.5
+  waterGrown: 0
   candie: 0
   blowSize: {x: 1, y: 5.5}
 --- !u!95 &1660466775
@@ -111223,6 +111228,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Saw
   sawObject: {fileID: 382698364}
+  waterGrown: 0
   sawSpeed: 2
   respawnTime: 7
   plantPos: {fileID: 0}
@@ -122829,6 +122835,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   spirits: 1
   blowForce: 0.5
+  waterGrown: 0
   candie: 0
   blowSize: {x: 1, y: 8}
 --- !u!95 &1963734505

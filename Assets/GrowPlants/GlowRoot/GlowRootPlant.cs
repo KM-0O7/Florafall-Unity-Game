@@ -8,6 +8,12 @@ public class GlowRootPlant : MonoBehaviour, IGrowablePlant
     public bool candie = false;
     private int spirits = 1;
     public int spiritCost => spirits;
+    public bool waterGrown = false;
+    public void setWaterGrow(bool value)
+    {
+        waterGrown = value;
+    }
+    public bool WaterGrown => waterGrown;
     public bool IsGrown => glowdb;
     public bool CanDie => candie;
 

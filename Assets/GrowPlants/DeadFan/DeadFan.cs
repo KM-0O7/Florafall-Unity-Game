@@ -5,6 +5,12 @@ public class DeadFan : MonoBehaviour, IGrowablePlant
 {
     [SerializeField] private int spirits = 1;
     [SerializeField] private float blowForce = 1.0f;
+    public bool waterGrown = false;
+    public bool WaterGrown => waterGrown;
+    public void setWaterGrow(bool value)
+    {
+        waterGrown = value;
+    }
     private bool fanDb = false;
     public bool candie = false;
     private Transform fanTransform;

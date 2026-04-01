@@ -23,6 +23,15 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Mountain/Tutorial/Cliff.unity
     guid: cb42ed111fa01a049ad2f8594f235f98
+  - enabled: 1
+    path: Assets/Scenes/FloraForest/SprinklerIntroScene.unity
+    guid: b20657074f365c549948e8364f699261
+  - enabled: 1
+    path: Assets/Scenes/FloraForest/HostileHorizontalBesideMushroom.unity
+    guid: 4ec4fceccdb604147b1a99b6369b6693
+  - enabled: 1
+    path: Assets/Scenes/FloraForest/FloraRespite.unity
+    guid: c0bd9c0998b0ce747b54007c8e97d05f
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

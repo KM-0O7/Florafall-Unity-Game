@@ -44,6 +44,7 @@ TagManager:
   - RoomBounds
   - SawPlant
   - Rocket
+  - Sprinkler
   layers:
   - Default
   - TransparentFX

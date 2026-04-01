@@ -8,6 +8,12 @@ public class IceWall : MonoBehaviour, IGrowablePlant
     private bool isGrown = false;
     private bool canDie = false;
     public bool CanDie => canDie;
+    public bool waterGrown = false;
+    public bool WaterGrown => waterGrown;
+    public void setWaterGrow(bool value)
+    {
+        waterGrown = value;
+    }
     public bool IsGrown => isGrown;
     public int spiritCost => growthCost;
     private Animator animator;
