@@ -1,3 +1,5 @@
+using NUnit.Framework;
+using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
 
@@ -12,6 +14,7 @@ public class Sprinkler : MonoBehaviour, IGrowablePlant
     [SerializeField] private ParticleSystem waterLittleDrop;
     [SerializeField] private ParticleSystem showerParticle;
     [SerializeField] private float boxCheckWidth = 3f;
+    List<Transform> plantsGrown = new List<Transform>();
 
     public void setWaterGrow(bool value)
     {
@@ -34,26 +37,34 @@ public class Sprinkler : MonoBehaviour, IGrowablePlant
     {
         if (isGrown)
         {
-            RaycastHit2D growChecker = Physics2D.Raycast(transform.position, Vector2.down, 10, LayerMask.GetMask("Ground"));
+            RaycastHit2D growChecker = Physics2D.Raycast(transform.position, Vector2.down, 1000, LayerMask.GetMask("Ground"));
 
             if (!growChecker) return;
 
             float height = Mathf.Abs(transform.position.y - growChecker.point.y);
-            Vector2 boxSize = new Vector2(boxCheckWidth, height);
+            Vector2 boxSize = new Vector2(boxCheckWidth, 0.5f);
 
-            RaycastHit2D boxCheck = Physics2D.BoxCast(transform.position, boxSize, 0f, Vector2.down, 0f, LayerMask.GetMask("GrowPlants"));
+            RaycastHit2D[] hits = Physics2D.BoxCastAll(transform.position, boxSize, 0f, Vector2.down, height, LayerMask.GetMask("GrowPlants"));
 
-            if (!boxCheck) return;
-
-            IGrowablePlant growInterface = boxCheck.collider.GetComponent<IGrowablePlant>();
-
-            if (growInterface != null && growInterface != gameObject.GetComponent<IGrowablePlant>())
+            foreach (var hit in hits)
             {
-                if (!growInterface.IsGrown)
+                if (hit.collider.gameObject == gameObject) continue;
+
+                IGrowablePlant growInterface = hit.collider.GetComponent<IGrowablePlant>();
+                if (growInterface != null)
                 {
-                    growInterface.setWaterGrow(true);
-                    growInterface.Grow();
+                    if (growInterface == GetComponent<IGrowablePlant>()) continue;
+
+                    Debug.Log("GrowInterface Valid!");
+                    if (!growInterface.IsGrown)
+                    {
+                        plantsGrown.Add(hit.collider.transform);
+                        Debug.Log("WaterGrowning" + hit.collider.name);
+                        growInterface.setWaterGrow(true);
+                        growInterface.Grow();
+                    }
                 }
+
             }
         }
     }
@@ -82,6 +93,12 @@ public class Sprinkler : MonoBehaviour, IGrowablePlant
 
     private IEnumerator DieCycle()
     {
+        foreach (var plant in plantsGrown)
+        {
+            plant.GetComponent<IGrowablePlant>().setWaterGrow(false);
+            DGF.DeGrowPlant(plant);
+        }
+
         animator.SetTrigger("Die");
         isGrown = false;
         var emission1 = waterLittleDrop.emission;
