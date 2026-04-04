@@ -45,6 +45,7 @@ TagManager:
   - SawPlant
   - Rocket
   - Sprinkler
+  - BigVine
   layers:
   - Default
   - TransparentFX
