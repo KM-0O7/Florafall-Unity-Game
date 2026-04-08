@@ -29700,6 +29700,7 @@ GameObject:
   - component: {fileID: 254235787}
   - component: {fileID: 254235796}
   - component: {fileID: 254235795}
+  - component: {fileID: 254235797}
   m_Layer: 8
   m_Name: IceCrow
   m_TagString: IceCrow
@@ -29875,11 +29876,8 @@ MonoBehaviour:
   bulletForce: 7
   shootingDistance: 10
   bullet: {fileID: 1209322336}
-  health: 2
   spikeObject: {fileID: 2009686600}
   deActivationDistance: 12
-  flashDuration: 0.3
-  flashPeak: 1
   pathRepeatRate: 0.15
   nextWaypointDistance: 0.15
 --- !u!95 &254235792
@@ -34792,6 +34790,24 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &254235797
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 254235786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43ae71b87d6156f49bbc7cdf8a9e998c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyDamage
+  dead: 0
+  health: 2
+  spiritsBack: 4
+  flashDuration: 0.3
+  customDeath: 1
+  flashPeak: 1
 --- !u!1 &268605857
 GameObject:
   m_ObjectHideFlags: 0
@@ -41295,7 +41311,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 4
   m_Sprite: {fileID: 5068423805372014987, guid: 7ce42e6c1b05ecd4bab3c4d585523a1f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -47499,6 +47515,7 @@ GameObject:
   - component: {fileID: 500585772}
   - component: {fileID: 500585771}
   - component: {fileID: 500585770}
+  - component: {fileID: 500585778}
   m_Layer: 8
   m_Name: IcyGolem.1
   m_TagString: IcyGolem
@@ -47548,12 +47565,9 @@ MonoBehaviour:
   dead: 0
   candie: 0
   isgrown: 0
-  health: 5
   movespeed: 0.5
   pauseTime: 3
   movedistance: 1
-  flashDuration: 0.3
-  flashPeak: 1
   blowForce: 0.5
   blowSize: {x: 1, y: 4}
 --- !u!198 &500585772
@@ -52510,6 +52524,24 @@ Transform:
   - {fileID: 838979936}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &500585778
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 500585769}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43ae71b87d6156f49bbc7cdf8a9e998c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyDamage
+  dead: 0
+  health: 5
+  spiritsBack: 3
+  flashDuration: 0.3
+  customDeath: 0
+  flashPeak: 1
 --- !u!1 &507021933
 GameObject:
   m_ObjectHideFlags: 0
@@ -100047,6 +100079,7 @@ GameObject:
   - component: {fileID: 1616209963}
   - component: {fileID: 1616209962}
   - component: {fileID: 1616209966}
+  - component: {fileID: 1616209967}
   m_Layer: 8
   m_Name: IcyGolem
   m_TagString: IcyGolem
@@ -100165,12 +100198,9 @@ MonoBehaviour:
   dead: 0
   candie: 0
   isgrown: 0
-  health: 5
   movespeed: 0.5
   pauseTime: 3
   movedistance: 3
-  flashDuration: 0.3
-  flashPeak: 1
   blowForce: 0.5
   blowSize: {x: 1, y: 3}
 --- !u!198 &1616209963
@@ -105058,6 +105088,24 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &1616209967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1616209958}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43ae71b87d6156f49bbc7cdf8a9e998c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyDamage
+  dead: 0
+  health: 5
+  spiritsBack: 3
+  flashDuration: 0.3
+  customDeath: 0
+  flashPeak: 1
 --- !u!1 &1617322829
 GameObject:
   m_ObjectHideFlags: 0

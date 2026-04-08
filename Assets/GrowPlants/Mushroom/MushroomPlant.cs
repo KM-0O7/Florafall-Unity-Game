@@ -10,6 +10,8 @@ public class MushroomPlant : MonoBehaviour, IGrowablePlant
     private BoxCollider2D platform;
     private int spirits = 1;
     public int spiritCost => spirits;
+    [SerializeField] private bool isFake = false;
+    [SerializeField] private GameObject mushMimic;
     public void setWaterGrow(bool value)
     {
         waterGrown = value;
@@ -32,7 +34,14 @@ public class MushroomPlant : MonoBehaviour, IGrowablePlant
         {
             if (candie == false)
             {
-                StartCoroutine(GrowCycle());
+                if (!isFake)
+                {
+                    StartCoroutine(GrowCycle());
+                } else
+                {
+
+                }
+                
             }
         }
     }
@@ -43,7 +52,14 @@ public class MushroomPlant : MonoBehaviour, IGrowablePlant
         {
             if (candie == true)
             {
-                StartCoroutine(diecycle());
+                if (!isFake)
+                {
+                    StartCoroutine(diecycle());
+                } else
+                {
+
+                }
+                
             }
         }
     }
@@ -69,5 +85,14 @@ public class MushroomPlant : MonoBehaviour, IGrowablePlant
         yield return new WaitForSeconds(3f);
         animator.SetTrigger("dbdone");
         mushdb = false;
+    }
+
+    private IEnumerator MimicGrow()
+    {
+        candie = false;
+        animator.SetTrigger("Grow");
+        yield return new WaitForSeconds(0.45f);
+        Instantiate(mushMimic);
+        Destroy(gameObject);
     }
 }

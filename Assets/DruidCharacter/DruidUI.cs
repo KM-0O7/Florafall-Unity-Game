@@ -35,6 +35,7 @@ public class DruidUI : MonoBehaviour, IDamageAble
     [SerializeField] private float flashDuration = 0.3f;
     [SerializeField] private float flashPeak = 1f;
 
+
     public bool Dead => dead;
 
     private void Start()
@@ -194,10 +195,7 @@ public class DruidUI : MonoBehaviour, IDamageAble
         Scene currentScene = SceneManager.GetActiveScene();
         druidanims.SetTrigger("Respawn");
 
-        if (SceneManager.GetActiveScene().name != spawnSceneName)
-        {
-            ChunkLoader.Instance.EnterChunk(spawnSceneName);
-        }
+        ChunkLoader.Instance.EnterChunk(spawnSceneName);
 
         yield return null;
         yield return null;

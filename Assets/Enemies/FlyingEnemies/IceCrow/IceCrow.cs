@@ -2,7 +2,7 @@ using Pathfinding;
 using System.Collections;
 using UnityEngine;
 
-public class IceCrow : MonoBehaviour, IGrowableEnemy, IDamageAble, IEnemy
+public class IceCrow : MonoBehaviour, IGrowableEnemy, IEnemy
 {
     /* ICE CROW
      * Handles the Ice Crow AI
@@ -21,14 +21,12 @@ public class IceCrow : MonoBehaviour, IGrowableEnemy, IDamageAble, IEnemy
     [SerializeField] private float bulletForce = 3f;
     [SerializeField] private float shootingDistance = 6f;
     [SerializeField] private GameObject bullet;
-    [SerializeField] private float health = 7f;
     [SerializeField] private GameObject spikeObject;
     [SerializeField] private float deActivationDistance = 12f;
 
     private bool isDashing = false;
     private bool dashCD = false;
-    private bool dead;
-    public bool Dead => dead;
+   
     private bool growDb;
     public bool IsGrown => growDb;
     private bool candie = false;
@@ -47,6 +45,7 @@ public class IceCrow : MonoBehaviour, IGrowableEnemy, IDamageAble, IEnemy
     private SpriteRenderer enemySprite;
     private bool isShooting = false;
     private bool canShoot = true;
+    private EnemyDamage damage;
 
     private Animator animator;
     private bool playerInSight = false;
@@ -55,13 +54,6 @@ public class IceCrow : MonoBehaviour, IGrowableEnemy, IDamageAble, IEnemy
     private int direction;
     private ParticleSystem explodeParticle;
 
-    //FLASH
-    private bool hitImmune = false;
-    private MaterialPropertyBlock mpb;
-    private Coroutine flashRoutine;
-    [SerializeField] private float flashDuration = 0.3f;
-    [SerializeField] private float flashPeak = 1f;
-
     //PATHFINDING
     private Seeker seeker;
 
@@ -69,9 +61,11 @@ public class IceCrow : MonoBehaviour, IGrowableEnemy, IDamageAble, IEnemy
     [SerializeField] private float pathRepeatRate = 0.2f;
     public float nextWaypointDistance = 0.2f;
     private int currentWaypoint = 0;
+    public bool Dead => damage.dead;
 
     private void Start()
     {
+        damage = GetComponent<EnemyDamage>();
         explodeParticle = GetComponent<ParticleSystem>();
         seeker = GetComponent<Seeker>();
         animator = GetComponent<Animator>();
@@ -80,8 +74,6 @@ public class IceCrow : MonoBehaviour, IGrowableEnemy, IDamageAble, IEnemy
         enemyRig = GetComponent<Rigidbody2D>();
         spikeGrowHitbox = spikeObject.GetComponent<BoxCollider2D>();
         GameObject player = GameObject.FindGameObjectWithTag("Player");
-        mpb = new MaterialPropertyBlock();
-        enemySprite.material = new Material(enemySprite.material);
         if (player != null)
         {
             playerTransform = player.gameObject.GetComponent<Transform>();
@@ -111,7 +103,7 @@ public class IceCrow : MonoBehaviour, IGrowableEnemy, IDamageAble, IEnemy
 
     private void FixedUpdate()
     {
-        if (!growDb && !isLerping && !dead)
+        if (!growDb && !isLerping && !damage.dead)
         {
             if (path == null) return;
             if (currentWaypoint >= path.vectorPath.Count) return;
@@ -131,18 +123,18 @@ public class IceCrow : MonoBehaviour, IGrowableEnemy, IDamageAble, IEnemy
     {
 
         //---- DEATH ----
-        if (health < 1 || health == 0)
+        if (damage.health < 1 || damage.health == 0)
         {
             
             enemyRig.linearVelocityX = 0f;
             enemyRig.linearVelocityY = 0f;
-            if (dead == false)
+            if (damage.dead == false)
             {
                 StartCoroutine(Death());
             }
         }
 
-        if (!growDb && !dead && !isLerping)
+        if (!growDb && !damage.dead && !isLerping)
         {
             if (!isDashing && !isShooting)
             {
@@ -207,7 +199,7 @@ public class IceCrow : MonoBehaviour, IGrowableEnemy, IDamageAble, IEnemy
     {
         enemySprite.enabled = false;
         explodeParticle.Emit(10);
-        dead = true;
+        damage.dead = true;
 
         foreach (Transform child in transform)
         {
@@ -217,33 +209,9 @@ public class IceCrow : MonoBehaviour, IGrowableEnemy, IDamageAble, IEnemy
         Destroy(gameObject);
     }
 
-    public void TakeDamage(float damage) //call to take damage put damage in parameters
-    {
-        if (!dead)
-        {
-            if (!hitImmune)
-            {
-                hitImmune = true;
-                health -= damage;
-                StartCoroutine(HitImmuneCoroutine(0.5f));
-                Flash();
-            }
-        }
-    }
-
-    // ---- FLASH CALL ----
-    public void Flash()
-    {
-        if (flashRoutine != null)
-        {
-            StopCoroutine(flashRoutine);
-        }
-        flashRoutine = StartCoroutine(FlashCoroutine());
-    }
-
     public void Grow()
     {
-        if (!dead)
+        if (!damage.dead)
         {
             if (IsGrown == false)
             {
@@ -259,7 +227,7 @@ public class IceCrow : MonoBehaviour, IGrowableEnemy, IDamageAble, IEnemy
 
     public void Die()
     {
-        if (!dead)
+        if (!damage.dead)
         {
             if (growDb == true)
             {
@@ -278,37 +246,6 @@ public class IceCrow : MonoBehaviour, IGrowableEnemy, IDamageAble, IEnemy
         Debug.DrawRay(transform.position, new Vector3(direction * dashDetectionDistance, 0, 0), Color.red);
         Gizmos.DrawWireSphere(transform.position, playerDetectionDistance);
         Gizmos.DrawWireSphere(transform.position, shootingDistance);
-    }
-
-    private IEnumerator FlashCoroutine()
-    {
-        Debug.Log("IceCrowFlash");
-        float timer = 0f;
-
-        enemySprite.GetPropertyBlock(mpb);
-
-        while (timer < flashDuration)
-        {
-            timer += Time.deltaTime;
-            float t = 1f - (timer / flashDuration);
-            float intensity = t * flashPeak;
-
-            mpb.SetFloat("_FlashIntensity", intensity);
-            enemySprite.SetPropertyBlock(mpb);
-
-            yield return null;
-        }
-
-        mpb.SetFloat("_FlashIntensity", 0f);
-        enemySprite.SetPropertyBlock(mpb);
-
-        flashRoutine = null; 
-    }
-
-    private IEnumerator HitImmuneCoroutine(float time)
-    {
-        yield return new WaitForSeconds(time);
-        hitImmune = false;
     }
 
     private IEnumerator GrowCycle()

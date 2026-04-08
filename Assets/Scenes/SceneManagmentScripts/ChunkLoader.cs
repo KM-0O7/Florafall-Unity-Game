@@ -53,13 +53,6 @@ public class ChunkLoader : MonoBehaviour
 
     private IEnumerator LoadAndUnload(string sceneName, System.Action onChunkLoaded = null)
     {
-        if (currentChunk == sceneName)
-        {
-            Debug.Log($"[ChunkLoader] Already in scene '{sceneName}', skipping reload.");
-            onChunkLoaded?.Invoke();
-            yield break;
-        }
-
         AsyncOperation loadOp = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
         while (!loadOp.isDone)
             yield return null;

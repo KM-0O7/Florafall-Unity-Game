@@ -1,7 +1,8 @@
 ﻿using System.Collections;
+
 using UnityEngine;
 
-public class RustyGolem : MonoBehaviour, IGrowableEnemy, IDamageAble, IEnemy
+public class RustyGolem : MonoBehaviour, IGrowableEnemy, IEnemy
 {
     /* RUSTY GOLEM
      * Handles all of rusty golem's logic
@@ -22,22 +23,18 @@ public class RustyGolem : MonoBehaviour, IGrowableEnemy, IDamageAble, IEnemy
     }
     public bool candie = false;
     public bool isgrown = false;
-   
-
     public bool CanDie => candie;
     public bool IsGrown => isgrown;
-    public bool Dead => dead;
+    
     public int spiritCost => 3;
 
     // ---- BASE COMPONENTS ----
-    public float health;
 
     private Animator animator;
+    private EnemyDamage enemyDamage;
     private Rigidbody2D rb;
     private DruidFrameWork druid;
     private SpriteRenderer spriterenderer;
-    private DruidUI UI;
-    private DruidGrowFramework growframework;
 
     // ---- MOVEMENT ----
     public float movespeed = 2f;
@@ -49,34 +46,13 @@ public class RustyGolem : MonoBehaviour, IGrowableEnemy, IDamageAble, IEnemy
     private bool isPaused = false;
     private Vector2 startpos;
 
-    // ---- DAMAGE FLASH ----
-    public float flashDuration = 0.3f;
-
-    public float flashPeak = 1f;
-
-    private MaterialPropertyBlock mpb;
-    private Coroutine flashRoutine;
-    private bool hitImmune = false;
-
     //BouncePad
     [SerializeField] private GameObject collide;
 
     [SerializeField] private float bounceheight;
 
     private BoxCollider2D bouncepad;
-
-    /* AWAKE
-     * Handles extremely necessary components
-     * Handles flash components
-     */
-
-    private void Awake()
-    {
-        spriterenderer = GetComponent<SpriteRenderer>();
-        spriterenderer.material = new Material(spriterenderer.material);
-
-        mpb = new MaterialPropertyBlock();
-    }
+    public bool Dead => enemyDamage.dead;
 
     /* START
      * Handles player variable
@@ -85,16 +61,16 @@ public class RustyGolem : MonoBehaviour, IGrowableEnemy, IDamageAble, IEnemy
 
     private void Start()
     {
+        enemyDamage = GetComponent<EnemyDamage>();
         startpos = transform.position;
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        spriterenderer = GetComponent<SpriteRenderer>();
 
         //find druidreference
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (player != null)
         {
-            growframework = player.GetComponent<DruidGrowFramework>();
-            UI = player.GetComponent<DruidUI>();
             druid = player.GetComponent<DruidFrameWork>();
         }
     }
@@ -106,23 +82,6 @@ public class RustyGolem : MonoBehaviour, IGrowableEnemy, IDamageAble, IEnemy
     private void Update()
     {
         animator.SetFloat("XVelo", rb.linearVelocityX);
-
-        //death
-        if (health < 1 || health == 0)
-        {
-            animator.SetTrigger("Death");
-            rb.linearVelocityX = 0f;
-            rb.linearVelocityY = 0f;
-            if (dead == false)
-            {
-                if (!DruidFrameWork.isTransformed)
-                {
-                    UI.spirits += 3;
-                }
-                dead = true;
-                growframework.RemoveTether(transform);
-            }
-        }
     }
 
     /* FIXED UPDATE
@@ -132,7 +91,7 @@ public class RustyGolem : MonoBehaviour, IGrowableEnemy, IDamageAble, IEnemy
 
     private void FixedUpdate()
     {
-        if (!dead && !isPaused)
+        if (!enemyDamage.dead && !isPaused)
         {
             if (!isgrown)
             {
@@ -168,14 +127,12 @@ public class RustyGolem : MonoBehaviour, IGrowableEnemy, IDamageAble, IEnemy
      * Handles grow
      * Handles Dying
      * Handles collision with bouncepad if grown
-     * Handles taking damage
-     * Handles flash
      */
 
     //grow the enemy
     public void Grow()
     {
-        if (!dead)
+        if (!enemyDamage.dead)
         {
             if (isgrown == false)
             {
@@ -192,7 +149,7 @@ public class RustyGolem : MonoBehaviour, IGrowableEnemy, IDamageAble, IEnemy
     //ungrow the enemy
     public void Die()
     {
-        if (!dead)
+        if (!enemyDamage.dead)
         {
             if (isgrown == true)
             {
@@ -207,14 +164,14 @@ public class RustyGolem : MonoBehaviour, IGrowableEnemy, IDamageAble, IEnemy
     // ---- DAMAGE ----
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!dead)
+        if (!enemyDamage.dead)
         {
             if (collision)
             {
                 if (collision.gameObject.CompareTag("SeedBullet")) //checks if touched by bullet
                 {
                     Destroy(collision.gameObject);
-                    TakeDamage(2f);
+                    enemyDamage.TakeDamage(2);
                 }
 
                 if (collision.gameObject.CompareTag("Player") && isgrown && bouncepad != null)
@@ -231,69 +188,13 @@ public class RustyGolem : MonoBehaviour, IGrowableEnemy, IDamageAble, IEnemy
             }
         }
     }
-
-    public void TakeDamage(float damage) //call to take damage put damage in parameters
-    {
-        if (!dead)
-        {
-            if (!hitImmune)
-            {
-                hitImmune = true;
-                StartCoroutine(HitImmuneCoroutine(0.5f));
-                health -= damage;
-                Flash();
-            }
-        }
-    }
-
-    // ---- FLASH CALL ----
-    public void Flash()
-    {
-        if (flashRoutine != null)
-        {
-            StopCoroutine(flashRoutine);
-        }
-        flashRoutine = StartCoroutine(FlashCoroutine());
-    }
-
+  
     /* COROUTINES
-     * Handles damage flash
      * Handles Growing
      * Handles Dying
      * Handles Idle at end of walking
-     * Handles HitImmunity
      */
 
-    //flash coroutine
-    private IEnumerator FlashCoroutine()
-    {
-        float timer = 0f;
-
-        spriterenderer.GetPropertyBlock(mpb);
-
-        while (timer < flashDuration)
-        {
-            timer += Time.deltaTime;
-            float t = 1f - (timer / flashDuration);
-            float intensity = t * flashPeak;
-
-            mpb.SetFloat("_FlashIntensity", intensity);
-            spriterenderer.SetPropertyBlock(mpb);
-
-            yield return null;
-        }
-
-        mpb.SetFloat("_FlashIntensity", 0f);
-        spriterenderer.SetPropertyBlock(mpb);
-
-        flashRoutine = null; // Clear reference
-    }
-
-    private IEnumerator HitImmuneCoroutine(float time)
-    {
-        yield return new WaitForSeconds(time);
-        hitImmune = false;
-    }
     private IEnumerator PauseAtEnd(bool turnRight) // pauses at the end of the movement
     {
         isPaused = true;

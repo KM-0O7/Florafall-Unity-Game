@@ -21,7 +21,6 @@ public class CliffCutscene : MonoBehaviour
     private PixelPerfectCamera ppc;
     private CliffMech cliffMech;
 
-    [SerializeField] private float knockBackForce = 10f; 
     [SerializeField] private int endPPU = 20;
     [SerializeField] private Transform firstCamLerpPos;
     private bool inEndCutscene = false;

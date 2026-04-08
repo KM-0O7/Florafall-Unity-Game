@@ -94,9 +94,10 @@ public class DruidGrowFramework : MonoBehaviour
                 if (distance < maxTetherDistance - 2)
                 {
                     IGrowableEnemy enemy = hit.collider.GetComponent<IGrowableEnemy>();
+                    IDamageAble damage = hit.collider.GetComponent<IDamageAble>();
                     IGrowablePlant plant = hit.collider.GetComponent<IGrowablePlant>();
 
-                    if ((plant != null && plant.WaterGrown == false)|| enemy != null)
+                    if ((plant != null && plant.WaterGrown == false)|| (enemy != null && damage != null && !damage.Dead))
                     {
                         SpriteRenderer growableRender = hit.collider.GetComponent<SpriteRenderer>();
 
@@ -160,12 +161,13 @@ public class DruidGrowFramework : MonoBehaviour
                         else
                         {
                             IGrowableEnemy enemy = hit.collider.GetComponent<IGrowableEnemy>();
+                            IDamageAble damage = hit.collider.GetComponent<IDamageAble>();
                             if (enemy != null)
                             {
                                 float distance = Vector2.Distance(druidtransform.position, hit.collider.transform.position);
                                 if (distance <= maxTetherDistance - 2)
                                 {
-                                    if (!enemy.Dead)
+                                    if (!damage.Dead)
                                     {
                                         if (!enemy.IsGrown && !enemy.CanDie && UI.spirits > 0)
                                         {

@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class RollingBot : MonoBehaviour, IDamageAble, IEnemy
+public class RollingBot : MonoBehaviour, IEnemy
 {
     /* ROLLING BOT
      * Handles the movement of a rolling bot
@@ -13,7 +13,7 @@ public class RollingBot : MonoBehaviour, IDamageAble, IEnemy
     private bool dead = false;
     public bool FlyingEnemy => false;
     public bool GroundEnemy => true;
-    public bool Dead => dead;
+  
 
     private bool isLerping = false; 
     public bool IsLerping => isLerping;
@@ -27,16 +27,9 @@ public class RollingBot : MonoBehaviour, IDamageAble, IEnemy
 
     private Transform rollingBotTransform;
     private SpriteRenderer spriterenderer;
-    private MaterialPropertyBlock mpb;
-    private Coroutine flashRoutine;
     private Animator animator;
     private Rigidbody2D rb;
-
-    //---- DAMAGE ----
-    private bool hitImmune = false;
-
-    [SerializeField] private float flashDuration = 0.3f;
-    [SerializeField] private float flashPeak = 1f;
+    private EnemyDamage damage;
 
     //---- ACTIVATION ----
     private bool activated = false;
@@ -54,6 +47,7 @@ public class RollingBot : MonoBehaviour, IDamageAble, IEnemy
     private bool movingright = true;
     private bool isPaused = false;
     private Vector2 startpos;
+    public bool Dead => damage.dead;
 
     /* START
      * Handles components
@@ -63,12 +57,11 @@ public class RollingBot : MonoBehaviour, IDamageAble, IEnemy
 
     private void Start()
     {
+        damage = GetComponent<EnemyDamage>();
         startpos = transform.position;
         rollingBotTransform = gameObject.GetComponent<Transform>();
         spriterenderer = gameObject.GetComponent<SpriteRenderer>();
-        spriterenderer.material = new Material(spriterenderer.material);
         animator = gameObject.GetComponent<Animator>();
-        mpb = new MaterialPropertyBlock();
         rb = gameObject.GetComponent<Rigidbody2D>();
 
         GameObject player = GameObject.FindGameObjectWithTag("Player");
@@ -87,7 +80,7 @@ public class RollingBot : MonoBehaviour, IDamageAble, IEnemy
     {
         if (activated)
         {
-            if (!dead && !isPaused)
+            if (!damage.dead && !isPaused)
             {
                 float distanceFromStart = transform.position.x - startpos.x;
 
@@ -128,18 +121,6 @@ public class RollingBot : MonoBehaviour, IDamageAble, IEnemy
     {
         animator.SetFloat("XVelo", rb.linearVelocityX);
 
-        //---- DEATH ----
-        if (health < 1 || health == 0)
-        {
-            animator.SetTrigger("Death");
-            rb.linearVelocityX = 0f;
-            rb.linearVelocityY = 0f;
-            if (dead == false)
-            {
-                dead = true;
-            }
-        }
-
         // ---- ACTIVATION ----
         if (activated == false && isActivating == false)
         {
@@ -158,33 +139,8 @@ public class RollingBot : MonoBehaviour, IDamageAble, IEnemy
 
     /* FUNCTIONS
      * Take damage is required by interface
-     * Calling flash makes the sprite flash depending on variable set
      * DrawGizmos shows the activation range when selecting the rolling bot
      */
-
-    public void TakeDamage(float damage) //call to take damage put damage in parameters
-    {
-        if (!dead)
-        {
-            if (!hitImmune)
-            {
-                hitImmune = true;
-                health -= damage;
-                StartCoroutine(HitImmuneCoroutine(0.5f));
-                Flash();
-            }
-        }
-    }
-
-    // ---- FLASH CALL ----
-    public void Flash()
-    {
-        if (flashRoutine != null)
-        {
-            StopCoroutine(flashRoutine);
-        }
-        flashRoutine = StartCoroutine(FlashCoroutine());
-    }
 
     //shows activation range when selected in editor
     private void OnDrawGizmosSelected()
@@ -195,41 +151,9 @@ public class RollingBot : MonoBehaviour, IDamageAble, IEnemy
     }
 
     /* COROUTINES
-     * FlashCoroutine handles flashing when called
-     * HitImmuneCoroutine handles disabling hitimmunity after time set in parameters
      * ActivationCoroutine handles the activation after anims
      * PauseAtEnd handles the rolling bot pausing at the end of their roll
      */
-
-    private IEnumerator FlashCoroutine()
-    {
-        float timer = 0f;
-
-        spriterenderer.GetPropertyBlock(mpb);
-
-        while (timer < flashDuration)
-        {
-            timer += Time.deltaTime;
-            float t = 1f - (timer / flashDuration);
-            float intensity = t * flashPeak;
-
-            mpb.SetFloat("_FlashIntensity", intensity);
-            spriterenderer.SetPropertyBlock(mpb);
-
-            yield return null;
-        }
-
-        mpb.SetFloat("_FlashIntensity", 0f);
-        spriterenderer.SetPropertyBlock(mpb);
-
-        flashRoutine = null; // Clear reference
-    }
-
-    private IEnumerator HitImmuneCoroutine(float time)
-    {
-        yield return new WaitForSeconds(time);
-        hitImmune = false;
-    }
 
     private IEnumerator ActivationCoroutine()
     {

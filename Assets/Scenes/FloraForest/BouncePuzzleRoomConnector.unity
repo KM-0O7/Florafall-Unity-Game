@@ -6298,6 +6298,8 @@ MonoBehaviour:
   mushdb: 0
   Collide: {fileID: 1729847286}
   candie: 0
+  isFake: 0
+  mushMimic: {fileID: 0}
   waterGrown: 0
 --- !u!61 &107069485
 BoxCollider2D:
@@ -8426,6 +8428,8 @@ MonoBehaviour:
   mushdb: 0
   Collide: {fileID: 642561845}
   candie: 0
+  isFake: 0
+  mushMimic: {fileID: 0}
   waterGrown: 0
 --- !u!61 &362916107
 BoxCollider2D:
@@ -25535,6 +25539,7 @@ GameObject:
   - component: {fileID: 1942491853}
   - component: {fileID: 1942491852}
   - component: {fileID: 1942491851}
+  - component: {fileID: 1942491857}
   m_Layer: 8
   m_Name: RustyGolem
   m_TagString: GrowableEnemy
@@ -25630,12 +25635,9 @@ MonoBehaviour:
   dead: 0
   candie: 0
   isgrown: 0
-  health: 6
   movespeed: 0.5
   pauseTime: 2
   movedistance: 3
-  flashDuration: 0.3
-  flashPeak: 1
   collide: {fileID: 1102849593}
   bounceheight: 8
 --- !u!95 &1942491854
@@ -25735,6 +25737,24 @@ Transform:
   - {fileID: 1102849596}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1942491857
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1942491850}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43ae71b87d6156f49bbc7cdf8a9e998c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyDamage
+  dead: 0
+  health: 5
+  spiritsBack: 3
+  flashDuration: 0.3
+  customDeath: 0
+  flashPeak: 1
 --- !u!1 &2012255874
 GameObject:
   m_ObjectHideFlags: 0
@@ -26139,6 +26159,8 @@ MonoBehaviour:
   mushdb: 0
   Collide: {fileID: 1021099562}
   candie: 0
+  isFake: 0
+  mushMimic: {fileID: 0}
   waterGrown: 0
 --- !u!61 &2146065407
 BoxCollider2D:
