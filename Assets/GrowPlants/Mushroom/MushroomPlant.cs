@@ -1,4 +1,5 @@
 using System.Collections;
+using UnityEditor.Tilemaps;
 using UnityEngine;
 
 public class MushroomPlant : MonoBehaviour, IGrowablePlant
@@ -39,7 +40,7 @@ public class MushroomPlant : MonoBehaviour, IGrowablePlant
                     StartCoroutine(GrowCycle());
                 } else
                 {
-
+                    StartCoroutine(MimicGrow());
                 }
                 
             }
@@ -55,11 +56,7 @@ public class MushroomPlant : MonoBehaviour, IGrowablePlant
                 if (!isFake)
                 {
                     StartCoroutine(diecycle());
-                } else
-                {
-
-                }
-                
+                } 
             }
         }
     }
@@ -89,6 +86,9 @@ public class MushroomPlant : MonoBehaviour, IGrowablePlant
 
     private IEnumerator MimicGrow()
     {
+        ParticleSystem debris = gameObject.GetComponent<ParticleSystem>();
+        ParticleSystem.EmissionModule debrisEmission = debris.emission;
+        debrisEmission.enabled = true;
         candie = false;
         animator.SetTrigger("Grow");
         yield return new WaitForSeconds(0.45f);

@@ -46,6 +46,7 @@ TagManager:
   - Rocket
   - Sprinkler
   - BigVine
+  - MushMimic
   layers:
   - Default
   - TransparentFX
