@@ -186,19 +186,23 @@ public class DruidFrameWork : MonoBehaviour
                 animator.SetBool("IsGrounded", isGrounded);
 
                 // ---- GROUND PARTICLE COLOUR CHANGER ----
-                RaycastHit2D groundTag = Physics2D.Raycast(groundCheck.position, Vector2.down, rayLength, groundLayer);
+                RaycastHit2D groundTag = Physics2D.Raycast(groundCheck.position, Vector2.down, rayLength, LayerMask.GetMask("Ground"));
                 ParticleSystem.MainModule walkMain;
                 ParticleSystem.MainModule fallMain;
                 fallMain = fallingParticle.main;
                 walkMain = walkingParticle.main;
-                if (groundTag.collider.gameObject.CompareTag("Grass"))
+                if (groundTag)
                 {
-                    fallMain.startColor = Color.green;
-                    walkMain.startColor = Color.green;
-                } else if (groundTag.collider.gameObject.CompareTag("Snow"))
-                {
-                    fallMain.startColor = Color.white;
-                    walkMain.startColor = Color.white;
+                    if (groundTag.collider.gameObject.CompareTag("Grass"))
+                    {
+                        fallMain.startColor = Color.green;
+                        walkMain.startColor = Color.green;
+                    }
+                    else if (groundTag.collider.gameObject.CompareTag("Snow"))
+                    {
+                        fallMain.startColor = Color.white;
+                        walkMain.startColor = Color.white;
+                    }
                 }
             }
         }

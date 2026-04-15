@@ -37988,7 +37988,7 @@ MonoBehaviour:
   maxSpirits: 5
   spirits: 5
   circleWipe: {fileID: 715693981}
-  currentRespawnPointName: 
+  currentRespawnPointName: BaseSpawnPoint
   health: 4
   MaxHealth: 4
   dead: 0

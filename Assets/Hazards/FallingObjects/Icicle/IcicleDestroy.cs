@@ -12,7 +12,7 @@ public class IcicleDestroy : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-       if (collision.gameObject.CompareTag("Ground"))
+       if (collision.gameObject.CompareTag("Snow"))
        {
             deathParticle.transform.parent = null;
             deathParticle.Emit(10);

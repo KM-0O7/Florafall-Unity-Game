@@ -32,6 +32,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/FloraForest/FloraRespite.unity
     guid: c0bd9c0998b0ce747b54007c8e97d05f
+  - enabled: 1
+    path: Assets/Scenes/LoadingScene.unity
+    guid: 30356de0189a5f0449c6687175e786ed
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

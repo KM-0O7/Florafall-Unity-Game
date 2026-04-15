@@ -35,12 +35,14 @@ public class CameraBounds : MonoBehaviour
 
     public void ResetBounds()
     {
-      
-        Bounds b = bc.bounds;
+        if (bc != null)
+        {
+            Bounds b = bc.bounds;
 
-        Vector2 min = b.min;
-        Vector2 max = b.max;
+            Vector2 min = b.min;
+            Vector2 max = b.max;
 
-        Camera.main.GetComponent<FollowPlayer>().SetBounds(min, max);
+            Camera.main.GetComponent<FollowPlayer>().SetBounds(min, max);
+        }
     }
 }

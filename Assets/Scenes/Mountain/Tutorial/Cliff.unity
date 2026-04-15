@@ -7116,7 +7116,7 @@ GameObject:
   - component: {fileID: 1137355439}
   m_Layer: 6
   m_Name: Tilemap
-  m_TagString: Ground
+  m_TagString: Snow
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -15828,7 +15828,6 @@ MonoBehaviour:
   mechMovePos: {fileID: 1017737548}
   boss: {fileID: 455882827}
   zoomedOutSize: 6
-  knockBackForce: 10
   endPPU: 30
   firstCamLerpPos: {fileID: 1087965872}
   holdDistance: 2

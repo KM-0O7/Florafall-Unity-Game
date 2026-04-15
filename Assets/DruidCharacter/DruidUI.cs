@@ -181,7 +181,7 @@ public class DruidUI : MonoBehaviour, IDamageAble
     private IEnumerator RespawnCycle()
     {
         yield return new WaitForSeconds(0.1f);
-
+        druid.transform.position = Vector2.zero;
         Scene currentScene = SceneManager.GetActiveScene();
         druidanims.SetTrigger("Respawn");
 

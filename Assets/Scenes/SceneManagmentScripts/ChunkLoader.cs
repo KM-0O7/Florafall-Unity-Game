@@ -1,13 +1,13 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class ChunkLoader : MonoBehaviour
 {
-
     /* CHUNKLOADER
      * This script handles moving between scenes via unloading and reloading
-     * This script is a singleton 
+     * This script is a singleton
      * This script is persistent
      */
     public static ChunkLoader Instance { get; private set; }
@@ -17,6 +17,7 @@ public class ChunkLoader : MonoBehaviour
     /* AWAKE
      * Handles persistence
      */
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -38,14 +39,14 @@ public class ChunkLoader : MonoBehaviour
     }
 
     //Enter chunk starts a courotine which takes a scene name and loads it
-     
+
     public void EnterChunk(string sceneName, System.Action onChunkLoaded = null)
     {
         StartCoroutine(LoadAndUnload(sceneName, onChunkLoaded));
     }
 
     /* LOAD AND UNLOAD
-     * Checks if it's loading the current scene if it is it breaks the coroutine
+     * Checks if it's loading the current scene if it forces reload
      * If its not it loads the scene and while its loading it waits frames until it's done loading
      * Checks if the sceneName is empty and then loads the starting scene via current chunk
      * Sets the current chunk to the now loaded scene if all is good
@@ -56,9 +57,21 @@ public class ChunkLoader : MonoBehaviour
         AsyncOperation loadOp = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
         while (!loadOp.isDone)
             yield return null;
+        Debug.Log("Unloaded" + sceneName);
 
         Scene newScene = SceneManager.GetSceneByName(sceneName);
+        while (!newScene.isLoaded)
+            yield return null;
+
         SceneManager.SetActiveScene(newScene);
+
+        yield return null;
+
+        if (AstarPath.active != null)
+        {
+            AstarPath.active.Scan();
+        }
+
         onChunkLoaded?.Invoke();
 
         if (!string.IsNullOrEmpty(currentChunk))
