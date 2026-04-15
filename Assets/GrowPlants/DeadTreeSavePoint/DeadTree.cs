@@ -70,6 +70,7 @@ public class DeadTree : MonoBehaviour, IGrowablePlant
         yield return new WaitForSeconds(0.75f);
         candie = true;
         UI.spawnSceneName = SceneManager.GetActiveScene().name;
+        UI.currentRespawnPointName = gameObject.name;
     }
 
     private IEnumerator DieCycle()

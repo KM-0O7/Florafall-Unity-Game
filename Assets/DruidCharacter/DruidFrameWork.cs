@@ -184,6 +184,22 @@ public class DruidFrameWork : MonoBehaviour
                 bool touchingGround = Physics2D.OverlapCircle(groundCheck.position, checkRadius, LayerMask.GetMask("Ground"));
                 isGrounded = touchingGround || validPlatformGround;
                 animator.SetBool("IsGrounded", isGrounded);
+
+                // ---- GROUND PARTICLE COLOUR CHANGER ----
+                RaycastHit2D groundTag = Physics2D.Raycast(groundCheck.position, Vector2.down, rayLength, groundLayer);
+                ParticleSystem.MainModule walkMain;
+                ParticleSystem.MainModule fallMain;
+                fallMain = fallingParticle.main;
+                walkMain = walkingParticle.main;
+                if (groundTag.collider.gameObject.CompareTag("Grass"))
+                {
+                    fallMain.startColor = Color.green;
+                    walkMain.startColor = Color.green;
+                } else if (groundTag.collider.gameObject.CompareTag("Snow"))
+                {
+                    fallMain.startColor = Color.white;
+                    walkMain.startColor = Color.white;
+                }
             }
         }
     }
@@ -331,6 +347,8 @@ public class DruidFrameWork : MonoBehaviour
         fallingParticle.Emit(10);
         canjump = false;
         canmove = false;
+        druidrb.linearVelocityX = 0f;
+        animator.SetTrigger("Land"); 
         druidrb.linearVelocityX = 0f;
         animator.SetTrigger("Land");
         Invoke("Recover", 0.4f);

@@ -15,6 +15,7 @@ public class DruidUI : MonoBehaviour, IDamageAble
     public int spirits; //current spirits
     public Image circleWipe;
     private Transform spawnPoint; //current spawnpoint;
+    public string currentRespawnPointName;
     public float health = 5;
     public float MaxHealth = 5;
     private float previousHealth;
@@ -105,16 +106,9 @@ public class DruidUI : MonoBehaviour, IDamageAble
             {
                 if (!waitCycle)
                 {
+                    dead = true;
                     StartCoroutine(DeathScreenCycle());
                 }
-            }
-        }
-
-        if (dead)
-        {
-            if (waitCycle)
-            {
-                StartCoroutine(RespawnCycle());
             }
         }
     }
@@ -169,15 +163,13 @@ public class DruidUI : MonoBehaviour, IDamageAble
 
     private IEnumerator DeathScreenCycle()
     {
+        deathScreen.SetTrigger("Start");
         health = 0;
         waitCycle = true;
         druidanims.SetTrigger("Death");
-
-        yield return new WaitForSeconds(0.5f);
-        deathScreen.SetTrigger("Expand");
-
-        yield return new WaitForSeconds(0.3f);
-        dead = true;
+  
+        yield return new WaitForSeconds(0.5f);  
+        StartCoroutine(RespawnCycle());
     }
 
     private IEnumerator HitImmuneCoroutine(float time)
@@ -188,8 +180,6 @@ public class DruidUI : MonoBehaviour, IDamageAble
 
     private IEnumerator RespawnCycle()
     {
-        waitCycle = false;
-        deathScreen.SetTrigger("Deflate");
         yield return new WaitForSeconds(0.1f);
 
         Scene currentScene = SceneManager.GetActiveScene();
@@ -201,7 +191,7 @@ public class DruidUI : MonoBehaviour, IDamageAble
         yield return null;
         yield return null;
 
-        spawnPoint = GameObject.FindWithTag("RespawnPoint")?.transform;
+        spawnPoint = GameObject.Find(currentRespawnPointName).transform;
        
         druidRig.gravityScale = 1f;
         health = MaxHealth;
@@ -216,5 +206,9 @@ public class DruidUI : MonoBehaviour, IDamageAble
         {
             Debug.LogWarning("No spawnPoint found in scene!");
         }
+
+        yield return new WaitForSeconds(0.2f);
+        waitCycle = false;
+        deathScreen.SetTrigger("End");
     }
 }

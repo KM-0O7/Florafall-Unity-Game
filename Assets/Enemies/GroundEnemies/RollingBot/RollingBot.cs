@@ -40,7 +40,6 @@ public class RollingBot : MonoBehaviour, IEnemy
     [SerializeField] private float moveSpeed = 2f;
 
     [SerializeField] private float pauseTime = 3f;
-    [SerializeField] private float health = 4f;
     [SerializeField] private float moveDistance = 5f;
     [SerializeField] private float activationDistance = 15f;
 

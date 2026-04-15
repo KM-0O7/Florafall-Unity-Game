@@ -47,6 +47,8 @@ TagManager:
   - Sprinkler
   - BigVine
   - MushMimic
+  - Grass
+  - Snow
   layers:
   - Default
   - TransparentFX
