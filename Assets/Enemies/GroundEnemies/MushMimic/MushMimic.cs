@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class MushMimic : MonoBehaviour, IGrowableEnemy, IEnemy
 {
@@ -45,6 +46,7 @@ public class MushMimic : MonoBehaviour, IGrowableEnemy, IEnemy
     [SerializeField] private Transform checkPointPos;
     private BoxCollider2D collide;
     [SerializeField] private GameObject platform;
+    [SerializeField] private BoxCollider2D landingHitbox;
     private Animator animator;
 
     private bool movingright = true;
@@ -111,13 +113,14 @@ public class MushMimic : MonoBehaviour, IGrowableEnemy, IEnemy
 
     private void Update()
     {
+        float distanceFromStart = transform.position.x - startpos.x;
         //Attack
-        if (canJump)
-        {
+        if (canJump && !(distanceFromStart <= -moveDistance || distanceFromStart >= moveDistance))
+        { 
             if (Vector2.Distance(gameObject.transform.position, druid.transform.position) <= jumpDistanceCheck)
             {
                 Debug.Log("Jumping");
-                StopAllCoroutines();
+                canHop = false;
                 StartCoroutine(JumpAttack());
             }
         }
@@ -177,7 +180,10 @@ public class MushMimic : MonoBehaviour, IGrowableEnemy, IEnemy
         }
         enemyRig.gravityScale = 1;
         animator.SetTrigger("Land");
-        yield return new WaitForSeconds(1.1f); 
+        landingHitbox.enabled = true;
+        yield return new WaitForSeconds(0.3f);
+        landingHitbox.enabled = false;
+        yield return new WaitForSeconds(0.7f); 
         canHop = true;
         isJumping = false;
         yield return new WaitForSeconds(attackCooldown);

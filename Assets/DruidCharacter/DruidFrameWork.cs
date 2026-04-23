@@ -33,6 +33,7 @@ public class DruidFrameWork : MonoBehaviour
     [SerializeField] private ParticleSystem walkingParticle;
     [SerializeField] private GameObject druid;
     [SerializeField] private ParticleSystem fallingParticle;
+    [SerializeField] private float gravityScale = 0.5f;
     public static bool inCutscene = false;
 
     // ---- CUSTOM JUMP PHYSICS ----
@@ -288,7 +289,7 @@ public class DruidFrameWork : MonoBehaviour
                     {
                         if (gravityjump)
                         {
-                            druidrb.gravityScale += 0.5f; //add 0.5 to gravity when falling so it feels less floaty when jumping
+                            druidrb.gravityScale += gravityScale; //add gravityScale to gravity when falling so it feels less floaty when jumping
                             gravityjump = false;
                         }
                     }

@@ -163,6 +163,7 @@ public class DruidUI : MonoBehaviour, IDamageAble
 
     private IEnumerator DeathScreenCycle()
     {
+        druidRig.linearVelocityX = 0f;
         deathScreen.SetTrigger("Start");
         health = 0;
         waitCycle = true;
@@ -182,6 +183,7 @@ public class DruidUI : MonoBehaviour, IDamageAble
     {
         yield return new WaitForSeconds(0.1f);
         druid.transform.position = Vector2.zero;
+        druidRig.linearVelocityX = 0f;
         Scene currentScene = SceneManager.GetActiveScene();
         druidanims.SetTrigger("Respawn");
 

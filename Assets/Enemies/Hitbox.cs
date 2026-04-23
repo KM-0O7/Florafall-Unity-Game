@@ -1,15 +1,38 @@
 using UnityEngine;
+using System.Collections;
+using UnityEngine.Rendering;
 
 public class Hitbox : MonoBehaviour
 {
     [SerializeField] private bool druidDamaging = false;
+    [SerializeField] private bool knockBack = false;
     [SerializeField] private GameObject parentObject;
     [SerializeField] private float damage = 1f;
+    GameObject druid;
+    Rigidbody2D druidRig;
+    DruidUI druidUI;
+    [SerializeField] private float knockBackForce = 2f;
+    [SerializeField] private float timeStunned = 0.2f;
+
+    private void Start()
+    {
+        var player = GameObject.FindGameObjectWithTag("Player");
+        if (player)
+        {
+            druidUI = player.GetComponent<DruidUI>();
+            druid = player;
+            druidRig = player.GetComponent<Rigidbody2D>();
+        }
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Player") && druidDamaging)
+        if (collision.gameObject.CompareTag("Player") && druidDamaging && !druidUI.dead)
         {
             Persistence.instance.ApplyDamageToDruid(collision.gameObject, damage);
+            if (knockBack)
+            {
+                StartCoroutine(KnockBack());
+            }
         } else if ((collision.gameObject.layer == LayerMask.NameToLayer("GrowEnemy") || collision.gameObject.layer == LayerMask.NameToLayer("RoboticEnemy")) && !druidDamaging)
         {
             if (!parentObject)
@@ -17,5 +40,17 @@ public class Hitbox : MonoBehaviour
                 Persistence.instance.ApplyDamage(collision.gameObject, damage);
             }  
         }
+    }
+
+    private IEnumerator KnockBack()
+    {
+        druidRig.linearVelocity = Vector2.zero;
+        DruidFrameWork.canmove = false;
+        var hitYDir = transform.position.y > druid.transform.position.y ? -1 : 1;
+        var hitXDir = transform.position.x > druid.transform.position.x ? -1 : 1;
+        druidRig.AddForce(new Vector2(hitXDir * knockBackForce, hitYDir * knockBackForce), ForceMode2D.Impulse);
+        yield return new WaitForSeconds(timeStunned);
+        Debug.Log("Stopped KnockBack");
+        DruidFrameWork.canmove = true;
     }
 }
