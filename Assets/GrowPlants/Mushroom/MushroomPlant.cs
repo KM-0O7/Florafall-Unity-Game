@@ -13,6 +13,7 @@ public class MushroomPlant : MonoBehaviour, IGrowablePlant
     public int spiritCost => spirits;
     [SerializeField] private bool isFake = false;
     [SerializeField] private GameObject mushMimic;
+    DruidGrowFramework druidGrowFramework;
     public void setWaterGrow(bool value)
     {
         waterGrown = value;
@@ -27,6 +28,11 @@ public class MushroomPlant : MonoBehaviour, IGrowablePlant
     private void Start()
     {
         animator = GetComponent<Animator>();
+        var player = GameObject.FindGameObjectWithTag("Player");
+        if (player)
+        {
+            druidGrowFramework = player.GetComponent<DruidGrowFramework>();
+        }
     }
 
     public void Grow()
@@ -86,13 +92,12 @@ public class MushroomPlant : MonoBehaviour, IGrowablePlant
 
     private IEnumerator MimicGrow()
     {
-        ParticleSystem debris = gameObject.GetComponent<ParticleSystem>();
-        ParticleSystem.EmissionModule debrisEmission = debris.emission;
-        debrisEmission.enabled = true;
         candie = false;
         animator.SetTrigger("Grow");
         yield return new WaitForSeconds(0.45f);
-        Instantiate(mushMimic);
+        mushMimic.SetActive(true);
+        mushMimic.transform.position = gameObject.transform.position;
+        druidGrowFramework.RemoveTether(transform);
         Destroy(gameObject);
     }
 }

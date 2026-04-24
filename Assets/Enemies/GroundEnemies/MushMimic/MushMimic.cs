@@ -7,6 +7,8 @@ public class MushMimic : MonoBehaviour, IGrowableEnemy, IEnemy
     private bool isGrown = false;
     private bool canDie = false;
     [SerializeField] private int cost;
+    public bool CantGrow => cantGrow;
+    private bool cantGrow = false;
     private EnemyDamage damage;
     public bool IsGrown => isGrown;
     public int spiritCost => cost;
@@ -61,6 +63,8 @@ public class MushMimic : MonoBehaviour, IGrowableEnemy, IEnemy
         damage = GetComponent<EnemyDamage>();
         enemyRig = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        canHop = false;
+        StartCoroutine(JumpAttack());
     }
 
     /* FIXED UPDATE
@@ -147,6 +151,7 @@ public class MushMimic : MonoBehaviour, IGrowableEnemy, IEnemy
 
     private IEnumerator JumpAttack()
     {
+        cantGrow = true;
         var playerDir = druid.transform.position.x > gameObject.transform.position.x ? 1 : -1;
         if (playerDir > 0)
         {
@@ -185,6 +190,7 @@ public class MushMimic : MonoBehaviour, IGrowableEnemy, IEnemy
         landingHitbox.enabled = false;
         yield return new WaitForSeconds(0.7f); 
         canHop = true;
+        cantGrow = false;
         isJumping = false;
         yield return new WaitForSeconds(attackCooldown);
         canJump = true;
@@ -203,7 +209,7 @@ public class MushMimic : MonoBehaviour, IGrowableEnemy, IEnemy
 
     public void Grow()
     {
-        if (!damage.dead)
+        if (!damage.dead && !cantGrow)
         {
             if (IsGrown == false)
             {
@@ -219,7 +225,7 @@ public class MushMimic : MonoBehaviour, IGrowableEnemy, IEnemy
 
     public void Die()
     {
-        if (!damage.dead)
+        if (!damage.dead && !cantGrow)
         {
             if (isGrown == true)
             {

@@ -41638,8 +41638,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   druidDamaging: 1
+  knockBack: 0
   parentObject: {fileID: 254235786}
   damage: 1
+  knockBackForce: 2
+  timeStunned: 0.2
 --- !u!61 &413021246
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -54329,8 +54332,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Hitbox
   druidDamaging: 0
+  knockBack: 0
   parentObject: {fileID: 1413097521}
   damage: 1
+  knockBackForce: 2
+  timeStunned: 0.2
 --- !u!61 &804183087
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -55170,8 +55176,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Hitbox
   druidDamaging: 0
+  knockBack: 0
   parentObject: {fileID: 366221235}
   damage: 1
+  knockBackForce: 2
+  timeStunned: 0.2
 --- !u!61 &925277055
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -61877,8 +61886,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Hitbox
   druidDamaging: 0
+  knockBack: 0
   parentObject: {fileID: 1058519430}
   damage: 1
+  knockBackForce: 2
+  timeStunned: 0.2
 --- !u!61 &1142785211
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -77184,8 +77196,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Hitbox
   druidDamaging: 0
+  knockBack: 0
   parentObject: {fileID: 1700430677}
   damage: 1
+  knockBackForce: 2
+  timeStunned: 0.2
 --- !u!61 &1311844999
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -82198,7 +82213,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   spirits: 1
-  blowForce: 0.4
+  blowForce: 1
   waterGrown: 0
   candie: 0
   blowSize: {x: 1, y: 11}
@@ -105228,8 +105243,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Hitbox
   druidDamaging: 0
+  knockBack: 0
   parentObject: {fileID: 1543625653}
   damage: 1
+  knockBackForce: 2
+  timeStunned: 0.2
 --- !u!61 &1621227595
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -116876,8 +116894,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Hitbox
   druidDamaging: 0
+  knockBack: 0
   parentObject: {fileID: 1019599488}
   damage: 1
+  knockBackForce: 2
+  timeStunned: 0.2
 --- !u!61 &1810367760
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -123049,8 +123070,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Hitbox
   druidDamaging: 0
+  knockBack: 0
   parentObject: {fileID: 1663512307}
   damage: 1
+  knockBackForce: 2
+  timeStunned: 0.2
 --- !u!61 &2002343654
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -123201,8 +123225,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Hitbox
   druidDamaging: 0
+  knockBack: 0
   parentObject: {fileID: 254235786}
   damage: 2
+  knockBackForce: 2
+  timeStunned: 0.2
 --- !u!61 &2009686602
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -123566,8 +123593,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Hitbox
   druidDamaging: 0
+  knockBack: 0
   parentObject: {fileID: 1334376945}
   damage: 1
+  knockBackForce: 2
+  timeStunned: 0.2
 --- !u!61 &2069755631
 BoxCollider2D:
   m_ObjectHideFlags: 0

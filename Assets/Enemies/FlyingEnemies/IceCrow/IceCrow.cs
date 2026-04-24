@@ -23,7 +23,8 @@ public class IceCrow : MonoBehaviour, IGrowableEnemy, IEnemy
     [SerializeField] private GameObject bullet;
     [SerializeField] private GameObject spikeObject;
     [SerializeField] private float deActivationDistance = 12f;
-
+    public bool CantGrow => cantGrow;
+    private bool cantGrow = false;
     private bool isDashing = false;
     private bool dashCD = false;
    

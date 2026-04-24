@@ -16,7 +16,8 @@ public class IcyGolem : MonoBehaviour, IGrowableEnemy, IEnemy
     public bool isgrown = false;
     public bool FlyingEnemy => false;
     public bool GroundEnemy => true;
-
+    public bool CantGrow => cantGrow;
+    private bool cantGrow = false;
     private bool isLerping = false;
     public bool IsLerping => isLerping;
     public void SetLerp(bool value)

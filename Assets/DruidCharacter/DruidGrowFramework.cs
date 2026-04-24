@@ -97,7 +97,7 @@ public class DruidGrowFramework : MonoBehaviour
                     IDamageAble damage = hit.collider.GetComponent<IDamageAble>();
                     IGrowablePlant plant = hit.collider.GetComponent<IGrowablePlant>();
 
-                    if ((plant != null && plant.WaterGrown == false)|| (enemy != null && damage != null && !damage.Dead))
+                    if ((plant != null && plant.WaterGrown == false)|| (enemy != null && damage != null && !damage.Dead && !enemy.CantGrow))
                     {
                         SpriteRenderer growableRender = hit.collider.GetComponent<SpriteRenderer>();
 
@@ -114,7 +114,7 @@ public class DruidGrowFramework : MonoBehaviour
                             lastHoveredObject = target;
                             lastHoveredMaterial = growableRender.material;
                         }
-                    }
+                    } 
                 }
             }
         }
@@ -169,7 +169,7 @@ public class DruidGrowFramework : MonoBehaviour
                                 {
                                     if (!damage.Dead)
                                     {
-                                        if (!enemy.IsGrown && !enemy.CanDie && UI.spirits > 0)
+                                        if (!enemy.IsGrown && !enemy.CanDie && UI.spirits > 0 && !enemy.CantGrow)
                                         {
                                             // Grow the enemy
                                             enemy.Grow();
