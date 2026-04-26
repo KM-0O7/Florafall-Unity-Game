@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 
 using UnityEngine;
@@ -85,11 +86,8 @@ public class DruidLedgeClimb : MonoBehaviour
 
             tetherClone = Instantiate(tether);
             tetherClone.positionCount = 2;
-            tetherClone.SetPosition(0, druidTransform.position);
-            tetherClone.SetPosition(1, ledgePosition);
-            tetherClone.useWorldSpace = true;
-
             StartCoroutine(LedgeClimb());
+            tetherClone.useWorldSpace = true;
         }
     }
 
@@ -100,8 +98,20 @@ public class DruidLedgeClimb : MonoBehaviour
         float elapsed = 0f;
 
         druidAnimator.SetTrigger("Climb");
-        yield return new WaitForSeconds(0.25f);
+        float t1 = 0;
+        while (t1 <= 0.15)
+        {
+            yield return null;
+            Vector2 pos2 = druidTransform.position;
+            pos2 = Vector2.Lerp(pos2, ledgePosition, t1 / 0.14f);
+            tetherClone.SetPosition(1, pos2);
+            tetherClone.SetPosition(0, druidTransform.position);
+            t1 += Time.deltaTime;
+        }
+        tetherClone.SetPosition(0, druidTransform.position);
+        tetherClone.SetPosition(1, ledgePosition);
 
+        yield return new WaitForSeconds(0.1f);
         while (elapsed < climbDuration)
         {
             var lerpEnd = elapsed / climbDuration;
@@ -125,12 +135,24 @@ public class DruidLedgeClimb : MonoBehaviour
         {
             druidTransform.position += Vector3.up * 0.05f;
         }
-        Destroy(tetherClone.gameObject);
+       
         druidRig.gravityScale = 1f;
         druidRig.constraints = RigidbodyConstraints2D.FreezeRotation;
         druidAnimator.SetBool("IsMantling", false);
         DruidFrameWork.canjump = true;
         DruidFrameWork.canmove = true;
         isMantled = false;
+        float t = 0;
+        while (t <= 0.25f)
+        {
+            yield return null;
+            Vector2 pos2 = tetherClone.GetPosition(1);
+            Vector2 pos1 = tetherClone.GetPosition(0);
+            pos2 = Vector2.Lerp(pos2, pos1, t / 0.25f);
+            tetherClone.SetPosition(1, pos2);
+            tetherClone.SetPosition(0, druidTransform.position);
+            t += Time.deltaTime;
+        }
+        Destroy(tetherClone);
     }
 }

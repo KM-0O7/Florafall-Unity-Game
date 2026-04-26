@@ -82213,7 +82213,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   spirits: 1
-  blowForce: 1
+  blowForce: 0.5
   waterGrown: 0
   candie: 0
   blowSize: {x: 1, y: 11}

@@ -33,6 +33,10 @@ public class MushroomPlant : MonoBehaviour, IGrowablePlant
         {
             druidGrowFramework = player.GetComponent<DruidGrowFramework>();
         }
+        if (isFake)
+        {
+            spirits = 0;
+        }
     }
 
     public void Grow()
@@ -97,7 +101,7 @@ public class MushroomPlant : MonoBehaviour, IGrowablePlant
         yield return new WaitForSeconds(0.45f);
         mushMimic.SetActive(true);
         mushMimic.transform.position = gameObject.transform.position;
-        druidGrowFramework.RemoveTether(transform);
+        yield return StartCoroutine(druidGrowFramework.RemoveTether(transform));
         Destroy(gameObject);
     }
 }

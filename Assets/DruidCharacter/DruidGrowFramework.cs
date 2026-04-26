@@ -1,5 +1,5 @@
+using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class DruidGrowFramework : MonoBehaviour
@@ -19,7 +19,9 @@ public class DruidGrowFramework : MonoBehaviour
 
     private List<LineRenderer> activeTethers = new List<LineRenderer>();
     private List<Transform> tetherTargets = new List<Transform>();
+    private List<bool> animatingTetherTargets = new List<bool>();
     [SerializeField] private ParticleSystem tetherBreak;
+    [SerializeField] private float tetherRetractTime = 0.5f;
 
     //HIGHLIGHTS
     private Transform lastHoveredObject;
@@ -57,10 +59,29 @@ public class DruidGrowFramework : MonoBehaviour
         {
             if (activeTethers[i] != null && tetherTargets[i] != null)
             {
-                activeTethers[i].SetPosition(0, druidtransform.position);
-                activeTethers[i].SetPosition(1, tetherTargets[i].position);
-
+                if (animatingTetherTargets[i] == false)
+                {
+                    activeTethers[i].SetPosition(0, druidtransform.position);
+                    activeTethers[i].SetPosition(1, tetherTargets[i].position);
+                }
+              
+                //fading from dist
                 float distance = Vector2.Distance(druidtransform.position, tetherTargets[i].position);
+
+                float d = Mathf.Clamp01(distance / maxTetherDistance);
+                Gradient gradient = activeTethers[i].colorGradient;
+
+                GradientAlphaKey[] alphaKeys = gradient.alphaKeys;
+
+                float expo = Mathf.Pow(d, 5f);
+
+                for (int j = 0; j < alphaKeys.Length; j++)
+                {
+                    alphaKeys[j].alpha = Mathf.Lerp(1, 0f, expo);
+                }
+
+                gradient.alphaKeys = alphaKeys;
+                activeTethers[i].colorGradient = gradient;
 
                 if (distance > maxTetherDistance)
                 {
@@ -151,7 +172,7 @@ public class DruidGrowFramework : MonoBehaviour
                                     // Grow the plant
                                     plant.Grow();
                                     Debug.Log("Growing" + hit.collider.name);
-                                    growplant(hit.collider.transform);
+                                    StartCoroutine(GrowPlant(hit.collider.transform));
                                 }
                                 else if (plant.CanDie && plant.IsGrown) DeGrowPlant(hit.collider.transform);
                             }
@@ -174,7 +195,7 @@ public class DruidGrowFramework : MonoBehaviour
                                             // Grow the enemy
                                             enemy.Grow();
                                             Debug.Log("Growing" + hit.collider.name);
-                                            growplant(hit.collider.transform);
+                                            StartCoroutine(GrowPlant(hit.collider.transform));
                                         }
                                         else if (enemy.CanDie && enemy.IsGrown) DeGrowPlant(hit.collider.transform);
                                     }
@@ -217,22 +238,37 @@ public class DruidGrowFramework : MonoBehaviour
         }
     }
 
-    public void RemoveTether(Transform plantTransform)
+    public IEnumerator RemoveTether(Transform plantTransform)
     {
-        // Find which index in the list this plant is at
         int index = tetherTargets.IndexOf(plantTransform);
 
         if (index != -1)
         {
+            Debug.Log("Removing " + activeTethers[index].name + " Tether!");
             animator.SetTrigger("Grow");
             animator.SetBool("Growing", true);
             Invoke("StopGrowing", 0.2f);
-            Destroy(activeTethers[index].gameObject);
 
+            animatingTetherTargets[index] = true;
+            //Retraction
+            float t = 0;
+            while (t <= tetherRetractTime)
+            {
+                yield return null;
+                Vector2 pos2 = activeTethers[index].GetPosition(1);
+                Vector2 pos1 = activeTethers[index].GetPosition(0);
+                pos2 = Vector2.Lerp(pos2, pos1, t / tetherRetractTime);
+                activeTethers[index].SetPosition(1, pos2);
+                activeTethers[index].SetPosition(0, druidtransform.position);
+                t += Time.deltaTime;
+            }
+            Destroy(activeTethers[index].gameObject);
             activeTethers.RemoveAt(index);
             tetherTargets.RemoveAt(index);
+            animatingTetherTargets.RemoveAt(index);
         }
     }
+
 
     //call to stop the grow anim
     private void StopGrowing()
@@ -252,8 +288,7 @@ public class DruidGrowFramework : MonoBehaviour
             {
                 UI.spirits += plant.spiritCost;
                 plant.Die();
-                RemoveTether(planttransform);
-                tetherBreak.Emit(3);
+                StartCoroutine(RemoveTether(planttransform));  
             }
         }
         else
@@ -265,14 +300,14 @@ public class DruidGrowFramework : MonoBehaviour
                 {
                     UI.spirits += enemy.spiritCost;
                     enemy.Die();
-                    RemoveTether(planttransform);
-                    tetherBreak.Emit(3);
+                    StartCoroutine(RemoveTether(planttransform));
                 }
             }
         }
     }
 
-    private void growplant(Transform plantTransform) //call this function add tether to growed plant
+
+    private IEnumerator GrowPlant(Transform plantTransform) //call this function add tether to growed plant
     {
         animator.SetTrigger("Grow");
         animator.SetBool("Growing", true);
@@ -283,13 +318,26 @@ public class DruidGrowFramework : MonoBehaviour
         {
             LineRenderer tetherclone = Instantiate(tether);
             tetherclone.positionCount = 2;
-            tetherclone.SetPosition(0, druidtransform.position);
-            tetherclone.SetPosition(1, plantTransform.position);
             tetherclone.useWorldSpace = true;
             activeTethers.Add(tetherclone);
             tetherTargets.Add(plantTransform);
-
+            animatingTetherTargets.Add(true);
+            int index = tetherTargets.IndexOf(plantTransform);
             UI.spirits -= plant.spiritCost;
+
+            float t = 0;
+            while (t <= tetherRetractTime)
+            {
+                yield return null;
+                Vector2 pos2 = druidtransform.position;
+                pos2 = Vector2.Lerp(pos2, plantTransform.position, t / tetherRetractTime);
+                activeTethers[index].SetPosition(1, pos2);
+                activeTethers[index].SetPosition(0, druidtransform.position);
+                t += Time.deltaTime;
+            }
+            tetherclone.SetPosition(0, druidtransform.position);
+            tetherclone.SetPosition(1, plantTransform.position);
+            animatingTetherTargets[index] = false;
         }
         else //enemies
         {
@@ -298,13 +346,26 @@ public class DruidGrowFramework : MonoBehaviour
             {
                 LineRenderer tetherclone = Instantiate(tether);
                 tetherclone.positionCount = 2;
-                tetherclone.SetPosition(0, druidtransform.position);
-                tetherclone.SetPosition(1, plantTransform.position);
                 tetherclone.useWorldSpace = true;
                 activeTethers.Add(tetherclone);
                 tetherTargets.Add(plantTransform);
-
+                animatingTetherTargets.Add(false);
                 UI.spirits -= enemy.spiritCost;
+                int index = tetherTargets.IndexOf(plantTransform);
+                
+                float t = 0;
+                while (t <= tetherRetractTime)
+                {
+                    yield return null;
+                    Vector2 pos2 = druidtransform.position;
+                    pos2 = Vector2.Lerp(pos2, plantTransform.position, t / tetherRetractTime);
+                    activeTethers[index].SetPosition(1, pos2);
+                    activeTethers[index].SetPosition(0, druidtransform.position);
+                    t += Time.deltaTime;
+                }
+                tetherclone.SetPosition(0, druidtransform.position);
+                tetherclone.SetPosition(1, plantTransform.position);
+                animatingTetherTargets[index] = false;
             }
         }
     }

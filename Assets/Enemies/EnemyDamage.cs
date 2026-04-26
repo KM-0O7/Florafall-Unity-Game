@@ -60,7 +60,7 @@ public class EnemyDamage : MonoBehaviour, IDamageAble
                         UI.spirits += spiritsBack;
                     }
                     dead = true;
-                    growframework.RemoveTether(transform);
+                    StartCoroutine(growframework.RemoveTether(transform));
                 }
             }
         }
