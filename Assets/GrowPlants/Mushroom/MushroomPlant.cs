@@ -24,7 +24,6 @@ public class MushroomPlant : MonoBehaviour, IGrowablePlant
     public bool IsGrown => mushdb;
     public bool CanDie => candie;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Start()
     {
         animator = GetComponent<Animator>();
