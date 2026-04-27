@@ -1,4 +1,6 @@
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class FollowPlayer : MonoBehaviour
 {
@@ -6,7 +8,7 @@ public class FollowPlayer : MonoBehaviour
     public GameObject Maincharacter;
 
     private Vector2 minBounds;
-    private Vector2 maxBounds; 
+    private Vector2 maxBounds;
 
     private float camHalfWidth;
     private float camHalfHeight;
@@ -14,6 +16,12 @@ public class FollowPlayer : MonoBehaviour
     public float smoothTime = 0.25f;
     private bool snapThisFrame = false;
     private Camera cam;
+    private SpriteRenderer druidSprite;
+    private Rigidbody2D druidRig;
+    [SerializeField] private float lookAheadOffset = 2;
+    private Vector2 currentOffset;
+    private Vector2 offsetVelocity;
+    [SerializeField] private float offsetSmoothTime = 0.2f;
 
     private void Start()
     {
@@ -23,13 +31,39 @@ public class FollowPlayer : MonoBehaviour
 
         camHalfHeight = cam.orthographicSize;
         camHalfWidth = camHalfHeight * cam.aspect;
+        druidSprite = Maincharacter.GetComponent<SpriteRenderer>();
+        druidRig = Maincharacter.GetComponent<Rigidbody2D>();
     }
 
-
-    private void Update()
+    private void LateUpdate()
     {
+        var druidDir = druidSprite.flipX ? -1f : 1f;
+
+        //LOOK AHEAD
+        Vector2 offset = Vector2.zero;
+        if (druidRig.linearVelocityX > 0.1 || druidRig.linearVelocityX < -0.1)
+        {
+            offset.x = lookAheadOffset * druidDir;
+        }
+        else if (druidRig.linearVelocityX == 0)
+        {
+            offset.x = 0;
+        }
+
+        float verticalChangeThreshold = 1f;
+        if (druidRig.linearVelocityY > verticalChangeThreshold)
+        {
+            offset.y = lookAheadOffset;
+        }
+        else if (druidRig.linearVelocityY < -verticalChangeThreshold)
+        {
+            offset.y = -lookAheadOffset;
+        }
+        else offset.y = 0;
+
+        currentOffset = Vector2.SmoothDamp(currentOffset, offset, ref offsetVelocity, offsetSmoothTime);
         target = Maincharacter.transform;
-        Vector3 newpos = new Vector3(target.position.x, target.position.y, -10);
+        Vector3 newpos = new Vector3(target.position.x + currentOffset.x, target.position.y + currentOffset.y, -10);
 
         float clampedX = Mathf.Clamp(newpos.x, minBounds.x + camHalfWidth, maxBounds.x - camHalfWidth);
         float clampedY = Mathf.Clamp(newpos.y, minBounds.y + camHalfHeight, maxBounds.y - camHalfHeight);

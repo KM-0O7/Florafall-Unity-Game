@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 0bc7af1a7376e1d4c9e8bd4fb6e33706
+guid: 44ac28bba12ead840ab8e208058f59b1
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8766487834408277533
-    second: Leaves3_0
+      213: 8012353650857388708
+    second: BigTrunk_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Leaves3_0
+      name: BigTrunk_0
       rect:
         serializedVersion: 2
-        x: 6
+        x: 18
         y: 0
-        width: 111
-        height: 50
+        width: 468
+        height: 140
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 3e9af4ee2cd275680800000000000000
-      internalID: -8766487834408277533
+      spriteID: 4aaa826b139913f60800000000000000
+      internalID: 8012353650857388708
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Leaves3_0: -8766487834408277533
+      BigTrunk_0: 8012353650857388708
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

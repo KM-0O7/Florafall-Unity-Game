@@ -49,6 +49,8 @@ public class MushMimic : MonoBehaviour, IGrowableEnemy, IEnemy
     private BoxCollider2D collide;
     [SerializeField] private GameObject platform;
     [SerializeField] private BoxCollider2D landingHitbox;
+    [SerializeField] private GameObject hitbox;
+    private EnemyDamage enemyDamage;
     private Animator animator;
 
     private bool movingright = true;
@@ -65,6 +67,7 @@ public class MushMimic : MonoBehaviour, IGrowableEnemy, IEnemy
         animator = GetComponent<Animator>();
         canHop = false;
         StartCoroutine(JumpAttack());
+        enemyDamage = GetComponent<EnemyDamage>();
     }
 
     /* FIXED UPDATE
@@ -119,7 +122,7 @@ public class MushMimic : MonoBehaviour, IGrowableEnemy, IEnemy
     {
         float distanceFromStart = transform.position.x - startpos.x;
         //Attack
-        if (canJump && !(distanceFromStart <= -moveDistance || distanceFromStart >= moveDistance))
+        if (canJump && !(distanceFromStart <= -moveDistance || distanceFromStart >= moveDistance) && !IsGrown)
         { 
             if (Vector2.Distance(gameObject.transform.position, druid.transform.position) <= jumpDistanceCheck)
             {
@@ -243,6 +246,9 @@ public class MushMimic : MonoBehaviour, IGrowableEnemy, IEnemy
     {
         animator.SetTrigger("Grow");
         isGrown = true;
+        hitbox.SetActive(false);
+        enemyRig.constraints = RigidbodyConstraints2D.FreezeAll;
+        enemyDamage.enabled = false;
         yield return new WaitForSeconds(0.75f);
         canDie = true;
         platform.AddComponent<BoxCollider2D>();
@@ -255,9 +261,13 @@ public class MushMimic : MonoBehaviour, IGrowableEnemy, IEnemy
     {
         canDie = false;
         animator.SetTrigger("Die");
-        Destroy(platform);
-
-        yield return new WaitForSeconds(3f);
+        Destroy(collide);
+        yield return new WaitForSeconds(0.4f);
+        hitbox.SetActive(true);
+        enemyDamage.enabled = true;
+        enemyRig.constraints = RigidbodyConstraints2D.None;
+        enemyRig.constraints = RigidbodyConstraints2D.FreezeRotation;
+        yield return new WaitForSeconds(1f);
         animator.SetTrigger("dbdone");
         isGrown = false;
     }

@@ -196,6 +196,50 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: MushMimicGrowSheet_4
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 32
+        height: 32
+      alignment: 9
+      pivot: {x: 0.5, y: 0.1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 028cfc4ad867ace48a66209730b0b4a5
+      internalID: -948402322
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MushMimicGrowSheet_5
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 0
+        width: 32
+        height: 32
+      alignment: 9
+      pivot: {x: 0.5, y: 0.1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 69ea93ef5470b2449953b8c2b3c283e9
+      internalID: -1347215755
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -216,6 +260,8 @@ TextureImporter:
       MushMimicGrowSheet_1: 7828066692335852851
       MushMimicGrowSheet_2: -4865158076453347199
       MushMimicGrowSheet_3: -6687757359948269856
+      MushMimicGrowSheet_4: -948402322
+      MushMimicGrowSheet_5: -1347215755
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
