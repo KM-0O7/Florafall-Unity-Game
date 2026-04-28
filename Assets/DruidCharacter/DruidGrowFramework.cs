@@ -77,7 +77,7 @@ public class DruidGrowFramework : MonoBehaviour
 
                 for (int j = 0; j < alphaKeys.Length; j++)
                 {
-                    alphaKeys[j].alpha = Mathf.Lerp(1, 0f, expo);
+                    alphaKeys[j].alpha = Mathf.Lerp(1, 0.05f, expo);
                 }
 
                 gradient.alphaKeys = alphaKeys;

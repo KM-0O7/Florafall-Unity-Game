@@ -101,6 +101,10 @@ public class DruidLedgeClimb : MonoBehaviour
         float t1 = 0;
         while (t1 <= 0.15)
         {
+            if (tetherClone == null)
+            {
+                break;
+            }
             yield return null;
             Vector2 pos2 = druidTransform.position;
             pos2 = Vector2.Lerp(pos2, ledgePosition, t1 / 0.14f);
