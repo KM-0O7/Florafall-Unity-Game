@@ -59,7 +59,7 @@ public class Speak : MonoBehaviour, IDialogue
 
         if (textOn == true && skippedText == false)
         {
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.E))
             {
                 skippedText = true;
             }
@@ -125,7 +125,7 @@ public class Speak : MonoBehaviour, IDialogue
         for (int i = 0; i < textBox.text.Length; i++)
         {
             textBox.maxVisibleCharacters += 1;
-            if (text[i] == '.' || text[i] == ',')
+            if (text[i] == '.' || text[i] == ',' || text[i] == '!' || text[i] == '?')
             {
                 yield return new WaitForSeconds(typingSpeed + 0.5f);
             }
@@ -148,6 +148,7 @@ public class Speak : MonoBehaviour, IDialogue
         skippedText = false;
         yield return new WaitForSeconds(0.9f);
         textBox.text = "";
+        npcName.text = "";
         dialogueAnimator.SetTrigger("Leave");
         yield return new WaitForSeconds(1f);
         textBox.maxVisibleCharacters = 0;
