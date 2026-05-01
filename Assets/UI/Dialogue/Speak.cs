@@ -25,6 +25,7 @@ public class Speak : MonoBehaviour, IDialogue
 
     private bool textOn = false;
     private bool skippedText = false;
+    private bool canSkip = false;
 
     private Coroutine dialogueRoutine;
 
@@ -57,11 +58,12 @@ public class Speak : MonoBehaviour, IDialogue
     private void Update()
     {
 
-        if (textOn == true && skippedText == false)
+        if (textOn == true && skippedText == false && canSkip)
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
                 skippedText = true;
+                canSkip = false;
             }
         }
 
@@ -121,7 +123,7 @@ public class Speak : MonoBehaviour, IDialogue
         textBox.maxVisibleCharacters = 0;
         dialogueAnimator.SetTrigger("Show");
         yield return new WaitForSeconds(0.3f);
-
+        canSkip = true;
         for (int i = 0; i < textBox.text.Length; i++)
         {
             textBox.maxVisibleCharacters += 1;

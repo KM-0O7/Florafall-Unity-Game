@@ -49,6 +49,7 @@ TagManager:
   - MushMimic
   - Grass
   - Snow
+  - EPrompt
   layers:
   - Default
   - TransparentFX
