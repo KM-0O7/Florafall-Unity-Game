@@ -5,7 +5,9 @@ public class PromptManager : MonoBehaviour
 
     private Transform druidTransform;
     [SerializeField] private Vector2 promptCheckSize = new Vector2(2, 2);
-
+    [SerializeField] private GameObject promptShower;
+    private bool showingPrompt = false;
+    private GameObject promptShowClone;
 
     void Start()
     {
@@ -20,6 +22,17 @@ public class PromptManager : MonoBehaviour
 
         if (promptCheck != null)
         {
+            if (showingPrompt == false)
+            {
+                Transform dialogueTransform = promptCheck.gameObject.GetComponent<Transform>();
+                if (dialogueTransform != null)
+                {
+                    showingPrompt = true;
+                    promptShowClone = Instantiate(promptShower, dialogueTransform);
+                    promptShowClone.SetActive(true);
+                }
+            }
+
             if (Input.GetKeyDown(KeyCode.E))
             {
                 IDialogue dialogue = promptCheck.gameObject.GetComponent<IDialogue>();
@@ -42,6 +55,11 @@ public class PromptManager : MonoBehaviour
 
                 }
             }
+        }
+        else
+        {
+            showingPrompt = false;
+            Destroy(promptShowClone);  
         }
     }
 }

@@ -9854,6 +9854,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PromptManager
   promptCheckSize: {x: 2, y: 2}
+  promptShower: {fileID: 0}
 --- !u!114 &855978707
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -35779,6 +35780,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PromptManager
   promptCheckSize: {x: 2, y: 2}
+  promptShower: {fileID: 0}
 --- !u!212 &1323705010
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -40707,6 +40709,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PromptManager
   promptCheckSize: {x: 2, y: 2}
+  promptShower: {fileID: 1454488870}
 --- !u!114 &1362395041
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -41565,7 +41568,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0.096, y: 0.49}
   m_SizeDelta: {x: 20, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1454488872
@@ -41580,7 +41583,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cd3edf39e1839946b5261a4a4ddbdc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PromptSineWave
-  amplitude: 2
+  amplitude: 0.1
   speed: 1
 --- !u!114 &1454488873
 MonoBehaviour:
@@ -41602,7 +41605,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: E
+  m_text: e
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 9efde07f0f0157c43bd5bd32dbdfb71c, type: 2}
   m_sharedMaterial: {fileID: -4377641353238545404, guid: 9efde07f0f0157c43bd5bd32dbdfb71c, type: 2}
@@ -41629,13 +41632,13 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 14
-  m_fontSizeBase: 14
+  m_fontSize: 8
+  m_fontSizeBase: 8
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 17
+  m_fontStyle: 1
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 256
   m_textAlignment: 65535
@@ -41667,7 +41670,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 9.69986, y: 1.7769976, z: 8.181852, w: 3.821126}
+  m_margin: {x: 9.839035, y: 2.0375013, z: 9.67938, w: 2.2224169}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   _SortingLayer: 0
@@ -42574,7 +42577,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -42595,7 +42598,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -3
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -48262,6 +48265,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PromptManager
   promptCheckSize: {x: 2, y: 2}
+  promptShower: {fileID: 0}
 --- !u!1 &1795213471
 GameObject:
   m_ObjectHideFlags: 0
