@@ -90,7 +90,7 @@ public class DoorScript : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning($"SpawnPoint '{targetSpawnID}' not found in scene '{targetChunk.SceneName}'");
+            Debug.LogWarning(spawnPoint + " Not Found!");
         }
     }
 

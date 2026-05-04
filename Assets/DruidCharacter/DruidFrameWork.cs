@@ -25,7 +25,7 @@ public class DruidFrameWork : MonoBehaviour
     private SpriteRenderer druidspriterender;
     private BoxCollider2D boxcollider;
     private float speedx;
-
+    
     public float druidspeed;
     public static bool canjump = true;
     public static bool canmove = true;
@@ -59,6 +59,9 @@ public class DruidFrameWork : MonoBehaviour
     [SerializeField] private float druidJumpHeight;
     [SerializeField] private float bearJumpHeight;
     [SerializeField] private float stunHeight = 9;
+    [SerializeField] private float maximumYVelocity = -10f;
+
+    FollowPlayer followPlayer;
 
     // ---- VOID CHECK ----
     public Vector2 lastGroundPosition = Vector2.zero;
@@ -97,6 +100,7 @@ public class DruidFrameWork : MonoBehaviour
         druidrb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         druidspriterender = GetComponent<SpriteRenderer>();
+        followPlayer = Camera.main.GetComponent<FollowPlayer>();
 
         // ---- CURSOR ----
         cursorHotspot = new Vector2(cursorTexture.width / 2, cursorTexture.height / 2);
@@ -309,6 +313,12 @@ public class DruidFrameWork : MonoBehaviour
                     impactSpeed = Mathf.Abs(druidrb.linearVelocityY);
                 }
 
+                // ---- CAP DOWNWARDS VELO ----
+                if (druidrb.linearVelocityY <= maximumYVelocity)
+                {
+                    druidrb.linearVelocityY = maximumYVelocity;
+                }
+
                 // ---- TRANSFORMATIONS INPUT ----
                 if (Input.GetKeyDown(KeyCode.Q))
                 {
@@ -356,6 +366,7 @@ public class DruidFrameWork : MonoBehaviour
         animator.SetTrigger("Land"); 
         druidrb.linearVelocityX = 0f;
         animator.SetTrigger("Land");
+        followPlayer.ScreenShake(0.025f, 0.5f);
         Invoke("Recover", 0.4f);
     }
 

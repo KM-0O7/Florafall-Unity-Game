@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -22,6 +23,13 @@ public class FollowPlayer : MonoBehaviour
     private Vector2 currentOffset;
     private Vector2 offsetVelocity;
     [SerializeField] private float offsetSmoothTime = 0.2f;
+    private float shakeDuration;
+    private float shakeTimer;
+    private float shakeMagnitude;
+    private float shakeFrequency = 25f;
+
+    private Vector3 shakeOffset;
+    private float shakeSeed;
 
     private void Start()
     {
@@ -82,12 +90,40 @@ public class FollowPlayer : MonoBehaviour
         {
             transform.position = Vector3.SmoothDamp(transform.position, clampedTarget, ref velocity, smoothTime);
         }
+
+        if (shakeTimer > 0)
+        {
+            shakeTimer -= Time.deltaTime;
+
+            float progress = 1f - (shakeTimer / shakeDuration);
+
+            float damper = 1f - Mathf.SmoothStep(0f, 1f, progress);
+
+            float x = (Mathf.PerlinNoise(shakeSeed, Time.time * shakeFrequency) * 2f - 1f) * shakeMagnitude * damper;
+            float y = (Mathf.PerlinNoise(shakeSeed + 1f, Time.time * shakeFrequency) * 2f - 1f) * shakeMagnitude * damper;
+
+            shakeOffset = new Vector3(x, y, 0);
+        }
+        else
+        {
+            shakeOffset = Vector3.zero;
+        }
+        transform.position += shakeOffset;
     }
 
     public void SetBounds(Vector2 min, Vector2 max)
     {
         minBounds = min;
         maxBounds = max;
+    }
+
+    public void ScreenShake(float amount, float duration)
+    {
+        shakeMagnitude = amount;
+        shakeDuration = duration;
+        shakeTimer = duration;
+
+        shakeSeed = Random.Range(0f, 1000f);
     }
 
     public void SnapToTarget() //call to snap to Target
