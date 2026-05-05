@@ -38,7 +38,7 @@ public class PromptManager : MonoBehaviour
                 IDialogue dialogue = promptCheck.gameObject.GetComponent<IDialogue>();
                 if (dialogue != null)
                 {
-                    if (dialogue.isInteracting == false)
+                    if (dialogue.isInteracting == false && DruidFrameWork.canmove)
                     {
                         dialogue.Interact();
                         Debug.Log("interacting with " + promptCheck.gameObject.name);

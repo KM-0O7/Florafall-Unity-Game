@@ -79,6 +79,9 @@ public class Speak : MonoBehaviour, IDialogue
             {
                 NPCSprite.flipX = false;
             }
+        } else if (flipDistance < rangeOfSight)
+        {
+            NPCSprite.flipX = false;
         }
 
         
