@@ -1,13 +1,19 @@
 fileFormatVersion: 2
-guid: a9c50ed21ada4f34bb3b101cafd00d9e
+guid: 6c55f2a8eebecaa44b12b10311558726
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -7334033966678443399
-    second: MossyBushShootSheet_0
+      213: -8731688502928615908
+    second: MossBullet_0
   - first:
-      213: -3638845530178112547
-    second: MossyBushShootSheet_1
+      213: 1718746059508231166
+    second: MossBullet_1
+  - first:
+      213: -6850021058761226053
+    second: MossBullet_2
+  - first:
+      213: 9089881436950786760
+    second: MossBullet_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -103,13 +109,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: MossyBushShootSheet_0
+      name: MossBullet_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 48
-        height: 48
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -118,20 +124,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 97a7b75f6f6483a90800000000000000
-      internalID: -7334033966678443399
+      spriteID: c16d39da19fc2d680800000000000000
+      internalID: -8731688502928615908
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MossyBushShootSheet_1
+      name: MossBullet_1
       rect:
         serializedVersion: 2
-        x: 48
+        x: 32
         y: 0
-        width: 48
-        height: 48
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -140,8 +146,52 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: dd3373d0549308dc0800000000000000
-      internalID: -3638845530178112547
+      spriteID: efb27105f663ad710800000000000000
+      internalID: 1718746059508231166
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MossBullet_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bb88798d326dfe0a0800000000000000
+      internalID: -6850021058761226053
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MossBullet_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8c27ed3b10fb52e70800000000000000
+      internalID: 9089881436950786760
       vertices: []
       indices: 
       edges: []
@@ -150,7 +200,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: ddadb034c54dc5a409c0b9c2d006d4cf
+    spriteID: 6078a1d0b4d9bb547989a0cd2a06b89b
     internalID: 0
     vertices: []
     indices: 
@@ -160,10 +210,12 @@ TextureImporter:
     spriteCustomMetadata:
       entries:
       - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":48.0,"y":48.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":32.0,"y":32.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      MossyBushShootSheet_0: -7334033966678443399
-      MossyBushShootSheet_1: -3638845530178112547
+      MossBullet_0: -8731688502928615908
+      MossBullet_1: 1718746059508231166
+      MossBullet_2: -6850021058761226053
+      MossBullet_3: 9089881436950786760
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

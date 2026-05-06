@@ -1,13 +1,22 @@
 fileFormatVersion: 2
-guid: a9c50ed21ada4f34bb3b101cafd00d9e
+guid: 979773b2c536d2e45a44751fee61348d
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -7334033966678443399
-    second: MossyBushShootSheet_0
+      213: 8577326278942549937
+    second: MossBulletExplode_0
   - first:
-      213: -3638845530178112547
-    second: MossyBushShootSheet_1
+      213: -8121824735658373510
+    second: MossBulletExplode_1
+  - first:
+      213: -6449749012917213086
+    second: MossBulletExplode_2
+  - first:
+      213: -4638417370300751883
+    second: MossBulletExplode_3
+  - first:
+      213: -2387475722064802322
+    second: MossBulletExplode_4
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -75,7 +84,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 128
+    maxTextureSize: 256
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -103,7 +112,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: MossyBushShootSheet_0
+      name: MossBulletExplode_0
       rect:
         serializedVersion: 2
         x: 0
@@ -118,14 +127,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 97a7b75f6f6483a90800000000000000
-      internalID: -7334033966678443399
+      spriteID: 1b76efa5ec8c80770800000000000000
+      internalID: 8577326278942549937
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MossyBushShootSheet_1
+      name: MossBulletExplode_1
       rect:
         serializedVersion: 2
         x: 48
@@ -140,8 +149,52 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: dd3373d0549308dc0800000000000000
-      internalID: -3638845530178112547
+      spriteID: a7e0a172f6b794f80800000000000000
+      internalID: -8121824735658373510
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MossBulletExplode_2
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 268a4aae173ed76a0800000000000000
+      internalID: -6449749012917213086
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MossBulletExplode_3
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 0
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 20cc2b7a24384a945a6cb79858d458f7
+      internalID: -4638417370300751883
       vertices: []
       indices: 
       edges: []
@@ -150,7 +203,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: ddadb034c54dc5a409c0b9c2d006d4cf
+    spriteID: fd0b47d1016993d44b674636ef984d3c
     internalID: 0
     vertices: []
     indices: 
@@ -162,8 +215,10 @@ TextureImporter:
       - key: SpriteEditor.SliceSettings
         value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":48.0,"y":48.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      MossyBushShootSheet_0: -7334033966678443399
-      MossyBushShootSheet_1: -3638845530178112547
+      MossBulletExplode_0: 8577326278942549937
+      MossBulletExplode_1: -8121824735658373510
+      MossBulletExplode_2: -6449749012917213086
+      MossBulletExplode_3: -4638417370300751883
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

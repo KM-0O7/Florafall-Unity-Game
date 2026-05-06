@@ -50,6 +50,7 @@ TagManager:
   - Grass
   - Snow
   - EPrompt
+  - MossyBush
   layers:
   - Default
   - TransparentFX
