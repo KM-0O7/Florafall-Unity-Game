@@ -200,8 +200,8 @@ public class DruidFrameWork : MonoBehaviour
                 {
                     if (groundTag.collider.gameObject.CompareTag("Grass"))
                     {
-                        fallMain.startColor = Color.green;
-                        walkMain.startColor = Color.green;
+                        fallMain.startColor = new Color(20f / 255f, 77f / 255f, 1f /255f, 1f);
+                        walkMain.startColor = new Color(20f / 255f, 77f / 255f, 1f / 255f, 1f);
                     }
                     else if (groundTag.collider.gameObject.CompareTag("Snow"))
                     {
@@ -366,7 +366,7 @@ public class DruidFrameWork : MonoBehaviour
         animator.SetTrigger("Land"); 
         druidrb.linearVelocityX = 0f;
         animator.SetTrigger("Land");
-        followPlayer.ScreenShake(0.025f, 0.5f);
+        followPlayer.ScreenShake(0.015f, 0.5f);
         Invoke("Recover", 0.4f);
     }
 

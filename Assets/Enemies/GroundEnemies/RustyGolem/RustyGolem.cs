@@ -211,6 +211,7 @@ public class RustyGolem : MonoBehaviour, IGrowableEnemy, IEnemy
     private IEnumerator GrowCycle()
     {
         animator.SetTrigger("grow");
+        rb.constraints = RigidbodyConstraints2D.FreezeAll;
         yield return new WaitForSeconds(0.75f);
         collide.AddComponent<BoxCollider2D>();
         bouncepad = collide.GetComponent<BoxCollider2D>();
@@ -225,6 +226,8 @@ public class RustyGolem : MonoBehaviour, IGrowableEnemy, IEnemy
         Destroy(bouncepad);
         animator.SetTrigger("die");
         yield return new WaitForSeconds(1f);
+        rb.constraints = RigidbodyConstraints2D.None;
+        rb.constraints = RigidbodyConstraints2D.FreezeRotation;
         isgrown = false;
     }
 }
