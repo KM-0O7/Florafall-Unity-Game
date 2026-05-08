@@ -103,14 +103,23 @@ public class DruidLedgeClimb : MonoBehaviour
         {
             if (tetherClone == null)
             {
+                Destroy(tetherClone);
+                druidRig.gravityScale = 1f;
+                druidRig.constraints = RigidbodyConstraints2D.None;
+                druidRig.constraints = RigidbodyConstraints2D.FreezeRotation;
+                druidAnimator.SetBool("IsMantling", false);
+                DruidFrameWork.canjump = true;
+                DruidFrameWork.canmove = true;
                 break;
-            }
-            yield return null;
-            Vector2 pos2 = druidTransform.position;
-            pos2 = Vector2.Lerp(pos2, ledgePosition, t1 / 0.14f);
-            tetherClone.SetPosition(1, pos2);
-            tetherClone.SetPosition(0, druidTransform.position);
-            t1 += Time.deltaTime;
+            } else
+            {
+                yield return null;
+                Vector2 pos2 = druidTransform.position;
+                pos2 = Vector2.Lerp(pos2, ledgePosition, t1 / 0.14f);
+                tetherClone.SetPosition(1, pos2);
+                tetherClone.SetPosition(0, druidTransform.position);
+                t1 += Time.deltaTime;
+            }    
         }
         tetherClone.SetPosition(0, druidTransform.position);
         tetherClone.SetPosition(1, ledgePosition);
