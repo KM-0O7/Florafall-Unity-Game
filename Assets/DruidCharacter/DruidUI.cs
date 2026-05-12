@@ -33,6 +33,8 @@ public class DruidUI : MonoBehaviour, IDamageAble
     private Coroutine flashRoutine;
     private DruidFrameWork frameWork;
 
+    FollowPlayer followPlayer;
+
     [SerializeField] private float flashDuration = 0.3f;
     [SerializeField] private float flashPeak = 1f;
 
@@ -49,6 +51,7 @@ public class DruidUI : MonoBehaviour, IDamageAble
         health = MaxHealth;
         druidRig = GetComponent<Rigidbody2D>();
         previousHealth = health;
+        followPlayer = Camera.main.GetComponent<FollowPlayer>();
     }
 
     private void Update()
@@ -124,6 +127,7 @@ public class DruidUI : MonoBehaviour, IDamageAble
                 StartCoroutine(HitImmuneCoroutine(0.5f));
                 Flash();
                 StartCoroutine(frameWork.FreezeFrame(0.3f));
+                followPlayer.ScreenShake(0.02f, 0.5f);
             }
         }
     }
@@ -168,7 +172,7 @@ public class DruidUI : MonoBehaviour, IDamageAble
         health = 0;
         waitCycle = true;
         druidanims.SetTrigger("Death");
-  
+       
         yield return new WaitForSeconds(0.5f);  
         StartCoroutine(RespawnCycle());
     }
@@ -198,8 +202,10 @@ public class DruidUI : MonoBehaviour, IDamageAble
         druidRig.gravityScale = 1f;
         health = MaxHealth;
         dead = false;
+        hitImmune = false;
         spirits = maxSpirits;
-
+        druidanims.SetFloat("XVelo", 0);
+      
         if (spawnPoint != null)
         {
             druid.transform.position = spawnPoint.position;
@@ -210,6 +216,7 @@ public class DruidUI : MonoBehaviour, IDamageAble
         }
 
         yield return new WaitForSeconds(0.2f);
+        DruidFrameWork.canmove = true;
         waitCycle = false;
         deathScreen.SetTrigger("End");
     }

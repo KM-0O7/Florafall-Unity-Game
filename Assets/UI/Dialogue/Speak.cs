@@ -109,7 +109,6 @@ public class Speak : MonoBehaviour, IDialogue
 
         if (npcName == null)
             npcName = GameObject.FindGameObjectWithTag("DialogueName").GetComponent<TextMeshProUGUI>();
-
     }
 
     private IEnumerator InteractingCoroutine()
@@ -125,7 +124,8 @@ public class Speak : MonoBehaviour, IDialogue
         textBox.text = text;
         textBox.maxVisibleCharacters = 0;
         dialogueAnimator.SetTrigger("Show");
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.5f);
+        druidAnimator.SetFloat("XVelo", 0f);
         canSkip = true;
         for (int i = 0; i < textBox.text.Length; i++)
         {
@@ -155,6 +155,7 @@ public class Speak : MonoBehaviour, IDialogue
         textBox.text = "";
         npcName.text = "";
         dialogueAnimator.SetTrigger("Leave");
+        canSkip = false;
         yield return new WaitForSeconds(1f);
         textBox.maxVisibleCharacters = 0;
         dialogueBox.enabled = false;
@@ -164,16 +165,20 @@ public class Speak : MonoBehaviour, IDialogue
 
     private void OnDisable()
     {
-        if (dialogueRoutine != null)
+        if (interacting)
         {
-            StopCoroutine(dialogueRoutine);
-        }
+            if (dialogueRoutine != null)
+            {
+                StopCoroutine(dialogueRoutine);
+            }
 
-        ResetDialogue();
+            ResetDialogue();
+        } 
     }
 
     private void ResetDialogue()
     {
+        Debug.Log("Dialogue Reset!");
         if (dialogueAnimator != null)
         {
             dialogueAnimator.SetTrigger("Leave");

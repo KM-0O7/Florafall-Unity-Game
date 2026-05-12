@@ -366,7 +366,7 @@ public class DruidFrameWork : MonoBehaviour
         animator.SetTrigger("Land"); 
         druidrb.linearVelocityX = 0f;
         animator.SetTrigger("Land");
-        followPlayer.ScreenShake(0.015f, 0.5f);
+        followPlayer.ScreenShake(0.02f, 0.5f);
         Invoke("Recover", 0.4f);
     }
 
