@@ -10,7 +10,6 @@ public class RollingBot : MonoBehaviour, IEnemy
      */
 
     //---- INTERFACE ----
-    private bool dead = false;
     public bool FlyingEnemy => false;
     public bool GroundEnemy => true;
   
