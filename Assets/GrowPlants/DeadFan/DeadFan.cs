@@ -11,6 +11,8 @@ public class DeadFan : MonoBehaviour, IGrowablePlant
     {
         waterGrown = value;
     }
+    private bool canGrow = true;
+    public bool CanGrow => canGrow;
     private bool fanDb = false;
     public bool candie = false;
     private Transform fanTransform;
@@ -77,7 +79,7 @@ public class DeadFan : MonoBehaviour, IGrowablePlant
     {
         if (!fanDb)
         {
-            if (!candie)
+            if (!candie && canGrow)
             {
                 StartCoroutine(GrowCycle());
             }
@@ -88,7 +90,7 @@ public class DeadFan : MonoBehaviour, IGrowablePlant
     {
         if (fanDb)
         {
-            if (candie)
+            if (candie && canGrow)
             {
                 StartCoroutine(DieCycle());
             }
@@ -97,19 +99,23 @@ public class DeadFan : MonoBehaviour, IGrowablePlant
 
     private IEnumerator GrowCycle()
     {
+        canGrow = false;
         fanDb = true;
         animator.SetTrigger("Grow");
         yield return new WaitForSeconds(0.3f);
+        canGrow = true;
         emission.enabled = true;
         candie = true;
     }
 
     private IEnumerator DieCycle()
     {
+        canGrow = false;
         candie = false;
         animator.SetTrigger("Die");
         emission.enabled = false;
         yield return new WaitForSeconds(0.3f);
+        canGrow = true;
         fanDb = false;
     }
 }

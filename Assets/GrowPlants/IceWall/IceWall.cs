@@ -10,6 +10,8 @@ public class IceWall : MonoBehaviour, IGrowablePlant
     public bool CanDie => canDie;
     public bool waterGrown = false;
     public bool WaterGrown => waterGrown;
+    private bool canGrow = true;
+    public bool CanGrow => canGrow;
     public void setWaterGrow(bool value)
     {
         waterGrown = value;
@@ -26,19 +28,21 @@ public class IceWall : MonoBehaviour, IGrowablePlant
 
     public void Grow()
     {
-        if (!canDie && !isGrown) StartCoroutine(GrowCycle());
+        if (!canDie && !isGrown && canGrow) StartCoroutine(GrowCycle());
     }
 
     public void Die()
     {
-        if (canDie && isGrown) StartCoroutine(DieCycle());
+        if (canDie && isGrown && canGrow) StartCoroutine(DieCycle());
     }
 
     private IEnumerator GrowCycle()
     {
         isGrown = true;
         animator.SetTrigger("Grow");
+        canGrow = false;
         yield return new WaitForSeconds(0.4f);
+        canGrow = true;
         wallCollider.enabled = true;
         canDie = true;
 
@@ -54,6 +58,7 @@ public class IceWall : MonoBehaviour, IGrowablePlant
     private IEnumerator DieCycle()
     {
         isGrown = false;
+        canGrow = false;
         wallCollider.enabled = false;
         if (wallCollider != null)
         {
@@ -64,6 +69,7 @@ public class IceWall : MonoBehaviour, IGrowablePlant
         }
         animator.SetTrigger("Die");
         yield return new WaitForSeconds(2f);
+        canGrow = true;
         animator.SetTrigger("ReGrow");
         canDie = false;
     }

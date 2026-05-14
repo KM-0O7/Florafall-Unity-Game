@@ -94,7 +94,7 @@ public class RoboticMortar : MonoBehaviour, IEnemy
         {
             if (bulletPlant != null)
             {
-                if (bulletPlant.IsGrown)
+                if (bulletPlant.IsGrown || !bulletPlant.CanGrow)
                 {
                     isShooting = false;
                     yield return new WaitForSeconds(timeBetweenShots);

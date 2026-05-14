@@ -11,6 +11,8 @@ public class IcicleFloorSpike : MonoBehaviour, IGrowablePlant
 
     private Animator animator;
     public static bool candamage = false;
+    private bool canGrow = true;
+    public bool CanGrow => canGrow;
 
     //---- INTERFACE ----
     public bool icicledb = false;
@@ -43,7 +45,7 @@ public class IcicleFloorSpike : MonoBehaviour, IGrowablePlant
     {
         if (!icicledb)
         {
-            if (!candie)
+            if (!candie && canGrow)
             {
                 StartCoroutine(GrowCycle());
             }
@@ -54,7 +56,7 @@ public class IcicleFloorSpike : MonoBehaviour, IGrowablePlant
     {
         if (icicledb)
         {
-            if (candie)
+            if (candie && canGrow)
             {
                 StartCoroutine(DieCycle());
             }
@@ -83,8 +85,9 @@ public class IcicleFloorSpike : MonoBehaviour, IGrowablePlant
     {
         animator.SetTrigger("Grow");
         icicledb = true;
-
+        canGrow = false;
         yield return new WaitForSeconds(0.75f);
+        canGrow = true;
         candamage = true;
         candie = true;
     }
@@ -94,7 +97,9 @@ public class IcicleFloorSpike : MonoBehaviour, IGrowablePlant
         candie = false;
         candamage = false;
         animator.SetTrigger("Die");
+        canGrow = false;
         yield return new WaitForSeconds(3f);
+        canGrow = true;
         icicledb = false;
     }
 

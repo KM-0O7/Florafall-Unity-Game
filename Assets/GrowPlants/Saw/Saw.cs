@@ -27,6 +27,8 @@ public class Saw : MonoBehaviour, IGrowablePlant
     [SerializeField] private float sawDistance = 5;
     private bool isGrowing = false;
     private Animator rootPlantAnimator;
+    private bool canGrow = true;
+    public bool CanGrow => canGrow;
 
     private void Start()
     {
@@ -58,19 +60,21 @@ public class Saw : MonoBehaviour, IGrowablePlant
 
     public void Grow()
     {
-        if (!growDB && !isGrowing) StartCoroutine(GrowCycle());
+        if (!growDB && !isGrowing && canGrow) StartCoroutine(GrowCycle());
     }
 
     public void Die()
     {
-        if (growDB && canDie) StartCoroutine(DieCycle());
+        if (growDB && canDie && canGrow) StartCoroutine(DieCycle());
     }
 
     private IEnumerator GrowCycle()
     {
+        canGrow = false;
         rootPlantAnimator.SetTrigger("Grow");
         isGrowing = true;
         yield return new WaitForSeconds(0.35f);
+        canGrow = true;
         canDie = true;
         sawClone = Instantiate(sawObject);
         sawClone.transform.position = gameObject.transform.position;
@@ -96,7 +100,7 @@ public class Saw : MonoBehaviour, IGrowablePlant
 
     public IEnumerator DieCycle()
     {
-      
+        canGrow = false;
         rootPlantAnimator.SetTrigger("Die");
         canDie = false;
         isGrowing = false;
@@ -109,6 +113,7 @@ public class Saw : MonoBehaviour, IGrowablePlant
         yield return new WaitForSeconds(respawnTime);
         rootPlantAnimator.SetTrigger("Respawn");
         yield return new WaitForSeconds(0.4f);
+        canGrow = true;
         growDB = false;
     }
 }

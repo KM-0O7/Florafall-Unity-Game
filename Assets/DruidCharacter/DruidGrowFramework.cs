@@ -118,7 +118,7 @@ public class DruidGrowFramework : MonoBehaviour
                     IDamageAble damage = hit.collider.GetComponent<IDamageAble>();
                     IGrowablePlant plant = hit.collider.GetComponent<IGrowablePlant>();
 
-                    if ((plant != null && plant.WaterGrown == false)|| (enemy != null && damage != null && !damage.Dead && !enemy.CantGrow))
+                    if ((plant != null && plant.WaterGrown == false && plant.CanGrow)|| (enemy != null && damage != null && !damage.Dead && !enemy.CantGrow))
                     {
                         SpriteRenderer growableRender = hit.collider.GetComponent<SpriteRenderer>();
 

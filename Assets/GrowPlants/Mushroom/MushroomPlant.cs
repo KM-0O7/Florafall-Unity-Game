@@ -23,6 +23,8 @@ public class MushroomPlant : MonoBehaviour, IGrowablePlant
 
     public bool IsGrown => mushdb;
     public bool CanDie => candie;
+    private bool canGrow = true;
+    public bool CanGrow => canGrow;
 
     private void Start()
     {
@@ -42,7 +44,7 @@ public class MushroomPlant : MonoBehaviour, IGrowablePlant
     {
         if (mushdb == false)
         {
-            if (candie == false)
+            if (candie == false && canGrow)
             {
                 if (!isFake)
                 {
@@ -60,7 +62,7 @@ public class MushroomPlant : MonoBehaviour, IGrowablePlant
     {
         if (mushdb == true)
         {
-            if (candie == true)
+            if (candie == true && canGrow)
             {
                 if (!isFake)
                 {
@@ -72,10 +74,13 @@ public class MushroomPlant : MonoBehaviour, IGrowablePlant
 
     private IEnumerator GrowCycle()
     {
+        canGrow = false;
         animator.SetTrigger("Grow");
         mushdb = true;
         yield return new WaitForSeconds(0.75f);
         candie = true;
+        canGrow = true
+            ;
         Collide.AddComponent<BoxCollider2D>();
         platform = Collide.GetComponent<BoxCollider2D>();
         platform.enabled = true;
@@ -87,9 +92,10 @@ public class MushroomPlant : MonoBehaviour, IGrowablePlant
         candie = false;
         animator.SetTrigger("Die");
         Destroy(platform);
-
+        canGrow = false;
         yield return new WaitForSeconds(3f);
         animator.SetTrigger("dbdone");
+        canGrow = true;
         mushdb = false;
     }
 

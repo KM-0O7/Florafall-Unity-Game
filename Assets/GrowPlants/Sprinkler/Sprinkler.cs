@@ -15,6 +15,8 @@ public class Sprinkler : MonoBehaviour, IGrowablePlant
     [SerializeField] private ParticleSystem showerParticle;
     [SerializeField] private float boxCheckWidth = 3f;
     List<Transform> plantsGrown = new List<Transform>();
+    private bool canGrow = true;
+    public bool CanGrow => canGrow;
 
     public void setWaterGrow(bool value)
     {
@@ -71,12 +73,12 @@ public class Sprinkler : MonoBehaviour, IGrowablePlant
 
     public void Grow()
     {
-        if (!canDie && !isGrown) StartCoroutine(GrowCycle());
+        if (!canDie && !isGrown && canGrow) StartCoroutine(GrowCycle());
     }
 
     public void Die()
     {
-        if (canDie && isGrown) StartCoroutine(DieCycle());
+        if (canDie && isGrown && canGrow) StartCoroutine(DieCycle());
     }
 
     private IEnumerator GrowCycle()
@@ -86,7 +88,9 @@ public class Sprinkler : MonoBehaviour, IGrowablePlant
         var emission1 = waterLittleDrop.emission;
         var emission2 = showerParticle.emission;
         emission1.enabled = false;
+        canGrow = false;
         yield return new WaitForSeconds(1f);
+        canGrow = true;
         emission2.enabled = true;
         isGrown = true;
     }
@@ -101,10 +105,12 @@ public class Sprinkler : MonoBehaviour, IGrowablePlant
 
         animator.SetTrigger("Die");
         isGrown = false;
+        canGrow = false;
         var emission1 = waterLittleDrop.emission;
         var emission2 = showerParticle.emission;
         emission2.enabled = false;
         yield return new WaitForSeconds(1f);
+        canGrow = true;
         emission1.enabled = true;
         canDie = false;
     }

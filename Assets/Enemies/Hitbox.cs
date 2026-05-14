@@ -35,8 +35,9 @@ public class Hitbox : MonoBehaviour
             }
         } else if ((collision.gameObject.layer == LayerMask.NameToLayer("GrowEnemy") || collision.gameObject.layer == LayerMask.NameToLayer("RoboticEnemy")) && !druidDamaging)
         {
-            if (!parentObject)
+            if (collision.gameObject != parentObject)
             {
+                Debug.Log("Hit Enemy!");
                 Persistence.instance.ApplyDamage(collision.gameObject, damage);
             }  
         }

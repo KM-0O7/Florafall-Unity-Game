@@ -10,6 +10,8 @@ public class DeadTree : MonoBehaviour, IGrowablePlant
     public bool CanDie => candie;
     public bool waterGrown = false;
     public bool WaterGrown => waterGrown;
+    private bool canGrow = true;
+    public bool CanGrow => canGrow;
     public void setWaterGrow(bool value)
     {
         waterGrown = value;
@@ -41,7 +43,7 @@ public class DeadTree : MonoBehaviour, IGrowablePlant
 
     public void Grow()
     {
-        if (!deadtreeDb)
+        if (!deadtreeDb && canGrow)
         {
             StartCoroutine(GrowCycle());
         }
@@ -51,7 +53,7 @@ public class DeadTree : MonoBehaviour, IGrowablePlant
     {
         if (deadtreeDb)
         {
-            if (candie)
+            if (candie && canGrow)
             {
                 StartCoroutine(DieCycle());
             }
@@ -61,13 +63,14 @@ public class DeadTree : MonoBehaviour, IGrowablePlant
     private IEnumerator GrowCycle()
     {
         TreeAnimator.SetTrigger("Grow");
- 
+        canGrow = false;
         DruidFrameWork.canmove = false;
         druidRig.linearVelocity = new Vector2(0f, 0f);
         druidRig.gravityScale = 0f;
         druidAnimator.SetTrigger("Resting");
         deadtreeDb = true;
         yield return new WaitForSeconds(0.75f);
+        canGrow = true;
         candie = true;
         UI.spawnSceneName = SceneManager.GetActiveScene().name;
         UI.currentRespawnPointName = gameObject.name;
@@ -76,11 +79,13 @@ public class DeadTree : MonoBehaviour, IGrowablePlant
     private IEnumerator DieCycle()
     {
         DruidFrameWork.canmove = true;
+        canGrow = false;
         candie = false;
         druidRig.gravityScale = 1f;
         TreeAnimator.SetTrigger("Die");
         druidAnimator.SetBool("StopRest", true);
         yield return new WaitForSeconds(0.6f);
+        canGrow = true;
         druidAnimator.SetBool("StopRest", false);
         deadtreeDb = false;
     }

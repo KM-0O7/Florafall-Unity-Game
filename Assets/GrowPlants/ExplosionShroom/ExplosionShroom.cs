@@ -8,6 +8,8 @@ public class ExplosionShroom : MonoBehaviour, IGrowablePlant
     [SerializeField] private DruidFrameWork druid;
     public bool waterGrown = false;
     public bool WaterGrown => waterGrown;
+    private bool canGrow = true;
+    public bool CanGrow => canGrow;
     public void setWaterGrow(bool value)
     {
         waterGrown = value;
@@ -27,7 +29,7 @@ public class ExplosionShroom : MonoBehaviour, IGrowablePlant
     {
         if (explosiondb == false)
         {
-            if (candie == false)
+            if (candie == false && canGrow)
             {
                 explosiondb = true;
                 candie = true;

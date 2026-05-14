@@ -14,6 +14,8 @@ public class GlowRootPlant : MonoBehaviour, IGrowablePlant
         waterGrown = value;
     }
     public bool WaterGrown => waterGrown;
+    private bool canGrow = true;
+    public bool CanGrow => canGrow;
     public bool IsGrown => glowdb;
     public bool CanDie => candie;
 
@@ -25,7 +27,7 @@ public class GlowRootPlant : MonoBehaviour, IGrowablePlant
 
     public void Grow()
     {
-        if (glowdb == false)
+        if (glowdb == false && canGrow)
         {
             StartCoroutine(GrowCycle());
         }
@@ -35,7 +37,7 @@ public class GlowRootPlant : MonoBehaviour, IGrowablePlant
     {
         if (glowdb == true)
         {
-            if (candie == true)
+            if (candie == true && canGrow)
             {
                 StartCoroutine(diecycle());
             }
@@ -46,7 +48,9 @@ public class GlowRootPlant : MonoBehaviour, IGrowablePlant
     {
         animator.SetTrigger("Grow");
         glowdb = true;
+        canGrow = false;
         yield return new WaitForSeconds(0.75f);
+        canGrow = true;
         candie = true;
     }
 
@@ -54,8 +58,9 @@ public class GlowRootPlant : MonoBehaviour, IGrowablePlant
     {
         candie = false;
         animator.SetTrigger("Die");
-
+        canGrow = false;
         yield return new WaitForSeconds(3f);
+        canGrow = true;
         animator.SetTrigger("dbdone");
         glowdb = false;
     }

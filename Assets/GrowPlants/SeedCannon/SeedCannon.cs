@@ -9,6 +9,8 @@ public class SeedCannon : MonoBehaviour, IGrowablePlant
     private bool shotdb = false;
     [SerializeField] private Transform bulletspawn;
     [SerializeField] private GameObject Bullet;
+    private bool canGrow = true;
+    public bool CanGrow => canGrow;
     public bool waterGrown = false;
     public bool WaterGrown => waterGrown;
     public void setWaterGrow(bool value)
@@ -23,7 +25,6 @@ public class SeedCannon : MonoBehaviour, IGrowablePlant
     private int spirits = 2;
     public int spiritCost => spirits;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Start()
     {
         cannon = GetComponent<SpriteRenderer>();
@@ -32,7 +33,7 @@ public class SeedCannon : MonoBehaviour, IGrowablePlant
 
     public void Grow()
     {
-        if (cannondb == false)
+        if (cannondb == false && canGrow)
         {
             StartCoroutine(GrowCycle());
         }
@@ -42,7 +43,7 @@ public class SeedCannon : MonoBehaviour, IGrowablePlant
     {
         if (cannondb == true)
         {
-            if (candie == true)
+            if (candie == true && canGrow)
             {
                 StartCoroutine(diecycle());
             }
@@ -54,7 +55,9 @@ public class SeedCannon : MonoBehaviour, IGrowablePlant
         animator.SetTrigger("Grow");
         cannondb = true;
         grew = true;
+        canGrow = false;
         yield return new WaitForSeconds(0.75f);
+        canGrow = true;
         candie = true;
     }
 
@@ -63,8 +66,9 @@ public class SeedCannon : MonoBehaviour, IGrowablePlant
         candie = false;
         animator.SetTrigger("Die");
         grew = false;
-
+        canGrow = false;
         yield return new WaitForSeconds(3f);
+        canGrow = true;
         animator.SetTrigger("dbdone");
         cannondb = false;
     }
@@ -91,6 +95,7 @@ public class SeedCannon : MonoBehaviour, IGrowablePlant
 
             //Get Bullets components/add components
             GameObject BulletClone = Instantiate(Bullet, bulletspawn.transform.position, bulletspawn.transform.rotation);
+            BulletClone.SetActive(true);
 
             //Rig
             Rigidbody2D bulletrig = BulletClone.AddComponent<Rigidbody2D>();

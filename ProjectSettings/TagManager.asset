@@ -72,7 +72,7 @@ TagManager:
   - Platform
   - Breakables
   - HiddenAreas
-  - 
+  - GroundCollider
   - 
   - 
   - 
