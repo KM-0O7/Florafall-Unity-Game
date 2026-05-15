@@ -66,6 +66,7 @@ public class MortarBullet : MonoBehaviour, IGrowablePlant
             growDB = true;
             canDie = true;
             isGrown = true;
+            animator.SetTrigger("Grow");
             rigClone.bodyType = RigidbodyType2D.Kinematic;
         }
     }
@@ -77,7 +78,7 @@ public class MortarBullet : MonoBehaviour, IGrowablePlant
             growDB = false;
             canDie = false;
             isGrown = false;
-
+            animator.SetTrigger("Die");
             rigClone.gravityScale = 2;
             rigClone.bodyType = RigidbodyType2D.Dynamic;
         }
@@ -93,9 +94,16 @@ public class MortarBullet : MonoBehaviour, IGrowablePlant
                 if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
                 {
                     canGrow = false;
-
-                    Debug.Log("GroundBall");
-                    StartCoroutine(Explode(false));
+                    RaycastHit2D groundCheck = Physics2D.Raycast(transform.position, Vector2.down, 1f, LayerMask.GetMask("Ground"));
+                    if (groundCheck)
+                    {
+                        Debug.Log("GroundBall");
+                        StartCoroutine(Explode(false));
+                    } else
+                    {
+                        Debug.Log("AirBall");
+                        StartCoroutine(Explode(true));
+                    }
                 }
                 else if (collision.gameObject.CompareTag("Player"))
                 {
