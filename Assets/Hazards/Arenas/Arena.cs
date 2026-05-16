@@ -20,11 +20,6 @@ public class Arena : MonoBehaviour
     public bool arenaCompleted = false;
     public bool inArena = false;
 
-    private void Start()
-    {
-        cameraBounds = GameObject.FindGameObjectWithTag("RoomBounds").GetComponent<CameraBounds>();
-    }
-
     void Update()
     {
         aliveEnemies.RemoveWhere(enemy => enemy.Dead);
@@ -107,8 +102,10 @@ public class Arena : MonoBehaviour
     {
         inArena = false;
         arenaCompleted = true;
+        cameraBounds = GameObject.FindGameObjectWithTag("RoomBounds").GetComponent<CameraBounds>();
         cameraBounds.ResetBounds();
         aliveEnemies.Clear();
+        Debug.Log("Cleared Arena");
         for (int i = 0; i < walls.Length; i++)
         {
             BoxCollider2D wallCollider = walls[i].GetComponent<BoxCollider2D>();

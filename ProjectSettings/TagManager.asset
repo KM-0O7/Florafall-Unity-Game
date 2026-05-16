@@ -95,5 +95,8 @@ TagManager:
   - name: GUI
     uniqueID: 3844069091
     locked: 0
+  - name: CameraSortingLayer
+    uniqueID: 2111402111
+    locked: 0
   m_RenderingLayers:
   - Default

@@ -4,9 +4,12 @@ public class CameraBounds : MonoBehaviour
 {
     Arena arena;
     BoxCollider2D bc;
+    private void Awake()
+    {
+        bc = GetComponent<BoxCollider2D>();
+    }
     private void Start()
     {
-         bc = GetComponent<BoxCollider2D>();
         GameObject arenaObj = GameObject.FindGameObjectWithTag("Arena");
 
         if (arenaObj != null)
@@ -35,6 +38,7 @@ public class CameraBounds : MonoBehaviour
 
     public void ResetBounds()
     {
+        bc = GetComponent<BoxCollider2D>();
         if (bc != null)
         {
             Bounds b = bc.bounds;
@@ -44,5 +48,6 @@ public class CameraBounds : MonoBehaviour
             Debug.Log("Reset Bound");
             Camera.main.GetComponent<FollowPlayer>().SetBounds(min, max);
         }
+        else Debug.Log("How?");
     }
 }
