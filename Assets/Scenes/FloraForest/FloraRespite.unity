@@ -341,7 +341,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Segment
   segmentPosition: 0
-  currentOwner: {fileID: 0}
+  currentOwner: {fileID: 576657315}
 --- !u!61 &6070889
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -8996,7 +8996,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Segment
   segmentPosition: 0
-  currentOwner: {fileID: 0}
+  currentOwner: {fileID: 576657315}
 --- !u!61 &551876170
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -9358,8 +9358,6 @@ MonoBehaviour:
   - {fileID: 551876173}
   - {fileID: 598945090}
   - {fileID: 6070887}
-  segmentSpacing: 4
-  moveDistForRecord: 0.01
   detectionRange: 10
 --- !u!61 &576657316
 BoxCollider2D:
@@ -9474,7 +9472,7 @@ Transform:
   m_GameObject: {fileID: 576657313}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.72, y: -13.25, z: 0}
+  m_LocalPosition: {x: -3.1, y: -13.13, z: 0}
   m_LocalScale: {x: 2.1468, y: 0.8138, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -9545,7 +9543,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Segment
   segmentPosition: 0
-  currentOwner: {fileID: 0}
+  currentOwner: {fileID: 576657315}
 --- !u!61 &598945087
 BoxCollider2D:
   m_ObjectHideFlags: 0
