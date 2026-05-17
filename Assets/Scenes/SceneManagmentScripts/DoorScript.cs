@@ -12,6 +12,8 @@ public class DoorScript : MonoBehaviour
     public string targetSpawnID;
     private FollowPlayer camFollow;
     [SerializeField] private bool interactDoor = false;
+    [SerializeField] private bool cellingDoor = false;
+    [SerializeField] private float upwardsJumpForce = 3f;
 
     private void Start()
     {
@@ -37,15 +39,10 @@ public class DoorScript : MonoBehaviour
         fade.SetTrigger("Start");
         DruidUI UI = player.GetComponent<DruidUI>();
         DruidFrameWork.canmove = false;
-
-        //colours
-        if (gameObject.tag == "MountainDoor")
+        Rigidbody2D playerRig = player.GetComponent<Rigidbody2D>();
+        if (cellingDoor)
         {
-            UI.circleWipe.color = new Color(78f / 255f, 104f / 255f, 154f / 255f);
-        }
-        else if (gameObject.tag == "FloraForestDoor")
-        {
-            UI.circleWipe.color = new Color(29f / 255f, 142f / 255f, 47f / 255f);
+            playerRig.AddForceY(upwardsJumpForce, ForceMode2D.Impulse);
         }
 
         yield return new WaitUntil(() =>
@@ -81,7 +78,7 @@ public class DoorScript : MonoBehaviour
         if (spawnPoint != null)
         {
             player.transform.position = spawnPoint.position;
-            Rigidbody2D playerRig = player.GetComponent<Rigidbody2D>();
+            
             playerRig.linearVelocity = new Vector2(0, 0);
             fade.SetTrigger("End");
             DruidFrameWork.Transitioning = false;

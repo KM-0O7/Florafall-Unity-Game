@@ -50,7 +50,7 @@ public class Void : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         druid.transform.position = posTP;
         circleExpand.SetTrigger("End");
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.5f);
         DruidFrameWork.canmove = true;
         alreadyHit = false;
     }

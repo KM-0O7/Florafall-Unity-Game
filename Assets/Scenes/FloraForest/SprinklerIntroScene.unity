@@ -22338,6 +22338,8 @@ MonoBehaviour:
     _sceneName: FloraRespite
   targetSpawnID: MiddleLeftSpawn
   interactDoor: 0
+  cellingDoor: 1
+  upwardsJumpForce: 3
 --- !u!212 &803534979
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -27900,6 +27902,8 @@ MonoBehaviour:
     _sceneName: HangingRespiteExtension
   targetSpawnID: BottomLeftSpawn
   interactDoor: 0
+  cellingDoor: 0
+  upwardsJumpForce: 3
 --- !u!212 &1201994855
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -28386,6 +28390,8 @@ MonoBehaviour:
     _sceneName: HangingRespiteExtension
   targetSpawnID: UpperLeftSpawn
   interactDoor: 0
+  cellingDoor: 0
+  upwardsJumpForce: 3
 --- !u!212 &1381377701
 SpriteRenderer:
   m_ObjectHideFlags: 0

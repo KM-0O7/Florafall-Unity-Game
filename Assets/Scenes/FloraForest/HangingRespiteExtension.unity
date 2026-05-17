@@ -9690,6 +9690,8 @@ MonoBehaviour:
     _sceneName: SprinklerIntroScene
   targetSpawnID: UpperRightSpawn
   interactDoor: 0
+  cellingDoor: 0
+  upwardsJumpForce: 3
 --- !u!212 &201884071
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -24627,7 +24629,7 @@ Transform:
   m_GameObject: {fileID: 1014852766}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.32, y: -39.55, z: 0}
+  m_LocalPosition: {x: 3.88, y: -39.55, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -36044,6 +36046,8 @@ MonoBehaviour:
     _sceneName: SprinklerIntroScene
   targetSpawnID: BottomRightSpawn
   interactDoor: 0
+  cellingDoor: 0
+  upwardsJumpForce: 3
 --- !u!212 &1496449672
 SpriteRenderer:
   m_ObjectHideFlags: 0
